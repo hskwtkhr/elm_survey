@@ -156,14 +156,28 @@ export default function SurveyForm() {
       const result = await response.json()
 
       // 判定条件：
-      // 1. 施術への満足度が「大変満足」または「満足」
+      // 1. 施術への満足度が「満足」または「大変満足」
       // 2. カウンセリングに「不満」が無い（「やや不満」はOK）
       // 3. 院内の雰囲気に「悪い」が無い（「やや悪い」はOK）
       // 4. スタッフの対応に「不満」が無い（「やや不満」はOK）
-      const isResultSatisfied = result.resultSatisfaction === '大変満足' || result.resultSatisfaction === '満足'
+      const isResultSatisfied = result.resultSatisfaction === '満足' || result.resultSatisfaction === '大変満足'
       const hasNoCounselingDissatisfaction = !result.counselingSatisfaction || result.counselingSatisfaction !== '不満'
       const hasNoAtmosphereDissatisfaction = !result.atmosphereRating || result.atmosphereRating !== '悪い'
       const hasNoStaffDissatisfaction = !result.staffServiceRating || result.staffServiceRating !== '不満'
+
+      // デバッグ用ログ（開発環境のみ）
+      if (process.env.NODE_ENV === 'development') {
+        console.log('判定結果:', {
+          isResultSatisfied,
+          hasNoCounselingDissatisfaction,
+          hasNoAtmosphereDissatisfaction,
+          hasNoStaffDissatisfaction,
+          resultSatisfaction: result.resultSatisfaction,
+          counselingSatisfaction: result.counselingSatisfaction,
+          atmosphereRating: result.atmosphereRating,
+          staffServiceRating: result.staffServiceRating,
+        })
+      }
 
       if (isResultSatisfied && hasNoCounselingDissatisfaction && hasNoAtmosphereDissatisfaction && hasNoStaffDissatisfaction) {
         router.push(`/review/${result.clinicId}?surveyId=${result.id}`)

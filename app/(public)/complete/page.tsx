@@ -5,11 +5,17 @@ import Image from 'next/image'
 export default function CompletePage() {
   const handleClose = () => {
     if (typeof window !== 'undefined') {
-      window.close()
-      // タブが閉じられない場合（直接開いた場合など）はトップページに戻る
-      setTimeout(() => {
-        window.location.href = '/'
-      }, 100)
+      // ページを閉じる（window.close()は通常のブラウザでは動作しないため、history.back()を使用）
+      if (window.history.length > 1) {
+        window.history.back()
+      } else {
+        // 履歴がない場合はページを閉じる試み
+        window.close()
+        // それでも閉じられない場合はトップページに戻る
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 100)
+      }
     }
   }
 
@@ -33,9 +39,9 @@ export default function CompletePage() {
             ご回答いただき、ありがとうございます。
           </h1>
           <p className="text-sm md:text-base text-gray-700 leading-relaxed px-2 md:px-0">
-            いただいた内容をもとに、
-            <br className="block md:hidden" />
-            今後ともサービス向上につとめさせていただきます。
+            いただいた内容をもとに、<br className="block md:hidden" />
+            今後ともサービス向上に<br className="block md:hidden" />
+            つとめさせていただきます。
           </p>
         </div>
 

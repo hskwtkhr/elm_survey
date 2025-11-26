@@ -74,7 +74,6 @@ export async function POST(request: NextRequest) {
     }
 
     // データベースに保存
-    // 注意: resultSatisfactionが追加されるまで、satisfactionフィールドに一時的に保存
     const survey = await prisma.survey.create({
       data: {
         clinicId,
@@ -83,14 +82,13 @@ export async function POST(request: NextRequest) {
         treatmentMenu,
         gender,
         ageGroup,
-        satisfaction: resultSatisfaction || '普通', // resultSatisfactionの値を使用
+        satisfaction: resultSatisfaction || '普通', // 後方互換性のため
         message: message || null, // 伝えたいことは任意
-        // 以下はデータベースにカラムが追加された後に有効化
-        // resultSatisfaction: resultSatisfaction || null,
-        // counselingSatisfaction: counselingSatisfaction || null,
-        // atmosphereRating: atmosphereRating || null,
-        // staffServiceRating: staffServiceRating || null,
-      } as any, // 一時的にany型を使用
+        resultSatisfaction: resultSatisfaction || null,
+        counselingSatisfaction: counselingSatisfaction || null,
+        atmosphereRating: atmosphereRating || null,
+        staffServiceRating: staffServiceRating || null,
+      },
       include: {
         clinic: {
           select: {
