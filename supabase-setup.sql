@@ -12,6 +12,11 @@
 -- ========================================
 
 -- ========================================
+-- ステップ0: UUID拡張を有効化（Supabaseでは通常不要だが、念のため）
+-- ========================================
+-- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- ========================================
 -- ステップ1: テーブルが存在しない場合は作成
 -- ========================================
 
@@ -93,7 +98,7 @@ BEGIN
     
     IF hiroshima_id IS NULL THEN
         INSERT INTO "Clinic" ("id", "name", "google_review_url", "createdAt", "updatedAt") 
-        VALUES (uuid_generate_v4()::text, '広島院', 'https://g.page/elmclinic-hiroshima/review', NOW(), NOW())
+        VALUES (gen_random_uuid()::text, '広島院', 'https://g.page/elmclinic-hiroshima/review', NOW(), NOW())
         RETURNING "id" INTO hiroshima_id;
     END IF;
 END $$;

@@ -43,21 +43,18 @@ export async function GET() {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     const errorStack = error instanceof Error ? error.stack : undefined
     console.error('Error details:', errorMessage)
+    console.error('Error stack:', errorStack)
     
-    // エラー時は詳細なエラーメッセージを返す（開発環境のみ）
-    if (process.env.NODE_ENV === 'development') {
-      return NextResponse.json(
-        { 
-          error: errorMessage,
-          stack: errorStack,
-          message: 'Failed to fetch clinics'
-        },
-        { status: 500 }
-      )
-    }
-    
-    // 本番環境では空配列を返す
-    return NextResponse.json([], { status: 500 })
+    // 本番環境でもエラーメッセージを返す（デバッグ用）
+    return NextResponse.json(
+      { 
+        error: errorMessage,
+        message: 'Failed to fetch clinics',
+        // 本番環境ではスタックトレースは含めない
+        ...(process.env.NODE_ENV === 'development' && { stack: errorStack })
+      },
+      { status: 500 }
+    )
   }
 }
 
