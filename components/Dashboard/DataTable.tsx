@@ -2,8 +2,8 @@
 
 interface Survey {
   id: string
-  clinic: { name: string }
-  doctor: { name: string }
+  clinic: { id: string; name: string }
+  doctor: { id: string; name: string }
   treatmentDate: string
   treatmentMenu: string
   gender: string
