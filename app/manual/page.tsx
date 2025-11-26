@@ -37,13 +37,7 @@ export default function ManualPage() {
                 <span className="text-gray-600 text-sm">（未ログインの場合は自動的にログインページにリダイレクトされます）</span>
               </div>
             </li>
-            <li>ログイン情報を入力：
-              <ul className="list-disc list-inside ml-6 mt-2 space-y-1">
-                <li><strong>ユーザー名</strong>: <code className="bg-gray-100 px-2 py-1 rounded">admin</code></li>
-                <li><strong>パスワード</strong>: <code className="bg-gray-100 px-2 py-1 rounded">MyZvAj7rabFaSinjop</code></li>
-              </ul>
-            </li>
-            <li>「ログイン」ボタンをクリック</li>
+            <li>ログイン情報を入力して「ログイン」ボタンをクリック</li>
             <li>ログイン成功後、ダッシュボードページが表示されます</li>
           </ol>
         </section>
