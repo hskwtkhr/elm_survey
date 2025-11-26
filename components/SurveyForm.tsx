@@ -309,7 +309,7 @@ export default function SurveyForm() {
                 e.currentTarget.select()
               }}
               max={new Date().toISOString().split('T')[0]}
-              className="w-full p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
+              className="w-full max-w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
             />
             <div className="mt-4">
               <button
