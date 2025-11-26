@@ -5,17 +5,21 @@ import Image from 'next/image'
 export default function CompletePage() {
   const handleClose = () => {
     if (typeof window !== 'undefined') {
-      // ページを閉じる（window.close()は通常のブラウザでは動作しないため、history.back()を使用）
-      if (window.history.length > 1) {
-        window.history.back()
-      } else {
-        // 履歴がない場合はページを閉じる試み
-        window.close()
-        // それでも閉じられない場合はトップページに戻る
-        setTimeout(() => {
-          window.location.href = '/'
-        }, 100)
-      }
+      // ウィンドウを閉じる試み
+      window.close()
+      
+      // window.close()が動作しない場合（通常のブラウザではセキュリティ上動作しない）
+      // 少し待ってから、まだ開いている場合は何もしない（ユーザーが手動で閉じる）
+      // または、openerがある場合は親ウィンドウに戻る
+      setTimeout(() => {
+        if (window.opener) {
+          // ポップアップから開かれた場合
+          window.close()
+        } else {
+          // 通常のブラウザでは閉じられないため、何もしない
+          // ユーザーが手動でブラウザを閉じる必要がある
+        }
+      }, 100)
     }
   }
 
@@ -29,14 +33,15 @@ export default function CompletePage() {
             alt="ELM CLINIC" 
             width={400} 
             height={160} 
-            className="object-contain w-40 md:w-full max-w-[192px] md:max-w-none"
+            className="object-contain w-56 md:w-full max-w-[224px] md:max-w-none"
           />
         </div>
 
         {/* タイトル */}
         <div className="text-center mb-3 md:mb-6">
           <h1 className="text-lg md:text-2xl font-bold mb-2 md:mb-6 text-black leading-tight md:leading-normal">
-            ご回答いただき、ありがとうございます。
+            ご回答いただき、<br className="block md:hidden" />
+            ありがとうございます。
           </h1>
           <p className="text-sm md:text-base text-gray-700 leading-relaxed px-2 md:px-0">
             いただいた内容をもとに、<br className="block md:hidden" />
