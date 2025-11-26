@@ -6,9 +6,6 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {
-    // データベース接続テスト
-    await prisma.$connect()
-    
     // 指定された順番で院を取得
     const clinicOrder = [
       '広島院',
@@ -70,11 +67,6 @@ export async function GET() {
       },
       { status: 500 }
     )
-  } finally {
-    // 接続を閉じる
-    await prisma.$disconnect().catch(() => {
-      // 接続が既に閉じられている場合は無視
-    })
   }
 }
 
