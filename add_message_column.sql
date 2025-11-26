@@ -1,0 +1,1 @@
+ALTER TABLE "Survey" ADD COLUMN IF NOT EXISTS "message" TEXT;

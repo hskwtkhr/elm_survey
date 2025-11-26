@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Clinic {
+  id               String   @id @default(uuid())
+  name             String
+  google_review_url String
+  doctors          Doctor[]
+  surveys          Survey[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Doctor {
+  id        String   @id @default(uuid())
+  clinicId  String
+  clinic    Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  name      String
+  surveys   Survey[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clinicId])
+}
+
+model Survey {
+  id             String   @id @default(uuid())
+  clinicId       String
+  clinic         Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  doctorId       String
+  doctor         Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  treatmentDate  DateTime
+  treatmentMenu  String
+  gender         String
+  ageGroup       String
+  satisfaction   String
+  resultSatisfaction      String?  // 結果への満足度
+  counselingSatisfaction  String?  // カウンセリングへの満足度
+  atmosphereRating        String?  // 院内の雰囲気
+  staffServiceRating      String?  // スタッフの対応
+  message        String?  // 伝えたいこと（任意）
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([clinicId])
+  @@index([doctorId])
+  @@index([treatmentDate])
+  @@index([satisfaction])
+}
+
+model AdminUser {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

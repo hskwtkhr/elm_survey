@@ -1,0 +1,232 @@
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
+import { useSearchParams, useParams } from 'next/navigation'
+import Image from 'next/image'
+
+export default function ReviewPage() {
+  const params = useParams()
+  const searchParams = useSearchParams()
+  const clinicId = params.clinicId as string
+  const surveyId = searchParams.get('surveyId')
+
+  const [reviewText, setReviewText] = useState<string>('')
+  const [googleReviewUrl, setGoogleReviewUrl] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [isCopied, setIsCopied] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    // clinicIdからGoogleマップのURLを取得
+    fetch(`/api/clinics`)
+      .then((res) => res.json())
+      .then((clinics) => {
+        const clinic = clinics.find((c: any) => c.id === clinicId)
+        if (clinic) {
+          setGoogleReviewUrl(clinic.google_review_url)
+        } else {
+          setError('院が見つかりません')
+          setIsLoading(false)
+          return
+        }
+
+        // surveyIdがある場合のみ口コミ文を生成
+        if (surveyId) {
+          fetch('/api/review', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ surveyId }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.error) {
+                setError(data.error)
+              } else {
+                setReviewText(data.reviewText)
+              }
+            })
+            .catch((err) => {
+              console.error('Error generating review:', err)
+              setError('口コミ文の生成に失敗しました')
+            })
+            .finally(() => {
+              setIsLoading(false)
+            })
+        } else {
+          // surveyIdがない場合は、直接Googleマップを開くオプションを表示
+          setIsLoading(false)
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching clinic:', err)
+        setError('院情報の取得に失敗しました')
+        setIsLoading(false)
+      })
+  }, [clinicId, surveyId])
+
+  // reviewTextが変更されたときにtextareaの高さを自動調整
+  useEffect(() => {
+    if (textareaRef.current && reviewText) {
+      textareaRef.current.style.height = 'auto'
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+    }
+  }, [reviewText])
+
+  const handleCopyAndGoToReview = async () => {
+    try {
+      // 現在のreviewText（編集後のテキスト）をコピー
+      await navigator.clipboard.writeText(reviewText)
+      setIsCopied(true)
+      setTimeout(() => setIsCopied(false), 2000)
+      
+      // 少し遅延してからGoogleレビューページを開く
+      setTimeout(() => {
+        if (googleReviewUrl) {
+          window.open(googleReviewUrl, '_blank')
+        }
+      }, 500)
+    } catch (err) {
+      console.error('Failed to copy:', err)
+      alert('コピーに失敗しました')
+      // コピーに失敗してもレビューページは開く
+      if (googleReviewUrl) {
+        window.open(googleReviewUrl, '_blank')
+      }
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12 px-4">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
+          <div className="mb-6 flex justify-center">
+            <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain" />
+          </div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
+          <p className="text-lg text-black">送信中...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12 px-4">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">エラー</h1>
+          <p className="text-lg text-gray-600 mb-8">{error}</p>
+          <a
+            href="/"
+            className="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            トップページに戻る
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+        {/* アンケート送信ありがとうございました（ロゴの上） */}
+        <div className="text-center" style={{ marginTop: '20px', marginBottom: '60px' }}>
+          <p className="text-2xl text-gray-700 font-medium" style={{ fontFamily: 'var(--font-shippori-mincho)' }}>
+            アンケートの送信
+            <br className="md:hidden" />
+            ありがとうございました。
+          </p>
+        </div>
+
+        {/* ロゴ */}
+        <div className="flex justify-center" style={{ marginBottom: '60px' }}>
+          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain" />
+        </div>
+
+        {/* メッセージ */}
+        <div className="mb-6 text-center">
+          <p className="text-xl text-gray-700 mb-3 font-bold">Googleへの口コミにもご協力ください。</p>
+          <p className="text-sm text-gray-700">
+            アンケート結果を元に、AIで文章を生成しました。
+            <br />
+            もし良ければ、下記ボタンを押して、<br className="md:hidden" />Googleの口コミにご協力ください。
+          </p>
+        </div>
+
+        {reviewText ? (
+          <>
+            <div className="mb-6">
+              <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-6 mb-6">
+                <textarea
+                  ref={textareaRef}
+                  value={reviewText}
+                  onChange={(e) => {
+                    setReviewText(e.target.value)
+                    // 高さを自動調整
+                    e.target.style.height = 'auto'
+                    e.target.style.height = e.target.scrollHeight + 'px'
+                  }}
+                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-relaxed text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
+                  style={{ 
+                    fontFamily: 'inherit',
+                    minHeight: '150px',
+                    maxHeight: 'none',
+                    overflow: 'hidden',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                  }}
+                  rows={10}
+                />
+              </div>
+
+              {googleReviewUrl && (
+                <button
+                  onClick={handleCopyAndGoToReview}
+                  className={`w-full px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${
+                    isCopied
+                      ? 'bg-green-400 text-white'
+                      : 'bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600'
+                  }`}
+                >
+                  {isCopied ? (
+                    <span className="flex flex-col items-center justify-center gap-2">
+                      <span>✓</span>
+                      <span>
+                        コピーしました！<br className="md:hidden" />Google口コミページを開きます
+                      </span>
+                    </span>
+                  ) : (
+                    <span className="flex flex-col items-center justify-center gap-2">
+                      <span className="text-xl">⭐️⭐️⭐️⭐️⭐️</span>
+                      <span>
+                        文章をコピー＆<br className="md:hidden" />Google口コミページを開く
+                      </span>
+                    </span>
+                  )}
+                </button>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="mb-6">
+            {googleReviewUrl && (
+              <button
+                onClick={() => window.open(googleReviewUrl, '_blank')}
+                className="w-full px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <span>🌟</span>
+                  <span>Google口コミページを開く</span>
+                </span>
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
