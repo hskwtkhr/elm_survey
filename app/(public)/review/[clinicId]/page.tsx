@@ -100,13 +100,13 @@ export default function ReviewPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-          <div className="mb-6 flex justify-center">
-            <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain" />
+      <div className="min-h-screen bg-gray-50 py-4 md:py-12 px-4">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 text-center">
+          <div className="mb-4 md:mb-6 flex justify-center">
+            <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-40 md:w-full" />
           </div>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
-          <p className="text-lg text-black">送信中...</p>
+          <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-pink-500 mx-auto mb-3 md:mb-4"></div>
+          <p className="text-sm md:text-lg text-black">送信中...</p>
         </div>
       </div>
     )
@@ -114,13 +114,13 @@ export default function ReviewPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">エラー</h1>
-          <p className="text-lg text-gray-600 mb-8">{error}</p>
+      <div className="min-h-screen bg-gray-50 py-4 md:py-12 px-4">
+        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 text-center">
+          <h1 className="text-lg md:text-2xl font-bold text-red-600 mb-3 md:mb-4">エラー</h1>
+          <p className="text-sm md:text-lg text-gray-600 mb-4 md:mb-8">{error}</p>
           <a
             href="/"
-            className="inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            className="inline-block px-4 py-2 md:px-6 md:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
           >
             トップページに戻る
           </a>
@@ -130,11 +130,11 @@ export default function ReviewPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen bg-gray-50 py-4 md:py-12 px-4">
+      <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8">
         {/* アンケート送信ありがとうございました（ロゴの上） */}
-        <div className="text-center" style={{ marginTop: '20px', marginBottom: '60px' }}>
-          <p className="text-2xl text-gray-700 font-medium" style={{ fontFamily: 'var(--font-shippori-mincho)' }}>
+        <div className="text-center" style={{ marginTop: '10px', marginBottom: '20px' }}>
+          <p className="text-lg md:text-2xl text-gray-700 font-medium" style={{ fontFamily: 'var(--font-shippori-mincho)' }}>
             アンケートの送信
             <br className="md:hidden" />
             ありがとうございました。
@@ -142,14 +142,14 @@ export default function ReviewPage() {
         </div>
 
         {/* ロゴ */}
-        <div className="flex justify-center" style={{ marginBottom: '60px' }}>
-          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain" />
+        <div className="flex justify-center" style={{ marginBottom: '20px' }}>
+          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-40 md:w-full" />
         </div>
 
         {/* メッセージ */}
-        <div className="mb-6 text-center">
-          <p className="text-xl text-gray-700 mb-3 font-bold">Googleへの口コミにもご協力ください。</p>
-          <p className="text-sm text-gray-700">
+        <div className="mb-4 md:mb-6 text-center">
+          <p className="text-base md:text-xl text-gray-700 mb-2 md:mb-3 font-bold">Googleへの口コミにもご協力ください。</p>
+          <p className="text-xs md:text-sm text-gray-700">
             アンケート結果を元に、AIで文章を生成しました。
             <br />
             もし良ければ、下記ボタンを押して、<br className="md:hidden" />Googleの口コミにご協力ください。
@@ -158,8 +158,8 @@ export default function ReviewPage() {
 
         {reviewText ? (
           <>
-            <div className="mb-6">
-              <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-6 mb-6">
+            <div className="mb-4 md:mb-6">
+              <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-3 md:p-6 mb-3 md:mb-6">
                 <textarea
                   ref={textareaRef}
                   value={reviewText}
@@ -169,7 +169,7 @@ export default function ReviewPage() {
                     e.target.style.height = 'auto'
                     e.target.style.height = e.target.scrollHeight + 'px'
                   }}
-                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-relaxed text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
+                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-relaxed text-sm md:text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
                   style={{ 
                     fontFamily: 'inherit',
                     minHeight: '150px',
@@ -185,7 +185,7 @@ export default function ReviewPage() {
               {googleReviewUrl && (
                 <button
                   onClick={handleCopyAndGoToReview}
-                  className={`w-full px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${
+                  className={`w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${
                     isCopied
                       ? 'bg-green-400 text-white'
                       : 'bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600'
@@ -215,7 +215,7 @@ export default function ReviewPage() {
             {googleReviewUrl && (
               <button
                 onClick={() => window.open(googleReviewUrl, '_blank')}
-                className="w-full px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+                className="w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 <span className="flex items-center justify-center gap-2">
                   <span>🌟</span>

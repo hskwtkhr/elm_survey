@@ -182,15 +182,15 @@ export default function SurveyForm() {
       case 1:
         // 性別と年齢層（同時表示）
         return (
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold mb-6 text-black">性別を選択してください</h2>
-              <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4 md:space-y-8">
+            <div className="space-y-2 md:space-y-4">
+              <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">性別を選択してください</h2>
+              <div className="grid grid-cols-2 gap-2 md:gap-4">
                 {genders.map((gender) => (
                   <button
                     key={gender}
                     onClick={() => handleSelect('gender', gender, false)}
-                    className={`p-4 border-2 rounded-lg transition-colors text-black font-medium ${
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${
                       formData.gender === gender
                         ? 'border-pink-500 bg-pink-300'
                         : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -201,14 +201,14 @@ export default function SurveyForm() {
                 ))}
               </div>
             </div>
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold mb-6 text-black">年齢層を選択してください</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="space-y-2 md:space-y-4">
+              <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">年齢層を選択してください</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                 {ageGroups.map((age) => (
                   <button
                     key={age}
                     onClick={() => handleSelect('ageGroup', age, false)}
-                    className={`p-4 border-2 rounded-lg transition-colors text-black font-medium ${
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${
                       formData.ageGroup === age
                         ? 'border-pink-500 bg-pink-300'
                         : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -220,10 +220,10 @@ export default function SurveyForm() {
               </div>
             </div>
             {formData.gender && formData.ageGroup && (
-              <div className="mt-6">
+              <div className="mt-4 md:mt-6">
                 <button
                   onClick={() => setCurrentStep(currentStep + 1)}
-                  className="w-full px-6 py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium"
+                  className="w-full px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base"
                 >
                   次へ
                 </button>
@@ -236,7 +236,7 @@ export default function SurveyForm() {
         // 院
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">どちらの院で施術を受けられましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どちらの院で施術を受けられましたか？</h2>
             {clinics.length === 0 ? (
               <p className="text-black">院情報を読み込み中...</p>
             ) : (
@@ -245,7 +245,7 @@ export default function SurveyForm() {
                 <button
                   key={clinic.id}
                   onClick={() => handleSelect('clinicId', clinic.id)}
-                  className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.clinicId === clinic.id
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -263,14 +263,14 @@ export default function SurveyForm() {
         // 先生
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">どちらの先生に施術していただきましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どちらの先生に施術していただきましたか？</h2>
             {selectedClinic ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {selectedClinic.doctors.map((doctor) => (
                   <button
                     key={doctor.id}
                     onClick={() => handleSelect('doctorId', doctor.id)}
-                    className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                       formData.doctorId === doctor.id
                         ? 'border-pink-500 bg-pink-300'
                         : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -290,7 +290,7 @@ export default function SurveyForm() {
         // 施術日
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">施術日を選択してください</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術日を選択してください</h2>
             <input
               type="date"
               value={formData.treatmentDate || new Date().toISOString().split('T')[0]}
@@ -315,7 +315,7 @@ export default function SurveyForm() {
               <button
                 onClick={() => setCurrentStep(currentStep + 1)}
                 disabled={!formData.treatmentDate}
-                className="px-6 py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 次へ
               </button>
@@ -327,13 +327,13 @@ export default function SurveyForm() {
         // 施術メニュー
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">どの施術メニューを受けられましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どの施術メニューを受けられましたか？</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {treatmentMenus.map((menu) => (
                 <button
                   key={menu}
                   onClick={() => handleSelect('treatmentMenu', menu)}
-                  className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.treatmentMenu === menu
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -350,13 +350,13 @@ export default function SurveyForm() {
         // 結果への満足度
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">施術結果に満足できましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術結果に満足できましたか？</h2>
             <div className="grid grid-cols-1 gap-4">
               {resultSatisfactions.map((result) => (
                 <button
                   key={result}
                   onClick={() => handleSelect('resultSatisfaction', result)}
-                  className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.resultSatisfaction === result
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -373,13 +373,13 @@ export default function SurveyForm() {
         // カウンセリングへの満足度
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">カウンセリングはご希望に沿った内容でしたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">カウンセリングはご希望に沿った内容でしたか？</h2>
             <div className="grid grid-cols-1 gap-4">
               {counselingSatisfactions.map((counseling) => (
                 <button
                   key={counseling}
                   onClick={() => handleSelect('counselingSatisfaction', counseling)}
-                  className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.counselingSatisfaction === counseling
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -396,13 +396,13 @@ export default function SurveyForm() {
         // 院内の雰囲気
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">院内の雰囲気はいかがでしたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">院内の雰囲気はいかがでしたか？</h2>
             <div className="grid grid-cols-1 gap-4">
               {atmosphereRatings.map((atmosphere) => (
                 <button
                   key={atmosphere}
                   onClick={() => handleSelect('atmosphereRating', atmosphere)}
-                  className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.atmosphereRating === atmosphere
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -419,13 +419,13 @@ export default function SurveyForm() {
         // スタッフの対応
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">スタッフの対応はいかがでしたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">スタッフの対応はいかがでしたか？</h2>
             <div className="grid grid-cols-1 gap-4">
               {staffServiceRatings.map((staff) => (
                 <button
                   key={staff}
                   onClick={() => handleSelect('staffServiceRating', staff)}
-                  className={`p-4 border-2 rounded-lg transition-colors text-left text-black font-medium ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.staffServiceRating === staff
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -445,7 +445,7 @@ export default function SurveyForm() {
         
         return (
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold mb-6 text-black">伝えたいことがあれば、お書きください（任意）</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">伝えたいことがあれば、お書きください（任意）</h2>
             <textarea
               value={formData.message || ''}
               onChange={(e) => {
@@ -519,7 +519,7 @@ export default function SurveyForm() {
                   await handleSubmitWithData(formData)
                 }}
                 disabled={isSubmitting}
-                className="flex-1 px-6 py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium disabled:opacity-50"
+                className="flex-1 px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50"
               >
                 {isSubmitting ? '送信中...' : '送信する'}
               </button>
@@ -533,17 +533,17 @@ export default function SurveyForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gray-50 py-4 md:py-12 px-4">
       <div className="max-w-2xl mx-auto">
         {/* ELM CLINIC ロゴ */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-4 md:mb-8">
           <img 
             src="/elm_logo.png" 
             alt="ELM CLINIC" 
-            className="mx-auto mb-4 max-w-xs md:max-w-md"
-            style={{ maxHeight: '120px', objectFit: 'contain' }}
+            className="mx-auto mb-2 md:mb-4 w-40 md:max-w-md"
+            style={{ maxHeight: '80px', objectFit: 'contain' }}
           />
-          <p className="text-lg text-black leading-relaxed" style={{ fontFamily: 'var(--font-noto-sans-jp), sans-serif' }}>
+          <p className="text-sm md:text-lg text-black leading-relaxed px-2 md:px-0" style={{ fontFamily: 'var(--font-noto-sans-jp), sans-serif' }}>
             ご来院ありがとうございました。
             <br />
             ぜひアンケートにご協力ください。
@@ -551,11 +551,11 @@ export default function SurveyForm() {
         </div>
 
         {/* アンケートフォーム */}
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="mb-6">
+        <div className="bg-white rounded-lg shadow-lg p-4 md:p-8">
+          <div className="mb-4 md:mb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-black font-medium">質問 {currentStep} / 10</span>
-              <div className="w-64 bg-gray-200 rounded-full h-2">
+              <span className="text-xs md:text-sm text-black font-medium">質問 {currentStep} / 10</span>
+              <div className="w-32 md:w-64 bg-gray-200 rounded-full h-2">
                 <div
                   className="bg-pink-300 h-2 rounded-full transition-all"
                   style={{ width: `${(currentStep / 10) * 100}%` }}
@@ -567,10 +567,10 @@ export default function SurveyForm() {
         {renderStep()}
 
           {currentStep > 1 && currentStep < 10 && (
-            <div className="mt-8">
+            <div className="mt-4 md:mt-8">
               <button
                 onClick={handleBack}
-                className="px-6 py-2 bg-gray-200 text-black rounded-lg hover:bg-pink-100 hover:border-pink-300 border-2 border-transparent transition-colors font-medium"
+                className="px-4 py-2 md:px-6 md:py-2 bg-gray-200 text-black rounded-lg hover:bg-pink-100 hover:border-pink-300 border-2 border-transparent transition-colors font-medium text-sm md:text-base"
               >
                 戻る
               </button>
