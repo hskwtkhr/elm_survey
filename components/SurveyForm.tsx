@@ -51,8 +51,15 @@ export default function SurveyForm() {
   const router = useRouter()
   const [clinics, setClinics] = useState<Clinic[]>([])
   const [currentStep, setCurrentStep] = useState(1)
+  // 今日の日付を取得（日本時間）
+  const getTodayString = () => {
+    const today = new Date()
+    const japanTime = new Date(today.getTime() + (9 * 60 * 60 * 1000)) // UTC+9
+    return japanTime.toISOString().split('T')[0]
+  }
+  
   const [formData, setFormData] = useState<Partial<SurveyFormData>>({
-    treatmentDate: new Date().toISOString().split('T')[0], // デフォルトで今日の日付
+    treatmentDate: getTodayString(), // デフォルトで今日の日付
   })
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -288,13 +295,18 @@ export default function SurveyForm() {
 
       case 4:
         // 施術日
+        // 今日の日付を取得（日本時間）
+        const today = new Date()
+        const japanTime = new Date(today.getTime() + (9 * 60 * 60 * 1000)) // UTC+9
+        const todayString = japanTime.toISOString().split('T')[0]
+        
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術日を選択してください</h2>
-            <div className="w-full">
+            <div className="w-full overflow-hidden">
               <input
                 type="date"
-                value={formData.treatmentDate || new Date().toISOString().split('T')[0]}
+                value={formData.treatmentDate || todayString}
                 onChange={(e) => {
                   setFormData({ ...formData, treatmentDate: e.target.value })
                 }}
@@ -309,7 +321,7 @@ export default function SurveyForm() {
                   e.currentTarget.focus()
                   e.currentTarget.select()
                 }}
-                max={new Date().toISOString().split('T')[0]}
+                max={todayString}
                 className="w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
                 style={{ boxSizing: 'border-box', width: '100%', maxWidth: '100%' }}
               />
@@ -554,7 +566,7 @@ export default function SurveyForm() {
         </div>
 
         {/* アンケートフォーム */}
-        <div className="bg-white rounded-lg shadow-lg p-4 md:p-8">
+        <div className="bg-white rounded-lg shadow-lg p-4 md:p-8 overflow-hidden">
           <div className="mb-4 md:mb-6">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs md:text-sm text-black font-medium">質問 {currentStep} / 10</span>
