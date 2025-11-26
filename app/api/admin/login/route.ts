@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdminUser } from '@/lib/auth'
 
+// このAPI Routeは動的に実行される（静的生成時には実行しない）
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

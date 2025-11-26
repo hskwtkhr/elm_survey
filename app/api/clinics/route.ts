@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 
+// このAPI Routeは動的に実行される（静的生成時には実行しない）
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     // 指定された順番で院を取得
