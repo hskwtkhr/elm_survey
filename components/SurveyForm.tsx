@@ -240,12 +240,12 @@ export default function SurveyForm() {
             {clinics.length === 0 ? (
               <p className="text-black">院情報を読み込み中...</p>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 {clinics.map((clinic) => (
                 <button
                   key={clinic.id}
                   onClick={() => handleSelect('clinicId', clinic.id)}
-                  className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.clinicId === clinic.id
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -265,12 +265,12 @@ export default function SurveyForm() {
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どちらの先生に施術していただきましたか？</h2>
             {selectedClinic ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 {selectedClinic.doctors.map((doctor) => (
                   <button
                     key={doctor.id}
                     onClick={() => handleSelect('doctorId', doctor.id)}
-                    className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                       formData.doctorId === doctor.id
                         ? 'border-pink-500 bg-pink-300'
                         : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -309,7 +309,7 @@ export default function SurveyForm() {
                 e.currentTarget.select()
               }}
               max={new Date().toISOString().split('T')[0]}
-              className="w-full max-w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
+              className="w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
             />
             <div className="mt-4">
               <button
@@ -328,12 +328,12 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どの施術メニューを受けられましたか？</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
               {treatmentMenus.map((menu) => (
                 <button
                   key={menu}
                   onClick={() => handleSelect('treatmentMenu', menu)}
-                  className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.treatmentMenu === menu
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -351,12 +351,12 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術結果に満足できましたか？</h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-2 md:gap-4">
               {resultSatisfactions.map((result) => (
                 <button
                   key={result}
                   onClick={() => handleSelect('resultSatisfaction', result)}
-                  className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.resultSatisfaction === result
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -374,12 +374,12 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">カウンセリングはご希望に沿った内容でしたか？</h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-2 md:gap-4">
               {counselingSatisfactions.map((counseling) => (
                 <button
                   key={counseling}
                   onClick={() => handleSelect('counselingSatisfaction', counseling)}
-                  className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.counselingSatisfaction === counseling
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -397,12 +397,12 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">院内の雰囲気はいかがでしたか？</h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-2 md:gap-4">
               {atmosphereRatings.map((atmosphere) => (
                 <button
                   key={atmosphere}
                   onClick={() => handleSelect('atmosphereRating', atmosphere)}
-                  className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.atmosphereRating === atmosphere
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
@@ -420,12 +420,12 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">スタッフの対応はいかがでしたか？</h2>
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-2 md:gap-4">
               {staffServiceRatings.map((staff) => (
                 <button
                   key={staff}
                   onClick={() => handleSelect('staffServiceRating', staff)}
-                  className={`p-2 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
                     formData.staffServiceRating === staff
                       ? 'border-pink-500 bg-pink-300'
                       : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
