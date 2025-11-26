@@ -22,6 +22,16 @@ interface Survey {
   satisfaction: string
 }
 
+interface EditSurveyFormData {
+  clinicId?: string
+  doctorId?: string
+  treatmentDate?: string
+  treatmentMenu?: string
+  gender?: string
+  ageGroup?: string
+  satisfaction?: string
+}
+
 interface EditSurveyModalProps {
   survey: Survey | null
   onClose: () => void
@@ -50,7 +60,7 @@ export default function EditSurveyModal({
   onSave,
 }: EditSurveyModalProps) {
   const [clinics, setClinics] = useState<Clinic[]>([])
-  const [formData, setFormData] = useState<Partial<Survey>>({})
+  const [formData, setFormData] = useState<EditSurveyFormData>({})
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [isSaving, setIsSaving] = useState(false)
 
