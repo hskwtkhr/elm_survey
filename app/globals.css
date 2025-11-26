@@ -37,4 +37,13 @@ textarea {
   scrollbar-width: none;
 }
 
+/* 入力欄のはみ出しを防ぐ */
+input[type="date"],
+input[type="text"],
+input[type="password"] {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
 /* Complete page mobile optimization - v2 */
