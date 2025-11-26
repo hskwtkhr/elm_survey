@@ -41,9 +41,9 @@ textarea {
 input[type="date"],
 input[type="text"],
 input[type="password"] {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 100%;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* Complete page mobile optimization - v2 */

@@ -291,27 +291,29 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術日を選択してください</h2>
-            <input
-              type="date"
-              value={formData.treatmentDate || new Date().toISOString().split('T')[0]}
-              onChange={(e) => {
-                setFormData({ ...formData, treatmentDate: e.target.value })
-              }}
-              onClick={(e) => {
-                // クリックでカレンダーを表示（スマホでは自動的にカレンダーが表示される）
-                if (e.currentTarget.showPicker) {
-                  e.currentTarget.showPicker()
-                }
-              }}
-              onDoubleClick={(e) => {
-                // ダブルクリックでテキスト入力モードに（PCのみ）
-                e.currentTarget.focus()
-                e.currentTarget.select()
-              }}
-              max={new Date().toISOString().split('T')[0]}
-              className="w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
-              style={{ boxSizing: 'border-box' }}
-            />
+            <div className="w-full">
+              <input
+                type="date"
+                value={formData.treatmentDate || new Date().toISOString().split('T')[0]}
+                onChange={(e) => {
+                  setFormData({ ...formData, treatmentDate: e.target.value })
+                }}
+                onClick={(e) => {
+                  // クリックでカレンダーを表示（スマホでは自動的にカレンダーが表示される）
+                  if (e.currentTarget.showPicker) {
+                    e.currentTarget.showPicker()
+                  }
+                }}
+                onDoubleClick={(e) => {
+                  // ダブルクリックでテキスト入力モードに（PCのみ）
+                  e.currentTarget.focus()
+                  e.currentTarget.select()
+                }}
+                max={new Date().toISOString().split('T')[0]}
+                className="w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
+                style={{ boxSizing: 'border-box', width: '100%', maxWidth: '100%' }}
+              />
+            </div>
             <div className="mt-4">
               <button
                 onClick={() => setCurrentStep(currentStep + 1)}
