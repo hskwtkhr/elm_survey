@@ -30,8 +30,13 @@ export async function GET() {
       },
     })
 
+    // IDで重複を削除（念のため）
+    const uniqueClinics = Array.from(
+      new Map(clinics.map(clinic => [clinic.id, clinic])).values()
+    )
+
     // 指定された順番でソート
-    clinics.sort((a, b) => {
+    uniqueClinics.sort((a, b) => {
       const indexA = clinicOrder.indexOf(a.name)
       const indexB = clinicOrder.indexOf(b.name)
       // 順番リストにない場合は最後に配置
@@ -40,7 +45,7 @@ export async function GET() {
       return indexA - indexB
     })
     
-    return NextResponse.json(clinics)
+    return NextResponse.json(uniqueClinics)
   } catch (error) {
     console.error('Error fetching clinics:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'

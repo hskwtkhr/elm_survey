@@ -68,7 +68,11 @@ export default function SurveyForm() {
       .then((data) => {
         // データが配列であることを確認
         if (Array.isArray(data)) {
-          setClinics(data)
+          // IDで重複を削除（念のため）
+          const uniqueClinics = Array.from(
+            new Map(data.map((clinic: Clinic) => [clinic.id, clinic])).values()
+          )
+          setClinics(uniqueClinics)
         } else {
           console.error('Invalid clinics data:', data)
           setClinics([])
