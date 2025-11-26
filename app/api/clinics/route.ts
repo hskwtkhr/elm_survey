@@ -6,6 +6,9 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {
+    // データベース接続テスト
+    await prisma.$connect()
+    
     // 指定された順番で院を取得
     const clinicOrder = [
       '広島院',
@@ -45,19 +48,33 @@ export async function GET() {
     console.error('Error fetching clinics:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     const errorStack = error instanceof Error ? error.stack : undefined
+    const errorName = error instanceof Error ? error.name : 'Unknown'
+    
+    console.error('Error name:', errorName)
     console.error('Error details:', errorMessage)
     console.error('Error stack:', errorStack)
+    
+    // DATABASE_URLの設定状況を確認（セキュリティのため、実際のURLは返さない）
+    const hasDatabaseUrl = !!process.env.DATABASE_URL
+    console.error('DATABASE_URL is set:', hasDatabaseUrl)
     
     // 本番環境でもエラーメッセージを返す（デバッグ用）
     return NextResponse.json(
       { 
         error: errorMessage,
+        errorName: errorName,
         message: 'Failed to fetch clinics',
-        // 本番環境ではスタックトレースは含めない
-        ...(process.env.NODE_ENV === 'development' && { stack: errorStack })
+        hasDatabaseUrl: hasDatabaseUrl,
+        // 本番環境でもスタックトレースを含める（一時的なデバッグ用）
+        ...(errorStack && { stack: errorStack })
       },
       { status: 500 }
     )
+  } finally {
+    // 接続を閉じる
+    await prisma.$disconnect().catch(() => {
+      // 接続が既に閉じられている場合は無視
+    })
   }
 }
 
