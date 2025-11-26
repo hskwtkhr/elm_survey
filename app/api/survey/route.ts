@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
         counselingSatisfaction: counselingSatisfaction || null,
         atmosphereRating: atmosphereRating || null,
         staffServiceRating: staffServiceRating || null,
-      },
+      } as any, // Prisma型定義の更新が必要な場合の一時的な対応
       include: {
         clinic: {
           select: {
