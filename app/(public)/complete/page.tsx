@@ -29,14 +29,12 @@ export default function CompletePage() {
 
         {/* タイトル */}
         <div className="text-center mb-3 md:mb-6">
-          <h1 className="text-lg md:text-4xl font-bold mb-2 md:mb-6 text-black leading-tight md:leading-normal">
-            ご回答いただき、
-            <br className="md:hidden" />
-            ありがとうございます。
+          <h1 className="text-lg md:text-2xl font-bold mb-2 md:mb-6 text-black leading-tight md:leading-normal">
+            ご回答いただき、ありがとうございます。
           </h1>
-          <p className="text-xs md:text-lg text-gray-700 leading-relaxed px-2 md:px-0">
+          <p className="text-sm md:text-base text-gray-700 leading-relaxed px-2 md:px-0">
             いただいた内容をもとに、
-            <br className="md:hidden" />
+            <br className="block md:hidden" />
             今後ともサービス向上につとめさせていただきます。
           </p>
         </div>

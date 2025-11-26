@@ -322,8 +322,8 @@ export default function SurveyForm() {
                   e.currentTarget.select()
                 }}
                 max={todayString}
-                className="w-full box-border p-3 md:p-4 border-2 border-pink-200 rounded-lg text-sm md:text-lg text-black md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
-                style={{ boxSizing: 'border-box', width: '100%', maxWidth: '100%' }}
+                className="w-full box-border p-3 md:p-4 bg-white border-2 border-pink-200 rounded-lg text-base md:text-lg text-black appearance-none md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
+                style={{ boxSizing: 'border-box', width: '100%', maxWidth: '100%', minHeight: '50px' }}
               />
             </div>
             <div className="mt-4">
