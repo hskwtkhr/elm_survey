@@ -26,6 +26,7 @@ export default function ManageTreatmentMenusModal({
   const [newMenuName, setNewMenuName] = useState('')
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [draggedMenuId, setDraggedMenuId] = useState<string | null>(null)
 
   useEffect(() => {
     if (isOpen) {
@@ -155,10 +156,67 @@ export default function ManageTreatmentMenusModal({
     }
   }
 
+  const handleDragStart = (e: React.DragEvent, menuId: string) => {
+    setDraggedMenuId(menuId)
+    e.dataTransfer.effectAllowed = 'move'
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  }
+
+  const handleDrop = async (e: React.DragEvent, targetMenuId: string) => {
+    e.preventDefault()
+
+    if (!draggedMenuId || draggedMenuId === targetMenuId) {
+      setDraggedMenuId(null)
+      return
+    }
+
+    const draggedIndex = menus.findIndex((m) => m.id === draggedMenuId)
+    const targetIndex = menus.findIndex((m) => m.id === targetMenuId)
+
+    if (draggedIndex === -1 || targetIndex === -1) {
+      setDraggedMenuId(null)
+      return
+    }
+
+    // 順番を入れ替え
+    const newMenus = [...menus]
+    const [dragged] = newMenus.splice(draggedIndex, 1)
+    newMenus.splice(targetIndex, 0, dragged)
+
+    // 順番を更新
+    const menuIds = newMenus.map((m) => m.id)
+
+    try {
+      const response = await fetch('/api/treatment-menus/reorder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ menuIds }),
+      })
+
+      if (!response.ok) {
+        throw new Error('順番の更新に失敗しました')
+      }
+
+      await fetchMenus()
+    } catch (error) {
+      console.error('Error reordering menus:', error)
+      alert('順番の更新に失敗しました')
+    }
+
+    setDraggedMenuId(null)
+  }
+
   const handleClose = () => {
     setEditingId(null)
     setEditName('')
     setNewMenuName('')
+    setDraggedMenuId(null)
     onClose()
   }
 
@@ -204,10 +262,18 @@ export default function ManageTreatmentMenusModal({
               {menus.length === 0 ? (
                 <p className="text-gray-500 text-center py-4">施術メニューがありません</p>
               ) : (
-                menus.map((menu) => (
+                menus.map((menu, index) => (
                   <div
                     key={menu.id}
-                    className="flex items-center gap-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, menu.id)}
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, menu.id)}
+                    className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${
+                      draggedMenuId === menu.id
+                        ? 'opacity-50 bg-gray-100'
+                        : 'hover:bg-gray-50 border-gray-200 cursor-move'
+                    }`}
                   >
                     {editingId === menu.id ? (
                       <>
@@ -235,6 +301,7 @@ export default function ManageTreatmentMenusModal({
                       </>
                     ) : (
                       <>
+                        <span className="text-gray-400 text-sm w-6">{index + 1}</span>
                         <span className="flex-1 text-gray-900">{menu.name}</span>
                         <button
                           onClick={() => handleStartEdit(menu)}

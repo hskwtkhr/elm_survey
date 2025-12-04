@@ -6,8 +6,7 @@ import Filters from '@/components/Dashboard/Filters'
 import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
 import EditSurveyModal from '@/components/Dashboard/EditSurveyModal'
-import EditDoctorModal from '@/components/Dashboard/EditDoctorModal'
-import ManageTreatmentMenusModal from '@/components/Dashboard/ManageTreatmentMenusModal'
+import ManageQuestionsModal from '@/components/Dashboard/ManageQuestionsModal'
 
 interface Clinic {
   id: string
@@ -46,8 +45,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [editingSurvey, setEditingSurvey] = useState<Survey | null>(null)
-  const [isEditDoctorModalOpen, setIsEditDoctorModalOpen] = useState(false)
-  const [isManageMenusModalOpen, setIsManageMenusModalOpen] = useState(false)
+  const [isManageQuestionsModalOpen, setIsManageQuestionsModalOpen] = useState(false)
 
   useEffect(() => {
     // 認証チェック
@@ -86,7 +84,7 @@ export default function DashboardPage() {
       if (startDate) params.append('startDate', startDate)
       if (endDate) params.append('endDate', endDate)
       params.append('page', currentPage.toString())
-      params.append('limit', '20')
+      params.append('limit', '50')
 
       const response = await fetch(`/api/dashboard?${params.toString()}`)
       const data = await response.json()
@@ -189,26 +187,22 @@ export default function DashboardPage() {
     )
   }
 
-  const totalPages = Math.ceil(dashboardData.totalCount / 20)
+  const totalPages = Math.ceil(dashboardData.totalCount / 50)
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">ダッシュボード</h1>
-          <div className="flex gap-4">
+          <div className="flex items-center gap-4">
+            <h1 className="text-3xl font-bold">ダッシュボード</h1>
             <button
-              onClick={() => setIsEditDoctorModalOpen(true)}
+              onClick={() => setIsManageQuestionsModalOpen(true)}
               className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
             >
-              先生名変更
+              設問管理
             </button>
-            <button
-              onClick={() => setIsManageMenusModalOpen(true)}
-              className="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
-            >
-              施術メニュー管理
-            </button>
+          </div>
+          <div className="flex gap-4">
             <button
               onClick={handleExportCSV}
               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
@@ -290,9 +284,9 @@ export default function DashboardPage() {
           onSave={fetchDashboardData}
         />
 
-        <EditDoctorModal
-          isOpen={isEditDoctorModalOpen}
-          onClose={() => setIsEditDoctorModalOpen(false)}
+        <ManageQuestionsModal
+          isOpen={isManageQuestionsModalOpen}
+          onClose={() => setIsManageQuestionsModalOpen(false)}
           onSave={() => {
             fetchDashboardData()
             // 院一覧も再取得
@@ -300,14 +294,6 @@ export default function DashboardPage() {
               .then((res) => res.json())
               .then((data) => setClinics(data))
               .catch((error) => console.error('Error fetching clinics:', error))
-          }}
-        />
-
-        <ManageTreatmentMenusModal
-          isOpen={isManageMenusModalOpen}
-          onClose={() => setIsManageMenusModalOpen(false)}
-          onSave={() => {
-            // モーダルを閉じるだけで、既にメニューは更新済み
           }}
         />
       </div>

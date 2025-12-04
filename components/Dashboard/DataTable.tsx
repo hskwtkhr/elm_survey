@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+
 interface Survey {
   id: string
   clinic: { id: string; name: string }
@@ -29,9 +31,27 @@ export default function DataTable({
   totalPages,
   onPageChange,
 }: DataTableProps) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-4">アンケート一覧</h2>
+      <div 
+        className="flex items-center justify-between cursor-pointer mb-4"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <h2 className="text-xl font-bold">個別データ</h2>
+        <svg
+          className={`w-6 h-6 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+
+      {isExpanded && (
+        <>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -100,13 +120,17 @@ export default function DataTable({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
-                    onClick={() => onEdit(survey)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onEdit(survey)
+                    }}
                     className="text-blue-600 hover:text-blue-900 mr-4"
                   >
                     編集
                   </button>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation()
                       if (confirm('このアンケートを削除しますか？')) {
                         onDelete(survey.id)
                       }
@@ -122,26 +146,32 @@ export default function DataTable({
         </table>
       </div>
 
-      {totalPages > 1 && (
-        <div className="mt-4 flex justify-center items-center gap-2">
-          <button
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            前へ
-          </button>
-          <span className="px-4">
-            {currentPage} / {totalPages}
-          </span>
-          <button
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-          >
-            次へ
-          </button>
-        </div>
+      <div className="mt-4 flex justify-center items-center gap-2">
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            onPageChange(currentPage - 1)
+          }}
+          disabled={currentPage === 1}
+          className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        >
+          前へ
+        </button>
+        <span className="px-4">
+          {currentPage} / {totalPages}
+        </span>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            onPageChange(currentPage + 1)
+          }}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        >
+          次へ
+        </button>
+      </div>
+        </>
       )}
     </div>
   )
