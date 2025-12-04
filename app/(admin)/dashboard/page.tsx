@@ -6,6 +6,8 @@ import Filters from '@/components/Dashboard/Filters'
 import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
 import EditSurveyModal from '@/components/Dashboard/EditSurveyModal'
+import EditDoctorModal from '@/components/Dashboard/EditDoctorModal'
+import ManageTreatmentMenusModal from '@/components/Dashboard/ManageTreatmentMenusModal'
 
 interface Clinic {
   id: string
@@ -44,6 +46,8 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [editingSurvey, setEditingSurvey] = useState<Survey | null>(null)
+  const [isEditDoctorModalOpen, setIsEditDoctorModalOpen] = useState(false)
+  const [isManageMenusModalOpen, setIsManageMenusModalOpen] = useState(false)
 
   useEffect(() => {
     // 認証チェック
@@ -194,6 +198,18 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold">ダッシュボード</h1>
           <div className="flex gap-4">
             <button
+              onClick={() => setIsEditDoctorModalOpen(true)}
+              className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+            >
+              先生名変更
+            </button>
+            <button
+              onClick={() => setIsManageMenusModalOpen(true)}
+              className="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition-colors"
+            >
+              施術メニュー管理
+            </button>
+            <button
               onClick={handleExportCSV}
               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
             >
@@ -272,6 +288,27 @@ export default function DashboardPage() {
           survey={editingSurvey}
           onClose={() => setEditingSurvey(null)}
           onSave={fetchDashboardData}
+        />
+
+        <EditDoctorModal
+          isOpen={isEditDoctorModalOpen}
+          onClose={() => setIsEditDoctorModalOpen(false)}
+          onSave={() => {
+            fetchDashboardData()
+            // 院一覧も再取得
+            fetch('/api/clinics')
+              .then((res) => res.json())
+              .then((data) => setClinics(data))
+              .catch((error) => console.error('Error fetching clinics:', error))
+          }}
+        />
+
+        <ManageTreatmentMenusModal
+          isOpen={isManageMenusModalOpen}
+          onClose={() => setIsManageMenusModalOpen(false)}
+          onSave={() => {
+            // モーダルを閉じるだけで、既にメニューは更新済み
+          }}
         />
       </div>
     </div>

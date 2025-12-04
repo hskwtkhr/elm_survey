@@ -38,7 +38,8 @@ interface EditSurveyModalProps {
   onSave: () => void
 }
 
-const treatmentMenus = [
+// デフォルトの施術メニュー（APIから取得できない場合のフォールバック）
+const defaultTreatmentMenus = [
   'ボトックス注射',
   'ヒアルロン酸注射',
   '糸リフト',
@@ -60,6 +61,7 @@ export default function EditSurveyModal({
   onSave,
 }: EditSurveyModalProps) {
   const [clinics, setClinics] = useState<Clinic[]>([])
+  const [treatmentMenus, setTreatmentMenus] = useState<string[]>(defaultTreatmentMenus)
   const [formData, setFormData] = useState<EditSurveyFormData>({})
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [isSaving, setIsSaving] = useState(false)
@@ -89,6 +91,25 @@ export default function EditSurveyModal({
         }
       })
       .catch((error) => console.error('Error fetching clinics:', error))
+
+    // 施術メニューを取得
+    fetch('/api/treatment-menus')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch treatment menus')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const menuNames = data.map((menu: { name: string }) => menu.name)
+          setTreatmentMenus(menuNames)
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching treatment menus:', error)
+        // エラー時はデフォルトのメニューを使用
+      })
   }, [survey, formData.clinicId])
 
   const handleClinicChange = (clinicId: string) => {

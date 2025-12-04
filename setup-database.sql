@@ -57,3 +57,4 @@ CREATE TABLE IF NOT EXISTS "AdminUser" (
     "updatedAt" TIMESTAMP(3) NOT NULL
 );
 
+

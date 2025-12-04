@@ -65,3 +65,4 @@ SELECT * FROM "Doctor";
 2. Supabaseのログを確認（左メニュー > Logs）
 3. ブラウザのコンソールでエラーを確認
 
+

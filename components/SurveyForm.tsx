@@ -27,7 +27,10 @@ interface SurveyFormData {
   message?: string // 伝えたいこと（任意）
 }
 
-const treatmentMenus = [
+const genders = ['男性', '女性']
+
+// デフォルトの施術メニュー（APIから取得できない場合のフォールバック）
+const defaultTreatmentMenus = [
   'ボトックス注射',
   'ヒアルロン酸注射',
   '糸リフト',
@@ -36,8 +39,6 @@ const treatmentMenus = [
   'ポテンツァ',
   'その他',
 ]
-
-const genders = ['男性', '女性']
 
 const ageGroups = ['10代', '20代', '30代', '40代', '50代', '60代', '70代', '80代']
 
@@ -50,6 +51,7 @@ const staffServiceRatings = ['とても丁寧だった', '丁寧だった', '普
 export default function SurveyForm() {
   const router = useRouter()
   const [clinics, setClinics] = useState<Clinic[]>([])
+  const [treatmentMenus, setTreatmentMenus] = useState<string[]>(defaultTreatmentMenus)
   const [currentStep, setCurrentStep] = useState(1)
   // 今日の日付を取得（日本時間）
   const getTodayString = () => {
@@ -88,6 +90,25 @@ export default function SurveyForm() {
       .catch((error) => {
         console.error('Error fetching clinics:', error)
         setClinics([])
+      })
+
+    // 施術メニューを取得
+    fetch('/api/treatment-menus')
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch treatment menus')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const menuNames = data.map((menu: { name: string }) => menu.name)
+          setTreatmentMenus(menuNames)
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching treatment menus:', error)
+        // エラー時はデフォルトのメニューを使用
       })
   }, [])
 
