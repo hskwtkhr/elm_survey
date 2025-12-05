@@ -166,7 +166,7 @@ export default function DashboardPage() {
 
   if (isLoading && !dashboardData) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-gray-300 py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
@@ -179,7 +179,7 @@ export default function DashboardPage() {
 
   if (!dashboardData) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-gray-300 py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <p className="text-center text-lg text-gray-600">データの取得に失敗しました</p>
         </div>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
   const totalPages = Math.ceil(dashboardData.totalCount / 50)
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-gray-300 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-4">
@@ -211,7 +211,7 @@ export default function DashboardPage() {
             </button>
             <button
               onClick={handleLogout}
-              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+              className="px-6 py-2 bg-gray-3000 text-white rounded-lg hover:bg-gray-600 transition-colors"
             >
               ログアウト
             </button>
