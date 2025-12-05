@@ -47,14 +47,14 @@ export default function ManageQuestionsModal({
           {/* タブナビゲーション */}
           <div className="flex border-b border-gray-200 mb-6">
             <button
-              onClick={() => setActiveTab('doctors')}
+              onClick={() => setActiveTab('options')}
               className={`px-6 py-3 font-medium text-sm transition-colors ${
-                activeTab === 'doctors'
+                activeTab === 'options'
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              先生名の編集
+              設問選択肢の編集
             </button>
             <button
               onClick={() => setActiveTab('menus')}
@@ -67,14 +67,14 @@ export default function ManageQuestionsModal({
               施術メニューの編集
             </button>
             <button
-              onClick={() => setActiveTab('options')}
+              onClick={() => setActiveTab('doctors')}
               className={`px-6 py-3 font-medium text-sm transition-colors ${
-                activeTab === 'options'
+                activeTab === 'doctors'
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              設問選択肢の編集
+              先生名の編集
             </button>
           </div>
 
