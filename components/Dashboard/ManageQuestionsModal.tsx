@@ -106,14 +106,6 @@ export default function ManageQuestionsModal({
             )}
           </div>
 
-          <div className="flex gap-4 pt-6 mt-6 border-t">
-            <button
-              onClick={handleClose}
-              className="flex-1 px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors border-0"
-            >
-              閉じる
-            </button>
-          </div>
         </div>
       </div>
     </>

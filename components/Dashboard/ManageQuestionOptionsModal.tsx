@@ -308,13 +308,7 @@ export default function ManageQuestionOptionsModal({
                   disabled={isAdding}
                   className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
-                <input
-                  type="text"
-                  value={newValue}
-                  onChange={(e) => setNewValue(e.target.value)}
-                  disabled={isAdding}
-                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                />
+                
                 <button
                   onClick={handleAdd}
                   disabled={isAdding || !newValue.trim()}
@@ -357,13 +351,7 @@ export default function ManageQuestionOptionsModal({
                           placeholder="選択肢"
                           className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                         />
-                        <input
-                          type="text"
-                          value={editValue}
-                          onChange={(e) => setEditValue(e.target.value)}
-                          disabled={isSaving}
-                          className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                        />
+                        
                         <button
                           onClick={() => handleSaveEdit(option.id)}
                           disabled={isSaving || !editValue.trim()}
@@ -406,16 +394,7 @@ export default function ManageQuestionOptionsModal({
           </>
         )}
 
-        <div className="flex gap-4 pt-6 mt-6 border-t">
-          <button
-            onClick={handleClose}
-            disabled={isSaving || isAdding}
-            className="flex-1 px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            閉じる
-          </button>
-        </div>
-      </div>
+        
     </div>
   )
 }
