@@ -168,7 +168,7 @@ export default function EditSurveyModal({
               value={formData.clinicId || ''}
               onChange={(e) => handleClinicChange(e.target.value)}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             >
               <option value="">選択してください</option>
               {clinics.map((clinic) => (
@@ -189,7 +189,7 @@ export default function EditSurveyModal({
                 setFormData({ ...formData, doctorId: e.target.value })
               }
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             >
               <option value="">選択してください</option>
               {selectedClinic?.doctors.map((doctor) => (
@@ -211,7 +211,7 @@ export default function EditSurveyModal({
                 setFormData({ ...formData, treatmentDate: e.target.value })
               }
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             />
           </div>
 
@@ -225,7 +225,7 @@ export default function EditSurveyModal({
                 setFormData({ ...formData, treatmentMenu: e.target.value })
               }
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             >
               <option value="">選択してください</option>
               {treatmentMenus.map((menu) => (
@@ -246,7 +246,7 @@ export default function EditSurveyModal({
                 setFormData({ ...formData, gender: e.target.value })
               }
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             >
               <option value="">選択してください</option>
               {genders.map((gender) => (
@@ -267,7 +267,7 @@ export default function EditSurveyModal({
                 setFormData({ ...formData, ageGroup: e.target.value })
               }
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             >
               <option value="">選択してください</option>
               {ageGroups.map((age) => (
@@ -288,7 +288,7 @@ export default function EditSurveyModal({
                 setFormData({ ...formData, satisfaction: e.target.value })
               }
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+              className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
             >
               <option value="">選択してください</option>
               {satisfactions.map((satisfaction) => (

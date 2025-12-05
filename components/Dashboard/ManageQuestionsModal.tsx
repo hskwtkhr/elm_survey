@@ -84,7 +84,7 @@ export default function ManageQuestionsModal({
               if (activeTab === 'doctors') {
                 return (
                   <div className="space-y-4">
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                    <div className="bg-blue-50 border-0 border-blue-200 rounded-lg p-4 mb-4">
                       <h3 className="font-semibold text-blue-900 mb-2 text-gray-900">先生名の編集について</h3>
                       <p className="text-sm text-blue-800">
                         アンケートフォームで選択できる先生名を管理します。<br />
@@ -112,7 +112,7 @@ export default function ManageQuestionsModal({
               if (activeTab === 'menus') {
                 return (
                   <div className="space-y-4">
-                    <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-4">
+                    <div className="bg-indigo-50 border-0 border-indigo-200 rounded-lg p-4 mb-4">
                       <h3 className="font-semibold text-indigo-900 mb-2 text-gray-900">施術メニューの編集について</h3>
                       <p className="text-sm text-indigo-800">
                         アンケートフォームで選択できる施術メニューを管理します。<br />
@@ -139,7 +139,7 @@ export default function ManageQuestionsModal({
 
               return (
                 <div className="space-y-4">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                  <div className="bg-green-50 border-0 border-green-200 rounded-lg p-4 mb-4">
                     <h3 className="font-semibold text-green-900 mb-2">設問選択肢の編集について</h3>
                     <p className="text-sm text-green-800">
                       アンケートフォームで使用される選択肢（性別、年齢層、満足度など）を管理します。<br />

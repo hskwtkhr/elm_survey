@@ -153,7 +153,7 @@ export default function DataTable({
             onPageChange(currentPage - 1)
           }}
           disabled={currentPage === 1}
-          className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          className="px-4 py-2 border-0 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
         >
           前へ
         </button>
@@ -166,7 +166,7 @@ export default function DataTable({
             onPageChange(currentPage + 1)
           }}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 border rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          className="px-4 py-2 border-0 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
         >
           次へ
         </button>

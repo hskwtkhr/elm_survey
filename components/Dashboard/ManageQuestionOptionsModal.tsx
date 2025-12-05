@@ -288,7 +288,7 @@ export default function ManageQuestionOptionsModal({
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+                className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -310,7 +310,7 @@ export default function ManageQuestionOptionsModal({
                   onChange={(e) => setNewLabel(e.target.value)}
                   placeholder="表示ラベル（例: 男性）"
                   disabled={isAdding}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
                 <input
                   type="text"
@@ -318,7 +318,7 @@ export default function ManageQuestionOptionsModal({
                   onChange={(e) => setNewValue(e.target.value)}
                   placeholder="値（例: 男性）"
                   disabled={isAdding}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
                 <button
                   onClick={handleAdd}
@@ -360,7 +360,7 @@ export default function ManageQuestionOptionsModal({
                           onChange={(e) => setEditLabel(e.target.value)}
                           disabled={isSaving}
                           placeholder="表示ラベル"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                          className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                         />
                         <input
                           type="text"
@@ -368,7 +368,7 @@ export default function ManageQuestionOptionsModal({
                           onChange={(e) => setEditValue(e.target.value)}
                           disabled={isSaving}
                           placeholder="値"
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                          className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                         />
                         <button
                           onClick={() => handleSaveEdit(option.id)}

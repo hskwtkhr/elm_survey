@@ -244,7 +244,7 @@ export default function ManageTreatmentMenusModal({
                   onChange={(e) => setNewMenuName(e.target.value)}
                   placeholder="施術メニュー名を入力"
                   disabled={isAdding}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
                 <button
                   onClick={handleAdd}
@@ -282,7 +282,7 @@ export default function ManageTreatmentMenusModal({
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
                           disabled={isSaving}
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                          className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                         />
                         <button
                           onClick={() => handleSaveEdit(menu.id)}

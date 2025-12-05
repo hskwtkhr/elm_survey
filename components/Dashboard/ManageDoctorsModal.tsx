@@ -273,7 +273,7 @@ export default function ManageDoctorsModal({
                   value={selectedClinicId}
                   onChange={(e) => setSelectedClinicId(e.target.value)}
                   disabled={isAdding}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                  className="px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 >
                   <option value="">院を選択</option>
                   {clinicGroups.map((group) => (
@@ -288,7 +288,7 @@ export default function ManageDoctorsModal({
                   onChange={(e) => setNewDoctorName(e.target.value)}
                   placeholder="先生名を入力"
                   disabled={isAdding || !selectedClinicId}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
                 <button
                   onClick={handleAdd}
@@ -330,7 +330,7 @@ export default function ManageDoctorsModal({
                                 value={editName}
                                 onChange={(e) => setEditName(e.target.value)}
                                 disabled={isSaving}
-                                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                                className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                               />
                               <button
                                 onClick={() => handleSaveEdit(doctor.id)}
