@@ -261,6 +261,8 @@ export default function ManageQuestionOptionsModal({
       className={embedded ? "" : "bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"}
       onClick={(e) => e.stopPropagation()}
     >
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">設問選択肢の管理</h2>
