@@ -106,7 +106,8 @@ export default function ManageQuestionOptionsModal({
       }
 
       await fetchOptions()
-      setEditingId(null)      setEditValue('')
+      setEditingId(null)
+      setEditValue('')
       alert('選択肢を更新しました')
       onSave()
     } catch (error) {
@@ -172,7 +173,8 @@ export default function ManageQuestionOptionsModal({
         throw new Error(data.error || '追加に失敗しました')
       }
 
-      await fetchOptions()      setNewValue('')
+      await fetchOptions()
+      setNewValue('')
       alert('選択肢を追加しました')
       onSave()
     } catch (error) {
@@ -242,7 +244,8 @@ export default function ManageQuestionOptionsModal({
 
   const handleClose = () => {
     setEditingId(null)
-    setEditValue('')    setNewValue('')
+    setEditValue('')
+    setNewValue('')
     setSelectedCategory('gender')
     setDraggedOptionId(null)
     onClose()
