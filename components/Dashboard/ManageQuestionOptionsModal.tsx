@@ -38,8 +38,10 @@ export default function ManageQuestionOptionsModal({
 }: ManageQuestionOptionsModalProps) {
   const [optionsByCategory, setOptionsByCategory] = useState<QuestionOptionsByCategory>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)  const [editValue, setEditValue] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('gender')  const [newValue, setNewValue] = useState('')
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editValue, setEditValue] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('gender')
+  const [newValue, setNewValue] = useState('')
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [draggedOptionId, setDraggedOptionId] = useState<string | null>(null)
@@ -69,11 +71,13 @@ export default function ManageQuestionOptionsModal({
   }
 
   const handleStartEdit = (option: QuestionOption) => {
-    setEditingId(option.id)    setEditValue(option.value)
+    setEditingId(option.id)
+    setEditValue(option.value)
   }
 
   const handleCancelEdit = () => {
-    setEditingId(null)    setEditValue('')
+    setEditingId(null)
+    setEditValue('')
   }
 
   const handleSaveEdit = async (optionId: string) => {
@@ -237,7 +241,8 @@ export default function ManageQuestionOptionsModal({
   }
 
   const handleClose = () => {
-    setEditingId(null)    setEditValue('')    setNewValue('')
+    setEditingId(null)
+    setEditValue('')    setNewValue('')
     setSelectedCategory('gender')
     setDraggedOptionId(null)
     onClose()
