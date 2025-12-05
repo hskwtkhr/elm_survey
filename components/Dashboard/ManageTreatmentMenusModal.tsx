@@ -325,9 +325,6 @@ export default function ManageTreatmentMenusModal({
                   </div>
                 ))
 
-  if (embedded) {
-    return content
-  }
 
   return (
     <div
@@ -360,3 +357,6 @@ export default function ManageTreatmentMenusModal({
   )
 }
 
+  if (embedded) {
+    return content
+  }
