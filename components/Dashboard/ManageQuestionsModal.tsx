@@ -16,17 +16,11 @@ export default function ManageQuestionsModal({
   onClose,
   onSave,
 }: ManageQuestionsModalProps) {
-  const [activeTab, setActiveTab] = useState<'doctors' | 'menus' | 'options'>('options')
-  const [isManageDoctorsOpen, setIsManageDoctorsOpen] = useState(false)
-  const [isManageMenusOpen, setIsManageMenusOpen] = useState(false)
-  const [isManageOptionsOpen, setIsManageOptionsOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<'options' | 'menus' | 'doctors'>('options')
 
   if (!isOpen) return null
 
   const handleClose = () => {
-    setIsManageDoctorsOpen(false)
-    setIsManageMenusOpen(false)
-    setIsManageOptionsOpen(false)
     onClose()
   }
 
