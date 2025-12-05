@@ -211,7 +211,7 @@ export default function DashboardPage() {
             </button>
             <button
               onClick={handleLogout}
-              className="px-6 py-2 bg-gray-3000 text-white rounded-lg hover:bg-gray-600 transition-colors"
+              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
             >
               ログアウト
             </button>
