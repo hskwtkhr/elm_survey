@@ -296,7 +296,7 @@ export default function ManageQuestionOptionsModal({
                   type="text"
                   value={newValue}
                   onChange={(e) => setNewValue(e.target.value)}
-                  placeholder="選択肢（例: 男性）"
+                  placeholder="選択肢(例: 男性)"
                   disabled={isAdding}
                   className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
