@@ -357,6 +357,3 @@ export default function ManageTreatmentMenusModal({
   )
 }
 
-  if (embedded) {
-    return content
-  }
