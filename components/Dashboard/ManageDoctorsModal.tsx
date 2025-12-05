@@ -257,7 +257,7 @@ export default function ManageDoctorsModal({
 
     <div
   const content = (
-      className={embedded ? "" : "bg-white rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto"}
+      className={embedded ? """"" : "bg-white rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto"}
       onClick={(e) => e.stopPropagation()}
     >
 
