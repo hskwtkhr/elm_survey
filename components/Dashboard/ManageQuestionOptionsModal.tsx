@@ -370,7 +370,6 @@ export default function ManageQuestionOptionsModal({
                     ) : (
                       <>
                         <span className="flex-1 text-gray-900">{option.label}</span>
-                        <span className="text-sm text-gray-500">({option.value})</span>
                         <button
                           onClick={() => handleStartEdit(option)}
                           disabled={isSaving}
