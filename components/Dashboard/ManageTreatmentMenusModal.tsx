@@ -225,7 +225,7 @@ export default function ManageTreatmentMenusModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-6">施術メニュー管理</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-900">施術メニュー管理</h2>
 
         {isLoading ? (
           <div className="text-center py-8">
@@ -236,7 +236,7 @@ export default function ManageTreatmentMenusModal({
           <>
             {/* 追加フォーム */}
             <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-semibold mb-3">新しい施術メニューを追加</h3>
+              <h3 className="text-lg font-semibold mb-3 text-gray-900">新しい施術メニューを追加</h3>
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -258,7 +258,7 @@ export default function ManageTreatmentMenusModal({
 
             {/* メニュー一覧 */}
             <div className="space-y-2">
-              <h3 className="text-lg font-semibold mb-3">施術メニュー一覧</h3>
+              <h3 className="text-lg font-semibold mb-3 text-gray-900">施術メニュー一覧</h3>
               {menus.length === 0 ? (
                 <p className="text-gray-500 text-center py-4">施術メニューがありません</p>
               ) : (

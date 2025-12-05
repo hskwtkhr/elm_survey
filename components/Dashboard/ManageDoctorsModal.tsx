@@ -256,7 +256,7 @@ export default function ManageDoctorsModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-6">先生名管理</h2>
+        <h2 className="text-2xl font-bold mb-6 text-gray-900">先生名管理</h2>
 
         {isLoading ? (
           <div className="text-center py-8">
@@ -267,7 +267,7 @@ export default function ManageDoctorsModal({
           <>
             {/* 追加フォーム */}
             <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-semibold mb-3">新しい先生を追加</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900">新しい先生を追加</h3>
               <div className="flex gap-2">
                 <select
                   value={selectedClinicId}
@@ -304,7 +304,7 @@ export default function ManageDoctorsModal({
             <div className="space-y-6">
               {clinicGroups.map((group) => (
                 <div key={group.clinic.id} className="border border-gray-200 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold mb-3">{group.clinic.name}</h3>
+                  <h3 className="text-lg font-semibold mb-3 text-gray-900">{group.clinic.name}</h3>
                   {group.doctors.length === 0 ? (
                     <p className="text-gray-500 text-sm">先生が登録されていません</p>
                   ) : (
