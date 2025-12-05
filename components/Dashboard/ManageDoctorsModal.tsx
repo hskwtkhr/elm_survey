@@ -378,16 +378,7 @@ export default function ManageDoctorsModal({
           </>
         )}
 
-        <div className="flex gap-4 pt-6 mt-6 border-t">
-          <button
-            onClick={handleClose}
-            disabled={isSaving || isAdding}
-            className="flex-1 px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            閉じる
-          </button>
-        </div>
-      </div>
+        
     </div>
   )
 }
