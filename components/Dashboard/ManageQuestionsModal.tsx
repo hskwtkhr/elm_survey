@@ -54,7 +54,7 @@ export default function ManageQuestionsModal({
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              先生名の管理
+              先生名の編集
             </button>
             <button
               onClick={() => setActiveTab('menus')}
@@ -64,7 +64,7 @@ export default function ManageQuestionsModal({
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              施術メニューの管理
+              施術メニューの編集
             </button>
             <button
               onClick={() => setActiveTab('options')}
@@ -74,7 +74,7 @@ export default function ManageQuestionsModal({
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              設問選択肢の管理
+              設問選択肢の編集
             </button>
           </div>
 
@@ -85,7 +85,7 @@ export default function ManageQuestionsModal({
                 return (
                   <div className="space-y-4">
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                      <h3 className="font-semibold text-blue-900 mb-2 text-gray-900">先生名の管理について</h3>
+                      <h3 className="font-semibold text-blue-900 mb-2 text-gray-900">先生名の編集について</h3>
                       <p className="text-sm text-blue-800">
                         アンケートフォームで選択できる先生名を管理します。<br />
                         院ごとに先生を追加・編集・削除でき、ドラッグ＆ドロップで表示順を変更できます。
@@ -113,7 +113,7 @@ export default function ManageQuestionsModal({
                 return (
                   <div className="space-y-4">
                     <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-4">
-                      <h3 className="font-semibold text-indigo-900 mb-2 text-gray-900">施術メニューの管理について</h3>
+                      <h3 className="font-semibold text-indigo-900 mb-2 text-gray-900">施術メニューの編集について</h3>
                       <p className="text-sm text-indigo-800">
                         アンケートフォームで選択できる施術メニューを管理します。<br />
                         メニューを追加・編集・削除でき、ドラッグ＆ドロップで表示順を変更できます。
@@ -140,7 +140,7 @@ export default function ManageQuestionsModal({
               return (
                 <div className="space-y-4">
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                    <h3 className="font-semibold text-green-900 mb-2">設問選択肢の管理について</h3>
+                    <h3 className="font-semibold text-green-900 mb-2">設問選択肢の編集について</h3>
                     <p className="text-sm text-green-800">
                       アンケートフォームで使用される選択肢（性別、年齢層、満足度など）を管理します。<br />
                       各カテゴリの選択肢を追加・編集・削除でき、ドラッグ＆ドロップで表示順を変更できます。
