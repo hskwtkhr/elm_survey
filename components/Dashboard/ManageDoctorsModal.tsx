@@ -382,5 +382,18 @@ export default function ManageDoctorsModal({
         
     </div>
   )
+
+  if (embedded) {
+    return content
+  }
+
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      onClick={handleClose}
+    >
+      {content}
+    </div>
+  )
 }
 
