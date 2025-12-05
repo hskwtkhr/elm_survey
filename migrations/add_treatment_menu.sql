@@ -24,3 +24,4 @@ VALUES
     (gen_random_uuid()::text, 'その他', 6, NOW(), NOW())
 ON CONFLICT ("name") DO NOTHING;
 
+

@@ -12,3 +12,4 @@ FROM (
 ) sub
 WHERE d.id = sub.id;
 
+

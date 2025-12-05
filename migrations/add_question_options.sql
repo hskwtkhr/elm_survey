@@ -70,3 +70,4 @@ VALUES
     (gen_random_uuid()::text, 'staffServiceRating', '不満', '不満', 4, NOW(), NOW())
 ON CONFLICT ("category", "value") DO NOTHING;
 
+
