@@ -12,12 +12,14 @@ interface ManageTreatmentMenusModalProps {
   isOpen: boolean
   onClose: () => void
   onSave: () => void
+  embedded?: boolean
 }
 
 export default function ManageTreatmentMenusModal({
   isOpen,
   onClose,
   onSave,
+  embedded = false,
 }: ManageTreatmentMenusModalProps) {
   const [menus, setMenus] = useState<TreatmentMenu[]>([])
   const [isLoading, setIsLoading] = useState(false)

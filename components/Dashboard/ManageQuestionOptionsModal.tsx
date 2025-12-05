@@ -27,12 +27,14 @@ interface ManageQuestionOptionsModalProps {
   isOpen: boolean
   onClose: () => void
   onSave: () => void
+  embedded?: boolean
 }
 
 export default function ManageQuestionOptionsModal({
   isOpen,
   onClose,
   onSave,
+  embedded = false,
 }: ManageQuestionOptionsModalProps) {
   const [optionsByCategory, setOptionsByCategory] = useState<QuestionOptionsByCategory>({})
   const [isLoading, setIsLoading] = useState(false)

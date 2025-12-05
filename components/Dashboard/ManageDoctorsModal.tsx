@@ -20,12 +20,14 @@ interface ManageDoctorsModalProps {
   isOpen: boolean
   onClose: () => void
   onSave: () => void
+  embedded?: boolean
 }
 
 export default function ManageDoctorsModal({
   isOpen,
   onClose,
   onSave,
+  embedded = false,
 }: ManageDoctorsModalProps) {
   const [clinicGroups, setClinicGroups] = useState<ClinicGroup[]>([])
   const [isLoading, setIsLoading] = useState(false)
