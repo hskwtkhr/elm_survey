@@ -38,12 +38,8 @@ export default function ManageQuestionOptionsModal({
 }: ManageQuestionOptionsModalProps) {
   const [optionsByCategory, setOptionsByCategory] = useState<QuestionOptionsByCategory>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [editLabel, setEditLabel] = useState('')
-  const [editValue, setEditValue] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('gender')
-  const [newLabel, setNewLabel] = useState('')
-  const [newValue, setNewValue] = useState('')
+  const [editingId, setEditingId] = useState<string | null>(null)  const [editValue, setEditValue] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('gender')  const [newValue, setNewValue] = useState('')
   const [isAdding, setIsAdding] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [draggedOptionId, setDraggedOptionId] = useState<string | null>(null)
@@ -73,33 +69,30 @@ export default function ManageQuestionOptionsModal({
   }
 
   const handleStartEdit = (option: QuestionOption) => {
-    setEditingId(option.id)
-    setEditLabel(option.label)
-    setEditValue(option.value)
+    setEditingId(option.id)    setEditValue(option.value)
   }
 
   const handleCancelEdit = () => {
-    setEditingId(null)
-    setEditLabel('')
-    setEditValue('')
+    setEditingId(null)    setEditValue('')
   }
 
   const handleSaveEdit = async (optionId: string) => {
-    if (!editLabel.trim() || !editValue.trim()) {
-      alert('ラベルと値を入力してください')
+    if (!editValue.trim()) {
+      alert('値を入力してください')
       return
     }
 
     setIsSaving(true)
     try {
+      const trimmedValue = editValue.trim();
       const response = await fetch(`/api/question-options/${optionId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          label: editLabel.trim(),
-          value: editValue.trim(),
+          label: trimmedValue,
+          value: trimmedValue,
         }),
       })
 
@@ -109,9 +102,7 @@ export default function ManageQuestionOptionsModal({
       }
 
       await fetchOptions()
-      setEditingId(null)
-      setEditLabel('')
-      setEditValue('')
+      setEditingId(null)      setEditValue('')
       alert('選択肢を更新しました')
       onSave()
     } catch (error) {
@@ -150,14 +141,15 @@ export default function ManageQuestionOptionsModal({
   }
 
   const handleAdd = async () => {
-    if (!newLabel.trim() || !newValue.trim()) {
-      alert('ラベルと値を入力してください')
+    if (!newValue.trim()) {
+      alert('値を入力してください')
       return
     }
 
     setIsAdding(true)
     try {
       const currentOptions = optionsByCategory[selectedCategory] || []
+      const trimmedValue = newValue.trim();
       const response = await fetch('/api/question-options', {
         method: 'POST',
         headers: {
@@ -165,8 +157,8 @@ export default function ManageQuestionOptionsModal({
         },
         body: JSON.stringify({
           category: selectedCategory,
-          label: newLabel.trim(),
-          value: newValue.trim(),
+          label: trimmedValue,
+          value: trimmedValue,
           order: currentOptions.length,
         }),
       })
@@ -176,9 +168,7 @@ export default function ManageQuestionOptionsModal({
         throw new Error(data.error || '追加に失敗しました')
       }
 
-      await fetchOptions()
-      setNewLabel('')
-      setNewValue('')
+      await fetchOptions()      setNewValue('')
       alert('選択肢を追加しました')
       onSave()
     } catch (error) {
@@ -247,11 +237,7 @@ export default function ManageQuestionOptionsModal({
   }
 
   const handleClose = () => {
-    setEditingId(null)
-    setEditLabel('')
-    setEditValue('')
-    setNewLabel('')
-    setNewValue('')
+    setEditingId(null)    setEditValue('')    setNewValue('')
     setSelectedCategory('gender')
     setDraggedOptionId(null)
     onClose()
@@ -308,9 +294,9 @@ export default function ManageQuestionOptionsModal({
               <div className="flex gap-2">
                 <input
                   type="text"
-                  value={newLabel}
-                  onChange={(e) => setNewLabel(e.target.value)}
-                  placeholder="表示ラベル（例: 男性）"
+                  value={newValue}
+                  onChange={(e) => setNewValue(e.target.value)}
+                  placeholder="選択肢（例: 男性）"
                   disabled={isAdding}
                   className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
@@ -318,13 +304,12 @@ export default function ManageQuestionOptionsModal({
                   type="text"
                   value={newValue}
                   onChange={(e) => setNewValue(e.target.value)}
-                  placeholder="値（例: 男性）"
                   disabled={isAdding}
                   className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                 />
                 <button
                   onClick={handleAdd}
-                  disabled={isAdding || !newLabel.trim() || !newValue.trim()}
+                  disabled={isAdding || !newValue.trim()}
                   className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isAdding ? '追加中...' : '追加'}
@@ -358,10 +343,10 @@ export default function ManageQuestionOptionsModal({
                       <>
                         <input
                           type="text"
-                          value={editLabel}
-                          onChange={(e) => setEditLabel(e.target.value)}
+                          value={editValue}
+                          onChange={(e) => setEditValue(e.target.value)}
                           disabled={isSaving}
-                          placeholder="表示ラベル"
+                          placeholder="選択肢"
                           className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                         />
                         <input
@@ -369,12 +354,11 @@ export default function ManageQuestionOptionsModal({
                           value={editValue}
                           onChange={(e) => setEditValue(e.target.value)}
                           disabled={isSaving}
-                          placeholder="値"
                           className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
                         />
                         <button
                           onClick={() => handleSaveEdit(option.id)}
-                          disabled={isSaving || !editLabel.trim() || !editValue.trim()}
+                          disabled={isSaving || !editValue.trim()}
                           className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                         >
                           {isSaving ? '保存中...' : '保存'}
