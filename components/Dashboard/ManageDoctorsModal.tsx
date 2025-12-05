@@ -255,10 +255,10 @@ export default function ManageDoctorsModal({
 
   if (!isOpen) return null
 
-  const content = (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-6 text-gray-900">先生名管理</h2>
+    <div
+      className={embedded ? "" : "bg-white rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto"}
+      onClick={(e) => e.stopPropagation()}
+    >
 
         {isLoading ? (
           <div className="text-center py-8">
