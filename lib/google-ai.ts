@@ -43,7 +43,7 @@ export async function generateReviewText(surveyData: {
 
   const prompt = `以下のアンケート結果を基に、Googleマップの口コミとして自然で適切な文章を生成してください。
 口コミは日本語で、100文字から200文字程度でお願いします。
-個人名や具体的な施術内容の詳細は含めず、一般的な表現でお願いします。
+先生名（${surveyData.doctorName}）と施術メニュー（${surveyData.treatmentMenu}）は必ず本文に含めてください。
 満足度の情報を自然に反映させてください。
 
 院名: ${surveyData.clinicName}
