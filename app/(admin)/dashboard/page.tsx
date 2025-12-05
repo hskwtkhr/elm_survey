@@ -166,7 +166,7 @@ export default function DashboardPage() {
 
   if (isLoading && !dashboardData) {
     return (
-      <div className="min-h-screen bg-gray-300 py-12 px-4">
+      <div className="min-h-screen bg-red-200 py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
