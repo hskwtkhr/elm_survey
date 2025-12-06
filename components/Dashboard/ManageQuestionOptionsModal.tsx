@@ -347,7 +347,7 @@ export default function ManageQuestionOptionsModal({
                   onDragStart={(e) => handleDragStart(e, option.id)}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, option.id, selectedCategory)}
-                  className={`flex items-center gap-2 p-3 border border-gray-300 rounded-lg transition-colors ${draggedOptionId === option.id
+                  className={`flex items-center gap-2 p-3 border-2 border-gray-400 rounded-lg bg-white transition-colors ${draggedOptionId === option.id
                     ? 'opacity-50 bg-gray-100'
                     : 'hover:bg-gray-50 cursor-move'
                     }`}
