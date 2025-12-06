@@ -22,6 +22,7 @@ interface Survey {
   gender: string
   ageGroup: string
   satisfaction: string
+  message: string | null
   createdAt: string
 }
 

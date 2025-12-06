@@ -189,6 +189,9 @@ export default function ManageTreatmentMenusModal({
     const [dragged] = newMenus.splice(draggedIndex, 1)
     newMenus.splice(targetIndex, 0, dragged)
 
+    // 楽観的UI更新: 即座にstateを更新
+    setMenus(newMenus)
+
     // 順番を更新
     const menuIds = newMenus.map((m) => m.id)
 
@@ -205,10 +208,13 @@ export default function ManageTreatmentMenusModal({
         throw new Error('順番の更新に失敗しました')
       }
 
-      await fetchMenus()
+      // API成功後、念のため再取得（整合性確保）
+      // await fetchMenus() // 楽観的更新が成功していれば再取得は必須ではない
     } catch (error) {
       console.error('Error reordering menus:', error)
       alert('順番の更新に失敗しました')
+      // エラー時は元の状態に戻す（必要なら）
+      fetchMenus()
     }
 
     setDraggedMenuId(null)

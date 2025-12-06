@@ -11,6 +11,7 @@ interface Survey {
   gender: string
   ageGroup: string
   satisfaction: string
+  message: string | null
   createdAt: string
 }
 
@@ -39,7 +40,12 @@ export default function DataTable({
         className="flex items-center justify-between cursor-pointer mb-4"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <h2 className="text-xl font-bold text-gray-900">個別データ</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-bold text-gray-900">個別データ</h2>
+          <span className="text-sm text-gray-500">
+            {isExpanded ? 'クリックして閉じる' : 'クリックして詳細データを表示'}
+          </span>
+        </div>
         <svg
           className={`w-6 h-6 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
           fill="none"
@@ -78,6 +84,9 @@ export default function DataTable({
                     満足度
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    コメント
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     記入日時
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -108,6 +117,9 @@ export default function DataTable({
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {survey.satisfaction}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate" title={survey.message || ''}>
+                      {survey.message || '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {new Date(survey.createdAt).toLocaleString('ja-JP', {
