@@ -320,7 +320,7 @@ export default function ManageTreatmentMenusModal({
                         削除
                       </button>
                     </>
-                  }
+                  )}
                 </div>
               ))
             )}
