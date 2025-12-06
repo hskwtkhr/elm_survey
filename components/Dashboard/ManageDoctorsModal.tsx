@@ -320,7 +320,7 @@ export default function ManageDoctorsModal({
               <button
                 onClick={handleAdd}
                 disabled={isAdding || !newDoctorName.trim() || !selectedClinicId}
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-0"
               >
                 {isAdding ? '追加中...' : '追加'}
               </button>
@@ -361,14 +361,14 @@ export default function ManageDoctorsModal({
                             <button
                               onClick={() => handleSaveEdit(doctor.id)}
                               disabled={isSaving || !editName.trim()}
-                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                             >
                               {isSaving ? '保存中...' : '保存'}
                             </button>
                             <button
                               onClick={handleCancelEdit}
                               disabled={isSaving}
-                              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                             >
                               キャンセル
                             </button>
@@ -379,14 +379,14 @@ export default function ManageDoctorsModal({
                             <button
                               onClick={() => handleStartEdit(doctor)}
                               disabled={isSaving}
-                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                             >
                               編集
                             </button>
                             <button
                               onClick={() => handleDelete(doctor.id)}
                               disabled={isSaving}
-                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                             >
                               削除
                             </button>

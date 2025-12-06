@@ -40,7 +40,7 @@ export default function DataTable({
           <h2 className="text-xl font-bold text-gray-900">個別データ</h2>
         </div>
         <svg
-          className={`w-8 h-8 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
+          className={`w-8 h-8 text-gray-500 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

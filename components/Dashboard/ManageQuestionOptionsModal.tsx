@@ -325,7 +325,7 @@ export default function ManageQuestionOptionsModal({
               <button
                 onClick={handleAdd}
                 disabled={isAdding || !newValue.trim()}
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-0"
               >
                 {isAdding ? '追加中...' : '追加'}
               </button>
@@ -333,7 +333,7 @@ export default function ManageQuestionOptionsModal({
           </div>
 
           {/* 選択肢一覧 */}
-          <div className="space-y-2">
+          <div className="space-y-2 border border-gray-200 rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-3 text-gray-900">
               {categoryLabels[selectedCategory]}の選択肢一覧
             </h3>
@@ -367,14 +367,14 @@ export default function ManageQuestionOptionsModal({
                       <button
                         onClick={() => handleSaveEdit(option.id)}
                         disabled={isSaving || !editValue.trim()}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                       >
                         {isSaving ? '保存中...' : '保存'}
                       </button>
                       <button
                         onClick={handleCancelEdit}
                         disabled={isSaving}
-                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                       >
                         キャンセル
                       </button>
@@ -385,14 +385,14 @@ export default function ManageQuestionOptionsModal({
                       <button
                         onClick={() => handleStartEdit(option)}
                         disabled={isSaving}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                       >
                         編集
                       </button>
                       <button
                         onClick={() => handleDelete(option.id)}
                         disabled={isSaving}
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm border-0"
                       >
                         削除
                       </button>
