@@ -40,12 +40,12 @@ export default function DataTable({
           <h2 className="text-xl font-bold text-gray-900">個別データ</h2>
         </div>
         <svg
-          className={`w-8 h-8 text-gray-500 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
+          className={`w-8 h-8 text-gray-500 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
         </svg>
       </div>
 
