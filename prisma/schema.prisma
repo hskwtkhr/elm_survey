@@ -14,6 +14,7 @@ model Clinic {
   id               String   @id @default(uuid())
   name             String
   google_review_url String
+  googleReviewClickCount Int @default(0)
   doctors          Doctor[]
   surveys          Survey[]
   createdAt        DateTime @default(now())

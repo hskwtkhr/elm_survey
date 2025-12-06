@@ -7,6 +7,8 @@ import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
 import ManageQuestionsModal from '@/components/Dashboard/ManageQuestionsModal'
 
+import ClickDetailsModal from '@/components/Dashboard/ClickDetailsModal'
+
 interface Clinic {
   id: string
   name: string
@@ -32,6 +34,7 @@ interface DashboardData {
   treatmentMenuData: { name: string; value: number }[]
   ageGroupData: { name: string; value: number }[]
   clinicData: { name: string; value: number }[]
+  clickData: { name: string; googleReviewClickCount: number }[]
 }
 
 export default function DashboardPage() {
@@ -45,6 +48,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isManageQuestionsModalOpen, setIsManageQuestionsModalOpen] = useState(false)
+  const [isClickDetailsModalOpen, setIsClickDetailsModalOpen] = useState(false)
 
   useEffect(() => {
     // 認証チェック
@@ -166,6 +170,7 @@ export default function DashboardPage() {
   }
 
   const totalPages = Math.ceil(dashboardData.totalCount / 50)
+  const totalClicks = dashboardData.clickData?.reduce((acc, curr) => acc + curr.googleReviewClickCount, 0) || 0
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
@@ -220,11 +225,17 @@ export default function DashboardPage() {
               </div>
               <div className="text-sm text-gray-600">満足</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-red-600">
-                {dashboardData.clinicData.length}
+            <div className="text-center relative">
+              <div className="text-3xl font-bold text-pink-600">
+                {totalClicks}
               </div>
-              <div className="text-sm text-gray-600">対象院数</div>
+              <div className="text-sm text-gray-600 mb-2">口コミボタンクリック数</div>
+              <button
+                onClick={() => setIsClickDetailsModalOpen(true)}
+                className="text-xs text-blue-500 hover:text-blue-700 underline"
+              >
+                詳細を見る
+              </button>
             </div>
           </div>
         </div>
@@ -265,6 +276,12 @@ export default function DashboardPage() {
               .then((data) => setClinics(data))
               .catch((error) => console.error('Error fetching clinics:', error))
           }}
+        />
+
+        <ClickDetailsModal
+          isOpen={isClickDetailsModalOpen}
+          onClose={() => setIsClickDetailsModalOpen(false)}
+          data={dashboardData.clickData || []}
         />
       </div>
     </div>

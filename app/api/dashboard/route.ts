@@ -115,6 +115,17 @@ export async function GET(request: NextRequest) {
       value,
     }))
 
+    // 口コミボタンクリック数を取得
+    const clinics = await prisma.clinic.findMany({
+      select: {
+        name: true,
+        googleReviewClickCount: true,
+      },
+      orderBy: {
+        googleReviewClickCount: 'desc',
+      },
+    })
+
     return NextResponse.json({
       surveys,
       totalCount,
@@ -122,6 +133,7 @@ export async function GET(request: NextRequest) {
       treatmentMenuData,
       ageGroupData,
       clinicData,
+      clickData: clinics,
     })
   } catch (error) {
     console.error('Error fetching dashboard data:', error)

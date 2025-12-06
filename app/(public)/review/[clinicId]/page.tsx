@@ -81,7 +81,7 @@ export default function ReviewPage() {
       await navigator.clipboard.writeText(reviewText)
       setIsCopied(true)
       setTimeout(() => setIsCopied(false), 2000)
-      
+
       // 少し遅延してからGoogleレビューページを開く
       setTimeout(() => {
         if (googleReviewUrl) {
@@ -170,7 +170,7 @@ export default function ReviewPage() {
                     e.target.style.height = e.target.scrollHeight + 'px'
                   }}
                   className="w-full bg-transparent text-black whitespace-pre-wrap leading-relaxed text-sm md:text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
-                  style={{ 
+                  style={{
                     fontFamily: 'inherit',
                     minHeight: '150px',
                     maxHeight: 'none',
@@ -184,12 +184,19 @@ export default function ReviewPage() {
 
               {googleReviewUrl && (
                 <button
-                  onClick={handleCopyAndGoToReview}
-                  className={`w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${
-                    isCopied
+                  onClick={async () => {
+                    await handleCopyAndGoToReview()
+                    // クリック数をカウント
+                    try {
+                      await fetch(`/api/clinics/${clinicId}/click`, { method: 'POST' })
+                    } catch (err) {
+                      console.error('Failed to track click:', err)
+                    }
+                  }}
+                  className={`w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${isCopied
                       ? 'bg-green-400 text-white'
-                      : 'bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600'
-                  }`}
+                      : 'bg-pink-500 text-white hover:bg-pink-600'
+                    }`}
                 >
                   {isCopied ? (
                     <span className="flex flex-col items-center justify-center gap-2">
@@ -214,8 +221,16 @@ export default function ReviewPage() {
           <div className="mb-6">
             {googleReviewUrl && (
               <button
-                onClick={() => window.open(googleReviewUrl, '_blank')}
-                className="w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg bg-gradient-to-r from-pink-400 to-pink-500 text-white hover:from-pink-500 hover:to-pink-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+                onClick={async () => {
+                  window.open(googleReviewUrl, '_blank')
+                  // クリック数をカウント
+                  try {
+                    await fetch(`/api/clinics/${clinicId}/click`, { method: 'POST' })
+                  } catch (err) {
+                    console.error('Failed to track click:', err)
+                  }
+                }}
+                className="w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg bg-pink-500 text-white hover:bg-pink-600 transition-all transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 <span className="flex items-center justify-center gap-2">
                   <span>🌟</span>
