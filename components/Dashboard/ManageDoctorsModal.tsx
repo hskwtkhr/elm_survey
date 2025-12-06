@@ -217,6 +217,15 @@ export default function ManageDoctorsModal({
     const [dragged] = newDoctors.splice(draggedIndex, 1)
     newDoctors.splice(targetIndex, 0, dragged)
 
+    // 楽観的UI更新: 即座にstateを更新
+    const newClinicGroups = clinicGroups.map((g) => {
+      if (g.clinic.id === clinicId) {
+        return { ...g, doctors: newDoctors }
+      }
+      return g
+    })
+    setClinicGroups(newClinicGroups)
+
     // 順番を更新
     const doctorIds = newDoctors.map((d) => d.id)
 
@@ -233,10 +242,13 @@ export default function ManageDoctorsModal({
         throw new Error('順番の更新に失敗しました')
       }
 
-      await fetchDoctors()
+      // API成功後、念のため再取得（整合性確保）
+      // await fetchDoctors() // 楽観的更新が成功していれば再取得は必須ではないが、他の変更があるかもしれないのでバックグラウンドでやってもよい
     } catch (error) {
       console.error('Error reordering doctors:', error)
       alert('順番の更新に失敗しました')
+      // エラー時は元の状態に戻す（必要なら）
+      fetchDoctors()
     }
 
     setDraggedDoctorId(null)
@@ -332,8 +344,8 @@ export default function ManageDoctorsModal({
                         onDragOver={handleDragOver}
                         onDrop={(e) => handleDrop(e, doctor.id, group.clinic.id)}
                         className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${draggedDoctorId === doctor.id
-                            ? 'opacity-50 bg-gray-100'
-                            : 'hover:bg-gray-50 border-gray-200 cursor-move'
+                          ? 'opacity-50 bg-gray-100'
+                          : 'hover:bg-gray-50 border-gray-200 cursor-move'
                           }`}
                       >
                         <span className="text-gray-400 text-sm w-6">{index + 1}</span>
