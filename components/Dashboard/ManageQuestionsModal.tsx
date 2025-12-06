@@ -39,34 +39,31 @@ export default function ManageQuestionsModal({
           </div>
 
           {/* タブナビゲーション */}
-          <div className="flex border-b border-gray-200 mb-6">
+          <div className="flex p-1 bg-gray-100 rounded-lg mb-6">
             <button
               onClick={() => setActiveTab('options')}
-              className={`px-6 py-3 font-medium text-sm transition-colors ${
-                activeTab === 'options'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
+              className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'options'
+                  ? 'bg-white text-gray-900 shadow'
                   : 'text-gray-500 hover:text-gray-700'
-              }`}
+                }`}
             >
               設問選択肢の編集
             </button>
             <button
               onClick={() => setActiveTab('menus')}
-              className={`px-6 py-3 font-medium text-sm transition-colors ${
-                activeTab === 'menus'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
+              className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'menus'
+                  ? 'bg-white text-gray-900 shadow'
                   : 'text-gray-500 hover:text-gray-700'
-              }`}
+                }`}
             >
               施術メニューの編集
             </button>
             <button
               onClick={() => setActiveTab('doctors')}
-              className={`px-6 py-3 font-medium text-sm transition-colors ${
-                activeTab === 'doctors'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
+              className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'doctors'
+                  ? 'bg-white text-gray-900 shadow'
                   : 'text-gray-500 hover:text-gray-700'
-              }`}
+                }`}
             >
               先生名の編集
             </button>
@@ -77,7 +74,7 @@ export default function ManageQuestionsModal({
             {activeTab === 'options' && (
               <ManageQuestionOptionsModal
                 isOpen={true}
-                onClose={() => {}}
+                onClose={() => { }}
                 onSave={() => {
                   onSave()
                 }}
@@ -87,7 +84,7 @@ export default function ManageQuestionsModal({
             {activeTab === 'menus' && (
               <ManageTreatmentMenusModal
                 isOpen={true}
-                onClose={() => {}}
+                onClose={() => { }}
                 onSave={() => {
                   onSave()
                 }}
@@ -97,7 +94,7 @@ export default function ManageQuestionsModal({
             {activeTab === 'doctors' && (
               <ManageDoctorsModal
                 isOpen={true}
-                onClose={() => {}}
+                onClose={() => { }}
                 onSave={() => {
                   onSave()
                 }}

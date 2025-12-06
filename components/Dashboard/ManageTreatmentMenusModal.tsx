@@ -230,6 +230,18 @@ export default function ManageTreatmentMenusModal({
       onClick={(e) => e.stopPropagation()}
     >
 
+      {!embedded && (
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">施術メニューの管理</h2>
+          <button
+            onClick={handleClose}
+            className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {isLoading ? (
         <div className="text-center py-8">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>

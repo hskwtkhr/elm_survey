@@ -261,6 +261,7 @@ export default function ManageQuestionOptionsModal({
       className={embedded ? "" : "bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto"}
       onClick={(e) => e.stopPropagation()}
     >
+      {!embedded && (
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900">設問選択肢の管理</h2>
           <button
@@ -270,132 +271,132 @@ export default function ManageQuestionOptionsModal({
             ×
           </button>
         </div>
+      )}
 
-        {isLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-gray-600">読み込み中...</p>
+      {isLoading ? (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">読み込み中...</p>
+        </div>
+      ) : (
+        <>
+          {/* カテゴリ選択 */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              設問カテゴリを選択
+            </label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-4 py-2 border-0 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-100 text-gray-900"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {categoryLabels[category]}
+                </option>
+              ))}
+            </select>
           </div>
-        ) : (
-          <>
-            {/* カテゴリ選択 */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                設問カテゴリを選択
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
+
+          {/* 追加フォーム */}
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">
+              {categoryLabels[selectedCategory]}の選択肢を追加
+            </h3>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newValue}
+                onChange={(e) => setNewValue(e.target.value)}
+                placeholder="選択肢(例: 男性)"
+                disabled={isAdding}
+                className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+              />
+
+              <button
+                onClick={handleAdd}
+                disabled={isAdding || !newValue.trim()}
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {categoryLabels[category]}
-                  </option>
-                ))}
-              </select>
+                {isAdding ? '追加中...' : '追加'}
+              </button>
             </div>
+          </div>
 
-            {/* 追加フォーム */}
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-              <h3 className="text-lg font-semibold mb-3 text-gray-900">
-                {categoryLabels[selectedCategory]}の選択肢を追加
-              </h3>
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={newValue}
-                  onChange={(e) => setNewValue(e.target.value)}
-                  placeholder="選択肢(例: 男性)"
-                  disabled={isAdding}
-                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                />
-                
-                <button
-                  onClick={handleAdd}
-                  disabled={isAdding || !newValue.trim()}
-                  className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isAdding ? '追加中...' : '追加'}
-                </button>
-              </div>
-            </div>
-
-            {/* 選択肢一覧 */}
-            <div className="space-y-2">
-              <h3 className="text-lg font-semibold mb-3 text-gray-900">
-                {categoryLabels[selectedCategory]}の選択肢一覧
-              </h3>
-              {currentOptions.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">選択肢がありません</p>
-              ) : (
-                currentOptions.map((option, index) => (
-                  <div
-                    key={option.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, option.id)}
-                    onDragOver={handleDragOver}
-                    onDrop={(e) => handleDrop(e, option.id, selectedCategory)}
-                    className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${
-                      draggedOptionId === option.id
-                        ? 'opacity-50 bg-gray-100'
-                        : 'hover:bg-gray-50 border-gray-200 cursor-move'
+          {/* 選択肢一覧 */}
+          <div className="space-y-2">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">
+              {categoryLabels[selectedCategory]}の選択肢一覧
+            </h3>
+            {currentOptions.length === 0 ? (
+              <p className="text-gray-500 text-center py-4">選択肢がありません</p>
+            ) : (
+              currentOptions.map((option, index) => (
+                <div
+                  key={option.id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, option.id)}
+                  onDragOver={handleDragOver}
+                  onDrop={(e) => handleDrop(e, option.id, selectedCategory)}
+                  className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${draggedOptionId === option.id
+                      ? 'opacity-50 bg-gray-100'
+                      : 'hover:bg-gray-50 border-gray-200 cursor-move'
                     }`}
-                  >
-                    <span className="text-gray-400 text-sm w-6">{index + 1}</span>
-                    {editingId === option.id ? (
-                      <>
-                        <input
-                          type="text"
-                          value={editValue}
-                          onChange={(e) => setEditValue(e.target.value)}
-                          disabled={isSaving}
-                          placeholder="選択肢"
-                          className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                        />
-                        
-                        <button
-                          onClick={() => handleSaveEdit(option.id)}
-                          disabled={isSaving || !editValue.trim()}
-                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                        >
-                          {isSaving ? '保存中...' : '保存'}
-                        </button>
-                        <button
-                          onClick={handleCancelEdit}
-                          disabled={isSaving}
-                          className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                        >
-                          キャンセル
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <span className="flex-1 text-gray-900">{option.label}</span>
-                        <button
-                          onClick={() => handleStartEdit(option)}
-                          disabled={isSaving}
-                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                        >
-                          編集
-                        </button>
-                        <button
-                          onClick={() => handleDelete(option.id)}
-                          disabled={isSaving}
-                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                        >
-                          削除
-                        </button>
-                      </>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>
-          </>
-        )}
+                >
+                  <span className="text-gray-400 text-sm w-6">{index + 1}</span>
+                  {editingId === option.id ? (
+                    <>
+                      <input
+                        type="text"
+                        value={editValue}
+                        onChange={(e) => setEditValue(e.target.value)}
+                        disabled={isSaving}
+                        placeholder="選択肢"
+                        className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                      />
 
-        
+                      <button
+                        onClick={() => handleSaveEdit(option.id)}
+                        disabled={isSaving || !editValue.trim()}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                      >
+                        {isSaving ? '保存中...' : '保存'}
+                      </button>
+                      <button
+                        onClick={handleCancelEdit}
+                        disabled={isSaving}
+                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                      >
+                        キャンセル
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <span className="flex-1 text-gray-900">{option.label}</span>
+                      <button
+                        onClick={() => handleStartEdit(option)}
+                        disabled={isSaving}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                      >
+                        編集
+                      </button>
+                      <button
+                        onClick={() => handleDelete(option.id)}
+                        disabled={isSaving}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                      >
+                        削除
+                      </button>
+                    </>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+        </>
+      )}
+
+
     </div>
   )
 

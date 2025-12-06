@@ -261,125 +261,136 @@ export default function ManageDoctorsModal({
       onClick={(e) => e.stopPropagation()}
     >
 
-        {isLoading ? (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-gray-600">読み込み中...</p>
+      {!embedded && (
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">先生名の管理</h2>
+          <button
+            onClick={handleClose}
+            className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      {isLoading ? (
+        <div className="text-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">読み込み中...</p>
+        </div>
+      ) : (
+        <>
+          {/* 追加フォーム */}
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+            <h3 className="text-lg font-semibold mb-3 text-gray-900">新しい先生を追加</h3>
+            <div className="flex gap-2">
+              <select
+                value={selectedClinicId}
+                onChange={(e) => setSelectedClinicId(e.target.value)}
+                disabled={isAdding}
+                className="px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+              >
+                <option value="">院を選択</option>
+                {clinicGroups.map((group) => (
+                  <option key={group.clinic.id} value={group.clinic.id}>
+                    {group.clinic.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="text"
+                value={newDoctorName}
+                onChange={(e) => setNewDoctorName(e.target.value)}
+                placeholder="先生名を入力"
+                disabled={isAdding || !selectedClinicId}
+                className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+              />
+              <button
+                onClick={handleAdd}
+                disabled={isAdding || !newDoctorName.trim() || !selectedClinicId}
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isAdding ? '追加中...' : '追加'}
+              </button>
+            </div>
           </div>
-        ) : (
-          <>
-            {/* 追加フォーム */}
-            <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg font-semibold mb-3 text-gray-900">新しい先生を追加</h3>
-              <div className="flex gap-2">
-                <select
-                  value={selectedClinicId}
-                  onChange={(e) => setSelectedClinicId(e.target.value)}
-                  disabled={isAdding}
-                  className="px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                >
-                  <option value="">院を選択</option>
-                  {clinicGroups.map((group) => (
-                    <option key={group.clinic.id} value={group.clinic.id}>
-                      {group.clinic.name}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="text"
-                  value={newDoctorName}
-                  onChange={(e) => setNewDoctorName(e.target.value)}
-                  placeholder="先生名を入力"
-                  disabled={isAdding || !selectedClinicId}
-                  className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                />
-                <button
-                  onClick={handleAdd}
-                  disabled={isAdding || !newDoctorName.trim() || !selectedClinicId}
-                  className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isAdding ? '追加中...' : '追加'}
-                </button>
-              </div>
-            </div>
 
-            {/* 院ごとの先生一覧 */}
-            <div className="space-y-6">
-              {clinicGroups.map((group) => (
-                <div key={group.clinic.id} className="border border-gray-200 rounded-lg p-4">
-                  <h3 className="text-lg font-semibold mb-3 text-gray-900">{group.clinic.name}</h3>
-                  {group.doctors.length === 0 ? (
-                    <p className="text-gray-500 text-sm">先生が登録されていません</p>
-                  ) : (
-                    <div className="space-y-2">
-                      {group.doctors.map((doctor, index) => (
-                        <div
-                          key={doctor.id}
-                          draggable
-                          onDragStart={(e) => handleDragStart(e, doctor.id)}
-                          onDragOver={handleDragOver}
-                          onDrop={(e) => handleDrop(e, doctor.id, group.clinic.id)}
-                          className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${
-                            draggedDoctorId === doctor.id
-                              ? 'opacity-50 bg-gray-100'
-                              : 'hover:bg-gray-50 border-gray-200 cursor-move'
+          {/* 院ごとの先生一覧 */}
+          <div className="space-y-6">
+            {clinicGroups.map((group) => (
+              <div key={group.clinic.id} className="border border-gray-200 rounded-lg p-4">
+                <h3 className="text-lg font-semibold mb-3 text-gray-900">{group.clinic.name}</h3>
+                {group.doctors.length === 0 ? (
+                  <p className="text-gray-500 text-sm">先生が登録されていません</p>
+                ) : (
+                  <div className="space-y-2">
+                    {group.doctors.map((doctor, index) => (
+                      <div
+                        key={doctor.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, doctor.id)}
+                        onDragOver={handleDragOver}
+                        onDrop={(e) => handleDrop(e, doctor.id, group.clinic.id)}
+                        className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${draggedDoctorId === doctor.id
+                            ? 'opacity-50 bg-gray-100'
+                            : 'hover:bg-gray-50 border-gray-200 cursor-move'
                           }`}
-                        >
-                          <span className="text-gray-400 text-sm w-6">{index + 1}</span>
-                          {editingId === doctor.id ? (
-                            <>
-                              <input
-                                type="text"
-                                value={editName}
-                                onChange={(e) => setEditName(e.target.value)}
-                                disabled={isSaving}
-                                className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-                              />
-                              <button
-                                onClick={() => handleSaveEdit(doctor.id)}
-                                disabled={isSaving || !editName.trim()}
-                                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                              >
-                                {isSaving ? '保存中...' : '保存'}
-                              </button>
-                              <button
-                                onClick={handleCancelEdit}
-                                disabled={isSaving}
-                                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                              >
-                                キャンセル
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <span className="flex-1 text-gray-900">{doctor.name}</span>
-                              <button
-                                onClick={() => handleStartEdit(doctor)}
-                                disabled={isSaving}
-                                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                              >
-                                編集
-                              </button>
-                              <button
-                                onClick={() => handleDelete(doctor.id)}
-                                disabled={isSaving}
-                                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
-                              >
-                                削除
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
+                      >
+                        <span className="text-gray-400 text-sm w-6">{index + 1}</span>
+                        {editingId === doctor.id ? (
+                          <>
+                            <input
+                              type="text"
+                              value={editName}
+                              onChange={(e) => setEditName(e.target.value)}
+                              disabled={isSaving}
+                              className="flex-1 px-3 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
+                            />
+                            <button
+                              onClick={() => handleSaveEdit(doctor.id)}
+                              disabled={isSaving || !editName.trim()}
+                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                            >
+                              {isSaving ? '保存中...' : '保存'}
+                            </button>
+                            <button
+                              onClick={handleCancelEdit}
+                              disabled={isSaving}
+                              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                            >
+                              キャンセル
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <span className="flex-1 text-gray-900">{doctor.name}</span>
+                            <button
+                              onClick={() => handleStartEdit(doctor)}
+                              disabled={isSaving}
+                              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                            >
+                              編集
+                            </button>
+                            <button
+                              onClick={() => handleDelete(doctor.id)}
+                              disabled={isSaving}
+                              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                            >
+                              削除
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
-        
+
     </div>
   )
 
