@@ -31,7 +31,7 @@ export default function DataTable({
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
       <div
         className="flex items-center justify-between cursor-pointer mb-4"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -40,12 +40,12 @@ export default function DataTable({
           <h2 className="text-xl font-bold text-gray-900">個別データ</h2>
         </div>
         <svg
-          className={`w-6 h-6 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
+          className={`w-8 h-8 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
         </svg>
       </div>
 

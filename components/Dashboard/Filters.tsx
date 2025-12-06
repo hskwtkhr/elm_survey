@@ -22,7 +22,7 @@ export default function Filters({
   onReset,
 }: FiltersProps) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow mb-6">
+    <div className="bg-white p-6 rounded-lg shadow mb-6 border border-gray-200">
       <h2 className="text-xl font-bold mb-4 text-gray-900">フィルター</h2>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>

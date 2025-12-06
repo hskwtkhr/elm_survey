@@ -42,27 +42,27 @@ export default function ManageQuestionsModal({
           <div className="flex p-1 bg-gray-100 rounded-lg mb-6">
             <button
               onClick={() => setActiveTab('options')}
-              className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'options'
-                  ? 'bg-white text-gray-900 shadow'
-                  : 'text-gray-500 hover:text-gray-700'
+              className={`flex-1 py-4 text-sm font-medium rounded-md transition-all ${activeTab === 'options'
+                ? 'bg-white text-gray-900 shadow'
+                : 'text-gray-500 hover:text-gray-700'
                 }`}
             >
               設問選択肢の編集
             </button>
             <button
               onClick={() => setActiveTab('menus')}
-              className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'menus'
-                  ? 'bg-white text-gray-900 shadow'
-                  : 'text-gray-500 hover:text-gray-700'
+              className={`flex-1 py-4 text-sm font-medium rounded-md transition-all ${activeTab === 'menus'
+                ? 'bg-white text-gray-900 shadow'
+                : 'text-gray-500 hover:text-gray-700'
                 }`}
             >
               施術メニューの編集
             </button>
             <button
               onClick={() => setActiveTab('doctors')}
-              className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${activeTab === 'doctors'
-                  ? 'bg-white text-gray-900 shadow'
-                  : 'text-gray-500 hover:text-gray-700'
+              className={`flex-1 py-4 text-sm font-medium rounded-md transition-all ${activeTab === 'doctors'
+                ? 'bg-white text-gray-900 shadow'
+                : 'text-gray-500 hover:text-gray-700'
                 }`}
             >
               先生名の編集

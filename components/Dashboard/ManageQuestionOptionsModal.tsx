@@ -217,6 +217,12 @@ export default function ManageQuestionOptionsModal({
     const [dragged] = newOptions.splice(draggedIndex, 1)
     newOptions.splice(targetIndex, 0, dragged)
 
+    // 楽観的UI更新: 即座にstateを更新
+    setOptionsByCategory(prev => ({
+      ...prev,
+      [category]: newOptions
+    }))
+
     // 順番を更新
     const optionIds = newOptions.map((o) => o.id)
 
@@ -233,10 +239,13 @@ export default function ManageQuestionOptionsModal({
         throw new Error('順番の更新に失敗しました')
       }
 
-      await fetchOptions()
+      // API成功後、念のため再取得（整合性確保）
+      // await fetchOptions() // 楽観的更新が成功していれば再取得は必須ではない
     } catch (error) {
       console.error('Error reordering options:', error)
       alert('順番の更新に失敗しました')
+      // エラー時は元の状態に戻す（必要なら）
+      fetchOptions()
     }
 
     setDraggedOptionId(null)
@@ -338,9 +347,9 @@ export default function ManageQuestionOptionsModal({
                   onDragStart={(e) => handleDragStart(e, option.id)}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, option.id, selectedCategory)}
-                  className={`flex items-center gap-2 p-3 border rounded-lg transition-colors ${draggedOptionId === option.id
-                      ? 'opacity-50 bg-gray-100'
-                      : 'hover:bg-gray-50 border-gray-200 cursor-move'
+                  className={`flex items-center gap-2 p-3 border-b border-gray-200 transition-colors ${draggedOptionId === option.id
+                    ? 'opacity-50 bg-gray-100'
+                    : 'hover:bg-gray-50 cursor-move'
                     }`}
                 >
                   <span className="text-gray-400 text-sm w-6">{index + 1}</span>

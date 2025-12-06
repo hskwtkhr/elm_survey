@@ -196,7 +196,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="mb-6 bg-white p-6 rounded-lg shadow">
+        <div className="mb-6 bg-white p-6 rounded-lg shadow border border-gray-200">
           <h2 className="text-xl font-bold mb-4 text-gray-900">統計情報</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
