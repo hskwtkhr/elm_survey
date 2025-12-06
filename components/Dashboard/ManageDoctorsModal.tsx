@@ -343,7 +343,7 @@ export default function ManageDoctorsModal({
                         onDragStart={(e) => handleDragStart(e, doctor.id)}
                         onDragOver={handleDragOver}
                         onDrop={(e) => handleDrop(e, doctor.id, group.clinic.id)}
-                        className={`flex items-center gap-2 p-3 border-b border-gray-200 transition-colors ${draggedDoctorId === doctor.id
+                        className={`flex items-center gap-2 p-3 border border-gray-300 rounded-lg transition-colors ${draggedDoctorId === doctor.id
                           ? 'opacity-50 bg-gray-100'
                           : 'hover:bg-gray-50 cursor-move'
                           }`}
