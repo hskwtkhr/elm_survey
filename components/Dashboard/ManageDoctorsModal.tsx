@@ -343,9 +343,9 @@ export default function ManageDoctorsModal({
                         onDragStart={(e) => handleDragStart(e, doctor.id)}
                         onDragOver={handleDragOver}
                         onDrop={(e) => handleDrop(e, doctor.id, group.clinic.id)}
-                        className={`flex items-center gap-2 p-3 border-2 border-gray-400 rounded-lg bg-white transition-colors ${draggedDoctorId === doctor.id
-                          ? 'opacity-50 bg-gray-100'
-                          : 'hover:bg-gray-50 cursor-move'
+                        className={`flex items-center gap-2 p-3 bg-gray-100 border border-gray-200 rounded-lg transition-colors ${draggedDoctorId === doctor.id
+                          ? 'opacity-50'
+                          : 'hover:bg-gray-200 cursor-move'
                           }`}
                       >
                         <span className="text-gray-400 text-sm w-6">{index + 1}</span>
