@@ -33,7 +33,7 @@ export default function Charts({
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       {/* 満足度分布 */}
       <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-lg font-bold mb-4">満足度分布</h3>
+        <h3 className="text-lg font-bold mb-4 text-gray-900">満足度分布</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={satisfactionData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -48,7 +48,7 @@ export default function Charts({
 
       {/* 施術メニュー別 */}
       <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-lg font-bold mb-4">施術メニュー別</h3>
+        <h3 className="text-lg font-bold mb-4 text-gray-900">施術メニュー別</h3>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
@@ -77,7 +77,7 @@ export default function Charts({
 
       {/* 年齢層別 */}
       <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-lg font-bold mb-4">年齢層別</h3>
+        <h3 className="text-lg font-bold mb-4 text-gray-900">年齢層別</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={ageGroupData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -92,7 +92,7 @@ export default function Charts({
 
       {/* 院別 */}
       <div className="bg-white p-6 rounded-lg shadow">
-        <h3 className="text-lg font-bold mb-4">院別</h3>
+        <h3 className="text-lg font-bold mb-4 text-gray-900">院別</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={clinicData}>
             <CartesianGrid strokeDasharray="3 3" />

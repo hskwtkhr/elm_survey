@@ -71,3 +71,4 @@ VALUES
 ON CONFLICT ("category", "value") DO NOTHING;
 
 
+

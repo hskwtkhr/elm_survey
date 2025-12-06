@@ -23,7 +23,7 @@ export default function Filters({
 }: FiltersProps) {
   return (
     <div className="bg-white p-6 rounded-lg shadow mb-6">
-      <h2 className="text-xl font-bold mb-4">フィルター</h2>
+      <h2 className="text-xl font-bold mb-4 text-gray-900">フィルター</h2>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">

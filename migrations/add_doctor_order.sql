@@ -13,3 +13,4 @@ FROM (
 WHERE d.id = sub.id;
 
 
+
