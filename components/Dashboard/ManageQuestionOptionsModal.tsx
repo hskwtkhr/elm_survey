@@ -347,9 +347,9 @@ export default function ManageQuestionOptionsModal({
                   onDragStart={(e) => handleDragStart(e, option.id)}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, option.id, selectedCategory)}
-                  className={`flex items-center gap-2 p-3 bg-gray-100 border border-gray-200 rounded-lg transition-colors ${draggedOptionId === option.id
+                  className={`flex items-center gap-2 p-3 bg-gray-100 border border-gray-200 rounded-lg transition-colors cursor-move ${draggedOptionId === option.id
                     ? 'opacity-50'
-                    : 'hover:bg-gray-200 cursor-move'
+                    : 'hover:bg-gray-200'
                     }`}
                 >
                   <span className="text-gray-400 text-sm w-6">{index + 1}</span>

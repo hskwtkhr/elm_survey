@@ -290,9 +290,9 @@ export default function ManageTreatmentMenusModal({
                   onDragStart={(e) => handleDragStart(e, menu.id)}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, menu.id)}
-                  className={`flex items-center gap-2 p-3 bg-gray-100 border border-gray-200 rounded-lg transition-colors ${draggedMenuId === menu.id
+                  className={`flex items-center gap-2 p-3 bg-gray-100 border border-gray-200 rounded-lg transition-colors cursor-move ${draggedMenuId === menu.id
                     ? 'opacity-50'
-                    : 'hover:bg-gray-200 cursor-move'
+                    : 'hover:bg-gray-200'
                     }`}
                 >
                   {editingId === menu.id ? (

@@ -177,7 +177,7 @@ export default function DashboardPage() {
               onClick={() => setIsManageQuestionsModalOpen(true)}
               className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors border-0"
             >
-              設問管理
+              設問の編集
             </button>
           </div>
           <div className="flex gap-4">
