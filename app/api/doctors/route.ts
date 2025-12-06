@@ -48,7 +48,37 @@ export async function GET(request: NextRequest) {
       return acc
     }, {} as Record<string, { clinic: { id: string; name: string }; doctors: { id: string; name: string; order: number }[] }>)
 
-    return NextResponse.json(Object.values(groupedByClinic))
+    const CLINIC_ORDER = [
+      '広島院',
+      '岡山院',
+      '熊本院',
+      '神戸院',
+      '麻布院',
+      '福岡院',
+      '京都院',
+      '大阪院',
+      '表参道院',
+    ]
+
+    const sortedGroups = Object.values(groupedByClinic).sort((a, b) => {
+      const indexA = CLINIC_ORDER.indexOf(a.clinic.name)
+      const indexB = CLINIC_ORDER.indexOf(b.clinic.name)
+
+      // 両方ともオーダーリストにある場合
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB
+      }
+
+      // Aのみある場合（Aを先に）
+      if (indexA !== -1) return -1
+      // Bのみある場合（Bを先に）
+      if (indexB !== -1) return 1
+
+      // どちらもない場合は名前順
+      return a.clinic.name.localeCompare(b.clinic.name)
+    })
+
+    return NextResponse.json(sortedGroups)
   } catch (error) {
     console.error('Error fetching doctors:', error)
     return NextResponse.json(
