@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import Filters from '@/components/Dashboard/Filters'
 import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
-import EditSurveyModal from '@/components/Dashboard/EditSurveyModal'
 import ManageQuestionsModal from '@/components/Dashboard/ManageQuestionsModal'
 
 interface Clinic {
@@ -45,7 +44,6 @@ export default function DashboardPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [editingSurvey, setEditingSurvey] = useState<Survey | null>(null)
   const [isManageQuestionsModalOpen, setIsManageQuestionsModalOpen] = useState(false)
 
   useEffect(() => {
@@ -107,27 +105,6 @@ export default function DashboardPage() {
     setStartDate('')
     setEndDate('')
     setCurrentPage(1)
-  }
-
-  const handleEdit = (survey: Survey) => {
-    setEditingSurvey(survey)
-  }
-
-  const handleDelete = async (surveyId: string) => {
-    try {
-      const response = await fetch(`/api/dashboard/${surveyId}`, {
-        method: 'DELETE',
-      })
-
-      if (response.ok) {
-        fetchDashboardData()
-      } else {
-        alert('削除に失敗しました')
-      }
-    } catch (error) {
-      console.error('Error deleting survey:', error)
-      alert('削除に失敗しました')
-    }
   }
 
   const handleExportCSV = async () => {
@@ -198,7 +175,7 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold text-gray-900">ダッシュボード</h1>
             <button
               onClick={() => setIsManageQuestionsModalOpen(true)}
-              className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
+              className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors border-0"
             >
               設問管理
             </button>
@@ -206,13 +183,13 @@ export default function DashboardPage() {
           <div className="flex gap-4">
             <button
               onClick={handleExportCSV}
-              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors border-0"
             >
               CSVエクスポート
             </button>
             <button
               onClick={handleLogout}
-              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors border-0"
             >
               ログアウト
             </button>
@@ -272,17 +249,9 @@ export default function DashboardPage() {
 
         <DataTable
           surveys={dashboardData.surveys}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
-        />
-
-        <EditSurveyModal
-          survey={editingSurvey}
-          onClose={() => setEditingSurvey(null)}
-          onSave={fetchDashboardData}
         />
 
         <ManageQuestionsModal

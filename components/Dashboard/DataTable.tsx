@@ -17,8 +17,6 @@ interface Survey {
 
 interface DataTableProps {
   surveys: Survey[]
-  onEdit: (survey: Survey) => void
-  onDelete: (surveyId: string) => void
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
@@ -26,8 +24,6 @@ interface DataTableProps {
 
 export default function DataTable({
   surveys,
-  onEdit,
-  onDelete,
   currentPage,
   totalPages,
   onPageChange,
@@ -42,9 +38,6 @@ export default function DataTable({
       >
         <div className="flex items-center gap-4">
           <h2 className="text-xl font-bold text-gray-900">個別データ</h2>
-          <span className="text-sm text-gray-500">
-            {isExpanded ? 'クリックして閉じる' : 'クリックして詳細データを表示'}
-          </span>
         </div>
         <svg
           className={`w-6 h-6 transition-transform ${isExpanded ? 'transform rotate-180' : ''}`}
@@ -83,14 +76,11 @@ export default function DataTable({
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     満足度
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">
                     コメント
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     記入日時
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    操作
                   </th>
                 </tr>
               </thead>
@@ -118,7 +108,7 @@ export default function DataTable({
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {survey.satisfaction}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900 max-w-xs truncate" title={survey.message || ''}>
+                    <td className="px-6 py-4 text-sm text-gray-900 whitespace-pre-wrap">
                       {survey.message || '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -129,28 +119,6 @@ export default function DataTable({
                         hour: '2-digit',
                         minute: '2-digit',
                       })}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onEdit(survey)
-                        }}
-                        className="text-blue-600 hover:text-blue-900 mr-4"
-                      >
-                        編集
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          if (confirm('このアンケートを削除しますか？')) {
-                            onDelete(survey.id)
-                          }
-                        }}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        削除
-                      </button>
                     </td>
                   </tr>
                 ))}
