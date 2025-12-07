@@ -59,7 +59,7 @@ export default function SurveyForm() {
     const japanTime = new Date(today.getTime() + (9 * 60 * 60 * 1000)) // UTC+9
     return japanTime.toISOString().split('T')[0]
   }
-  
+
   const [formData, setFormData] = useState<Partial<SurveyFormData>>({
     treatmentDate: getTodayString(), // デフォルトで今日の日付
   })
@@ -232,11 +232,10 @@ export default function SurveyForm() {
                   <button
                     key={gender}
                     onClick={() => handleSelect('gender', gender, false)}
-                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${
-                      formData.gender === gender
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${formData.gender === gender
                         ? 'border-pink-500 bg-pink-300'
-                        : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                    }`}
+                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      }`}
                   >
                     {gender}
                   </button>
@@ -250,11 +249,10 @@ export default function SurveyForm() {
                   <button
                     key={age}
                     onClick={() => handleSelect('ageGroup', age, false)}
-                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${
-                      formData.ageGroup === age
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${formData.ageGroup === age
                         ? 'border-pink-500 bg-pink-300'
-                        : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                    }`}
+                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      }`}
                   >
                     {age}
                   </button>
@@ -284,17 +282,16 @@ export default function SurveyForm() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 {clinics.map((clinic) => (
-                <button
-                  key={clinic.id}
-                  onClick={() => handleSelect('clinicId', clinic.id)}
-                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                    formData.clinicId === clinic.id
-                      ? 'border-pink-500 bg-pink-300'
-                      : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                  }`}
-                >
-                  {clinic.name}
-                </button>
+                  <button
+                    key={clinic.id}
+                    onClick={() => handleSelect('clinicId', clinic.id)}
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.clinicId === clinic.id
+                        ? 'border-pink-500 bg-pink-300'
+                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      }`}
+                  >
+                    {clinic.name}
+                  </button>
                 ))}
               </div>
             )}
@@ -312,11 +309,10 @@ export default function SurveyForm() {
                   <button
                     key={doctor.id}
                     onClick={() => handleSelect('doctorId', doctor.id)}
-                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                      formData.doctorId === doctor.id
+                    className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.doctorId === doctor.id
                         ? 'border-pink-500 bg-pink-300'
-                        : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                    }`}
+                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      }`}
                   >
                     {doctor.name}
                   </button>
@@ -334,7 +330,7 @@ export default function SurveyForm() {
         const today = new Date()
         const japanTime = new Date(today.getTime() + (9 * 60 * 60 * 1000)) // UTC+9
         const todayString = japanTime.toISOString().split('T')[0]
-        
+
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術日を選択してください</h2>
@@ -383,11 +379,10 @@ export default function SurveyForm() {
                 <button
                   key={menu}
                   onClick={() => handleSelect('treatmentMenu', menu)}
-                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                    formData.treatmentMenu === menu
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.treatmentMenu === menu
                       ? 'border-pink-500 bg-pink-300'
-                      : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                  }`}
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    }`}
                 >
                   {menu}
                 </button>
@@ -406,11 +401,10 @@ export default function SurveyForm() {
                 <button
                   key={result}
                   onClick={() => handleSelect('resultSatisfaction', result)}
-                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                    formData.resultSatisfaction === result
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.resultSatisfaction === result
                       ? 'border-pink-500 bg-pink-300'
-                      : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                  }`}
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    }`}
                 >
                   {result}
                 </button>
@@ -429,11 +423,10 @@ export default function SurveyForm() {
                 <button
                   key={counseling}
                   onClick={() => handleSelect('counselingSatisfaction', counseling)}
-                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                    formData.counselingSatisfaction === counseling
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.counselingSatisfaction === counseling
                       ? 'border-pink-500 bg-pink-300'
-                      : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                  }`}
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    }`}
                 >
                   {counseling}
                 </button>
@@ -452,11 +445,10 @@ export default function SurveyForm() {
                 <button
                   key={atmosphere}
                   onClick={() => handleSelect('atmosphereRating', atmosphere)}
-                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                    formData.atmosphereRating === atmosphere
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.atmosphereRating === atmosphere
                       ? 'border-pink-500 bg-pink-300'
-                      : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                  }`}
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    }`}
                 >
                   {atmosphere}
                 </button>
@@ -475,11 +467,10 @@ export default function SurveyForm() {
                 <button
                   key={staff}
                   onClick={() => handleSelect('staffServiceRating', staff)}
-                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${
-                    formData.staffServiceRating === staff
+                  className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.staffServiceRating === staff
                       ? 'border-pink-500 bg-pink-300'
-                      : 'border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
-                  }`}
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    }`}
                 >
                   {staff}
                 </button>
@@ -492,7 +483,7 @@ export default function SurveyForm() {
         // 伝えたいこと
         const selectedClinicName = clinics.find(c => c.id === formData.clinicId)?.name || ''
         const selectedDoctorName = selectedClinic?.doctors.find(d => d.id === formData.doctorId)?.name || ''
-        
+
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">伝えたいことがあれば、お書きください（任意）</h2>
@@ -505,7 +496,7 @@ export default function SurveyForm() {
               rows={6}
               className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg text-black resize-none"
             />
-            
+
             {/* 選択内容の確認 */}
             <div className="mt-6 p-6 bg-gray-50 rounded-lg border-2 border-pink-200">
               <h3 className="text-xl font-bold mb-4 text-black">ご回答内容の確認</h3>
@@ -556,7 +547,7 @@ export default function SurveyForm() {
                 </table>
               </div>
             </div>
-            
+
             <div className="flex gap-4 mt-6">
               <button
                 onClick={handleBack}
@@ -587,9 +578,9 @@ export default function SurveyForm() {
       <div className="max-w-2xl mx-auto">
         {/* ELM CLINIC ロゴ */}
         <div className="text-center mb-4 md:mb-8">
-          <img 
-            src="/elm_logo.png" 
-            alt="ELM CLINIC" 
+          <img
+            src="/elm_logo.png"
+            alt="ELM CLINIC"
             className="mx-auto mb-2 md:mb-4 max-w-xs md:max-w-md"
             style={{ maxHeight: '120px', objectFit: 'contain' }}
           />
@@ -614,7 +605,7 @@ export default function SurveyForm() {
             </div>
           </div>
 
-        {renderStep()}
+          {renderStep()}
 
           {currentStep > 1 && currentStep < 10 && (
             <div className="mt-4 md:mt-8">
