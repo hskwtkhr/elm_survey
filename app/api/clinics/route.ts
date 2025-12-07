@@ -60,11 +60,8 @@ export async function GET() {
     console.error('Error stack:', errorStack)
 
     // DATABASE_URLの設定状況を確認（セキュリティのため、実際のURLは返さない）
-    const dbUrl = process.env.DATABASE_URL
-    const hasDatabaseUrl = !!dbUrl
-    const maskedDbUrl = dbUrl ? dbUrl.replace(/:[^:@]+@/, ':****@') : 'undefined'
+    const hasDatabaseUrl = !!process.env.DATABASE_URL
     console.error('DATABASE_URL is set:', hasDatabaseUrl)
-    console.error('Masked DATABASE_URL:', maskedDbUrl)
 
     // 本番環境でもエラーメッセージを返す（デバッグ用）
     return NextResponse.json(
