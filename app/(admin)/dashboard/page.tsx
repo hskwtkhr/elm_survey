@@ -68,9 +68,24 @@ export default function DashboardPage() {
 
     // 院一覧を取得
     fetch('/api/clinics')
-      .then((res) => res.json())
-      .then((data) => setClinics(data))
-      .catch((error) => console.error('Error fetching clinics:', error))
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch clinics')
+        }
+        return res.json()
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setClinics(data)
+        } else {
+          console.error('Invalid clinics data:', data)
+          setClinics([])
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching clinics:', error)
+        setClinics([])
+      })
   }, [isAuthenticated])
 
   useEffect(() => {
