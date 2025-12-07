@@ -47,25 +47,28 @@ export async function GET() {
       if (indexB === -1) return -1
       return indexA - indexB
     })
-    
+
     return NextResponse.json(uniqueClinics)
   } catch (error) {
     console.error('Error fetching clinics:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     const errorStack = error instanceof Error ? error.stack : undefined
     const errorName = error instanceof Error ? error.name : 'Unknown'
-    
+
     console.error('Error name:', errorName)
     console.error('Error details:', errorMessage)
     console.error('Error stack:', errorStack)
-    
+
     // DATABASE_URLの設定状況を確認（セキュリティのため、実際のURLは返さない）
-    const hasDatabaseUrl = !!process.env.DATABASE_URL
+    const dbUrl = process.env.DATABASE_URL
+    const hasDatabaseUrl = !!dbUrl
+    const maskedDbUrl = dbUrl ? dbUrl.replace(/:[^:@]+@/, ':****@') : 'undefined'
     console.error('DATABASE_URL is set:', hasDatabaseUrl)
-    
+    console.error('Masked DATABASE_URL:', maskedDbUrl)
+
     // 本番環境でもエラーメッセージを返す（デバッグ用）
     return NextResponse.json(
-      { 
+      {
         error: errorMessage,
         errorName: errorName,
         message: 'Failed to fetch clinics',
