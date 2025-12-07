@@ -169,7 +169,7 @@ export default function ReviewPage() {
                     e.target.style.height = 'auto'
                     e.target.style.height = e.target.scrollHeight + 'px'
                   }}
-                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-relaxed text-sm md:text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
+                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-loose text-sm md:text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
                   style={{
                     fontFamily: 'inherit',
                     minHeight: '150px',
@@ -194,8 +194,8 @@ export default function ReviewPage() {
                     }
                   }}
                   className={`w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${isCopied
-                      ? 'bg-green-400 text-white'
-                      : 'bg-pink-500 text-white hover:bg-pink-600'
+                    ? 'bg-green-400 text-white'
+                    : 'bg-pink-500 text-white hover:bg-pink-600'
                     }`}
                 >
                   {isCopied ? (
@@ -209,7 +209,7 @@ export default function ReviewPage() {
                     <span className="flex flex-col items-center justify-center gap-2">
                       <span className="text-xl">⭐️⭐️⭐️⭐️⭐️</span>
                       <span>
-                        文章をコピー＆<br className="md:hidden" />Google口コミページを開く
+                        文章をコピー ＆ <br className="md:hidden" />Google口コミページを開く
                       </span>
                     </span>
                   )}

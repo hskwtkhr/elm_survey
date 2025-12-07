@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import NextImage from 'next/image'
 import Filters from '@/components/Dashboard/Filters'
 import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
@@ -177,24 +178,31 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-gray-900">ダッシュボード</h1>
-            <button
-              onClick={() => setIsManageQuestionsModalOpen(true)}
-              className="px-6 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors border-0"
-            >
-              設問の編集
-            </button>
+            <NextImage
+              src="/elm_logo.png"
+              alt="ELM CLINIC"
+              width={300}
+              height={80}
+              className="object-contain"
+              priority
+            />
           </div>
           <div className="flex gap-4">
             <button
+              onClick={() => setIsManageQuestionsModalOpen(true)}
+              className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors border-0 text-lg font-medium"
+            >
+              設問の編集
+            </button>
+            <button
               onClick={handleExportCSV}
-              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors border-0"
+              className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors border-0 text-lg font-medium"
             >
               CSVエクスポート
             </button>
             <button
               onClick={handleLogout}
-              className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors border-0"
+              className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors border-0 text-lg font-medium"
             >
               ログアウト
             </button>
