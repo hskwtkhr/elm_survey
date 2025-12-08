@@ -17,13 +17,13 @@ export default function ManualPage() {
             <li><a href="#view" className="text-blue-600 hover:underline">アンケート結果の確認</a></li>
             <li><a href="#edit" className="text-blue-600 hover:underline">アンケート結果の編集・削除</a></li>
             <li><a href="#export" className="text-blue-600 hover:underline">データのエクスポート</a></li>
-            <li><a href="#change" className="text-blue-600 hover:underline">アンケート項目の変更について</a></li>
+            <li><a href="#change" className="text-blue-600 hover:underline">アンケート項目の編集</a></li>
           </ol>
         </nav>
 
         <section id="access" className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">1. ダッシュボードへのアクセス</h2>
-          
+
           <h3 className="text-xl font-bold mb-4 mt-6 text-black">ログイン方法</h3>
           <ol className="list-decimal list-inside space-y-3 mb-6 text-black">
             <li>ブラウザで以下のURLにアクセス：
@@ -44,7 +44,7 @@ export default function ManualPage() {
 
         <section id="features" className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">2. ダッシュボードの機能</h2>
-          
+
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-bold mb-4 text-black">1. 統計情報</h3>
@@ -127,7 +127,7 @@ export default function ManualPage() {
 
         <section id="view" className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">3. アンケート結果の確認</h2>
-          
+
           <div className="space-y-6">
             <div>
               <h3 className="text-xl font-bold mb-4 text-black">基本的な確認方法</h3>
@@ -159,7 +159,7 @@ export default function ManualPage() {
 
         <section id="edit" className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">4. アンケート結果の編集・削除</h2>
-          
+
           <div className="space-y-6">
             <div>
               <h3 className="text-xl font-bold mb-4 text-black">編集方法</h3>
@@ -196,7 +196,7 @@ export default function ManualPage() {
 
         <section id="export" className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">5. データのエクスポート</h2>
-          
+
           <div>
             <h3 className="text-xl font-bold mb-4 text-black">CSVエクスポート</h3>
             <ol className="list-decimal list-inside space-y-2 ml-4 text-black">
@@ -236,59 +236,49 @@ export default function ManualPage() {
         </section>
 
         <section id="change" className="mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">6. アンケート項目の変更について</h2>
-          
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">6. アンケート項目の編集</h2>
+
+          <p className="mb-4 text-black">ダッシュボード右上の「設問の編集」ボタンから、アンケートの各項目を自由にカスタマイズできます。</p>
+
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-bold mb-4 text-black">現在の機能</h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="font-bold mb-2 text-black">ダッシュボードで変更できる項目:</p>
-                  <ul className="list-disc list-inside space-y-1 ml-4 text-black">
-                    <li>✅ 既存のアンケート結果の編集（院名、先生名、施術日、施術メニュー、性別、年齢層、満足度など）</li>
-                    <li>✅ アンケート結果の削除</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="font-bold mb-2 text-black">ダッシュボードで変更できない項目:</p>
-                  <ul className="list-disc list-inside space-y-1 ml-4 text-black">
-                    <li>❌ アンケートの質問項目（質問文）</li>
-                    <li>❌ 選択肢の内容（例：「男性」「女性」→「男」「女」への変更）</li>
-                    <li>❌ 選択肢の追加・削除</li>
-                    <li>❌ 質問の順番</li>
-                    <li>❌ 院や先生の追加・削除</li>
-                  </ul>
-                </div>
-              </div>
+              <h3 className="text-xl font-bold mb-4 text-black">1. 設問選択肢の編集</h3>
+              <p className="mb-2 text-black">以下の項目の選択肢を追加・編集・削除・並べ替えできます：</p>
+              <ul className="list-disc list-inside space-y-1 ml-4 text-black">
+                <li>性別</li>
+                <li>年齢層</li>
+                <li>満足度（各種）</li>
+              </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-bold mb-4 text-black">アンケート項目を変更する場合</h3>
-              <p className="mb-3 text-black">アンケートの質問項目や選択肢を変更する場合は、<strong>開発者によるコード修正が必要</strong>です。</p>
-              <div className="mb-3">
-                <p className="font-bold mb-2 text-black">変更が必要な主なファイル：</p>
-                <ul className="list-disc list-inside space-y-1 ml-4 text-black">
-                  <li><code className="bg-gray-100 px-2 py-1 rounded">components/SurveyForm.tsx</code>: 質問項目、選択肢、質問の順番</li>
-                  <li><code className="bg-gray-100 px-2 py-1 rounded">prisma/seed.ts</code> または <code className="bg-gray-100 px-2 py-1 rounded">supabase-setup.sql</code>: 院や先生の追加・削除</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-bold mb-2 text-black">変更例:</p>
-                <ul className="list-disc list-inside space-y-1 ml-4 text-black">
-                  <li>性別の選択肢を「男性」「女性」から「男」「女」に変更</li>
-                  <li>施術メニューに新しい項目を追加</li>
-                  <li>質問の順番を変更</li>
-                  <li>新しい院や先生を追加</li>
-                </ul>
-              </div>
-              <p className="mt-3 text-black">これらの変更は、コードを修正してからVercelに再デプロイする必要があります。</p>
+              <h3 className="text-xl font-bold mb-4 text-black">2. 質問文の編集</h3>
+              <p className="text-black">アンケートフォームに表示される質問のタイトル（例：「第1問」など）を編集できます。</p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-black">3. 施術メニューの編集</h3>
+              <p className="text-black">「施術メニュー」の選択肢を追加・編集・削除・並べ替えできます。</p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-black">4. 先生名の編集</h3>
+              <p className="text-black">各院に所属する先生の名前を追加・編集・削除・並べ替えできます。</p>
+              <p className="text-sm text-gray-600 ml-4">（院を選択してから、その院の先生を編集します）</p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-black">注意事項</h3>
+              <ul className="list-disc list-inside space-y-1 ml-4 text-black">
+                <li><strong>院の追加・削除</strong>: 現在、管理画面からは行えません。開発者によるデータベース操作が必要です。</li>
+              </ul>
             </div>
           </div>
         </section>
 
         <section className="mb-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-black border-b-2 border-gray-300 pb-2">よくある質問（FAQ）</h2>
-          
+
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-bold mb-2 text-black">Q: ログインできない</h3>
@@ -348,8 +338,8 @@ export default function ManualPage() {
         </section>
 
         <div className="mt-12 pt-6 border-t-2 border-gray-300 text-center">
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="inline-block px-6 py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium"
           >
             トップページに戻る
