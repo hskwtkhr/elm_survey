@@ -43,7 +43,29 @@ export default function ClickDetailsModal({
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                            {data.map((item, index) => (
+                            {[...data].sort((a, b) => {
+                                const order = [
+                                    '広島院',
+                                    '福岡院',
+                                    '岡山院',
+                                    '京都院',
+                                    '熊本院',
+                                    '大阪院',
+                                    '神戸院',
+                                    '表参道院',
+                                    '麻布院',
+                                ]
+                                const indexA = order.indexOf(a.name)
+                                const indexB = order.indexOf(b.name)
+
+                                // 両方ともリストにある場合はリスト順
+                                if (indexA !== -1 && indexB !== -1) return indexA - indexB
+                                // 片方だけリストにある場合はある方を優先
+                                if (indexA !== -1) return -1
+                                if (indexB !== -1) return 1
+                                // 両方ともリストにない場合は元の順序（または名前順など）
+                                return 0
+                            }).map((item, index) => (
                                 <tr key={index}>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         {item.name}
