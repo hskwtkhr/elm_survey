@@ -145,17 +145,17 @@ export default function ManageQuestionTextsModal({
 
 function getQuestionDescription(key: string): string {
     const descriptions: Record<string, string> = {
-        gender: '性別',
-        ageGroup: '年齢層',
-        clinicId: '院の選択',
-        doctorId: '先生の選択',
-        treatmentDate: '施術日',
-        treatmentMenu: '施術メニュー',
-        resultSatisfaction: '結果への満足度',
-        counselingSatisfaction: 'カウンセリングへの満足度',
-        atmosphereRating: '院内の雰囲気',
-        staffServiceRating: 'スタッフの対応',
-        message: '自由記述（メッセージ）',
+        gender: '第1問 性別',
+        ageGroup: '第1問 年齢層',
+        clinicId: '第2問 院の選択',
+        doctorId: '第3問 先生の選択',
+        treatmentDate: '第4問 施術日',
+        treatmentMenu: '第5問 施術メニュー',
+        resultSatisfaction: '第6問 結果への満足度',
+        counselingSatisfaction: '第7問 カウンセリングへの満足度',
+        atmosphereRating: '第8問 院内の雰囲気',
+        staffServiceRating: '第9問 スタッフの対応',
+        message: '第10問 自由記述（メッセージ）',
     }
     return descriptions[key] || key
 }
