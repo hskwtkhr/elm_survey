@@ -322,7 +322,7 @@ export default function SurveyForm() {
               <div className="mt-4 md:mt-6">
                 <button
                   onClick={() => setCurrentStep(currentStep + 1)}
-                  className="w-full px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base"
+                  className="w-full px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base border-0"
                 >
                   次へ
                 </button>
@@ -420,7 +420,7 @@ export default function SurveyForm() {
               <button
                 onClick={() => setCurrentStep(currentStep + 1)}
                 disabled={!formData.treatmentDate}
-                className="px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed border-0"
               >
                 次へ
               </button>
@@ -619,7 +619,7 @@ export default function SurveyForm() {
                   await handleSubmitWithData(formData)
                 }}
                 disabled={isSubmitting}
-                className="flex-1 px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50"
+                className="flex-1 px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50 border-0"
               >
                 {isSubmitting ? '送信中...' : '送信する'}
               </button>
