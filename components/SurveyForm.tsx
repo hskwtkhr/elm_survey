@@ -2,6 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import { ja } from 'date-fns/locale/ja'
+import { format } from 'date-fns'
+import 'react-datepicker/dist/react-datepicker.css'
+
+registerLocale('ja', ja)
 
 interface Clinic {
   id: string
@@ -393,27 +399,101 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.treatmentDate || '施術日を選択してください'}</h2>
-            <div className="w-full overflow-hidden">
-              <input
-                type="date"
-                value={formData.treatmentDate || todayString}
-                onChange={(e) => {
-                  setFormData({ ...formData, treatmentDate: e.target.value })
-                }}
-                onClick={(e) => {
-                  // クリックでカレンダーを表示（スマホでは自動的にカレンダーが表示される）
-                  if (e.currentTarget.showPicker) {
-                    e.currentTarget.showPicker()
+            <div className="w-full">
+              <style>{`
+                .react-datepicker-wrapper {
+                  width: 100%;
+                }
+                .react-datepicker__input-container input {
+                  width: 100%;
+                  padding: 1rem;
+                  font-size: 1.125rem;
+                  border: 2px solid #fbcfe8;
+                  border-radius: 0.5rem;
+                  outline: none;
+                }
+                .react-datepicker__input-container input:focus {
+                  border-color: #f472b6;
+                }
+                .react-datepicker {
+                  font-family: inherit;
+                  border-color: #e5e7eb;
+                  font-size: 1.2rem;
+                }
+                .react-datepicker__header {
+                  background-color: #fce7f3;
+                  border-bottom-color: #fbcfe8;
+                  padding-top: 1rem;
+                }
+                .react-datepicker__current-month {
+                  font-size: 1.2rem;
+                  margin-bottom: 0.5rem;
+                }
+                .react-datepicker__day-name, .react-datepicker__day {
+                  width: 3rem;
+                  line-height: 3rem;
+                  margin: 0.2rem;
+                }
+                .react-datepicker__day--selected {
+                  background-color: #f472b6;
+                }
+                .react-datepicker__navigation {
+                  top: 1rem;
+                }
+                @media (max-width: 768px) {
+                  .react-datepicker {
+                    font-size: 1rem;
+                  }
+                  .react-datepicker__day-name, .react-datepicker__day {
+                    width: 2rem;
+                    line-height: 2rem;
+                  }
+                }
+              `}</style>
+              <DatePicker
+                selected={formData.treatmentDate ? new Date(formData.treatmentDate) : new Date()}
+                onChange={(date) => {
+                  if (date) {
+                    // ローカル時間のYYYY-MM-DD形式で保存
+                    const year = date.getFullYear()
+                    const month = String(date.getMonth() + 1).padStart(2, '0')
+                    const day = String(date.getDate()).padStart(2, '0')
+                    setFormData({ ...formData, treatmentDate: `${year}-${month}-${day}` })
                   }
                 }}
-                onDoubleClick={(e) => {
-                  // ダブルクリックでテキスト入力モードに（PCのみ）
-                  e.currentTarget.focus()
-                  e.currentTarget.select()
-                }}
-                max={todayString}
-                className="w-full box-border p-3 md:p-4 bg-white border-2 border-pink-200 rounded-lg text-base md:text-lg text-black appearance-none md:hover:border-pink-400 focus:border-pink-400 focus:outline-none"
-                style={{ boxSizing: 'border-box', width: '100%', maxWidth: '100%', minHeight: '50px' }}
+                locale="ja"
+                dateFormat="yyyy/MM/dd"
+                maxDate={new Date()}
+                inline
+                renderCustomHeader={({
+                  date,
+                  decreaseMonth,
+                  increaseMonth,
+                  prevMonthButtonDisabled,
+                  nextMonthButtonDisabled,
+                }) => (
+                  <div className="flex items-center justify-between px-4 py-2">
+                    <button
+                      onClick={decreaseMonth}
+                      disabled={prevMonthButtonDisabled}
+                      type="button"
+                      className="text-xl font-bold text-gray-600 hover:text-black disabled:opacity-30"
+                    >
+                      {'<'}
+                    </button>
+                    <span className="text-xl font-bold text-gray-800">
+                      {format(date, 'yyyy/MM')}
+                    </span>
+                    <button
+                      onClick={increaseMonth}
+                      disabled={nextMonthButtonDisabled}
+                      type="button"
+                      className="text-xl font-bold text-gray-600 hover:text-black disabled:opacity-30"
+                    >
+                      {'>'}
+                    </button>
+                  </div>
+                )}
               />
             </div>
             <div className="mt-4 flex justify-end">
