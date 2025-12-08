@@ -731,7 +731,7 @@ export default function SurveyForm() {
         </div>
 
         {/* アンケートフォーム */}
-        <div className="bg-white rounded-lg shadow-lg p-4 md:p-8 overflow-hidden">
+        <div className="bg-white rounded-3xl shadow-lg p-4 md:p-8 overflow-hidden">
           <div className="mb-4 md:mb-6">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs md:text-sm text-black font-medium">質問 {currentStep} / 10</span>
