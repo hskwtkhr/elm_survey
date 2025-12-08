@@ -87,3 +87,12 @@ model QuestionOption {
   @@unique([category, value], name: "category_value")
   @@index([category, order])
 }
+
+model Question {
+  id        String   @id @default(uuid())
+  key       String   @unique // 'gender', 'ageGroup', 'clinic', 'doctor', 'date', 'menu', 'result', 'counseling', 'atmosphere', 'staff', 'message'
+  label     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

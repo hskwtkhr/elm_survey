@@ -4,6 +4,7 @@ import { useState } from 'react'
 import ManageDoctorsModal from './ManageDoctorsModal'
 import ManageTreatmentMenusModal from './ManageTreatmentMenusModal'
 import ManageQuestionOptionsModal from './ManageQuestionOptionsModal'
+import ManageQuestionTextsModal from './ManageQuestionTextsModal'
 
 interface ManageQuestionsModalProps {
   isOpen: boolean
@@ -16,7 +17,7 @@ export default function ManageQuestionsModal({
   onClose,
   onSave,
 }: ManageQuestionsModalProps) {
-  const [activeTab, setActiveTab] = useState<'options' | 'menus' | 'doctors'>('options')
+  const [activeTab, setActiveTab] = useState<'options' | 'menus' | 'doctors' | 'texts'>('options')
 
   if (!isOpen) return null
 
@@ -54,6 +55,15 @@ export default function ManageQuestionsModal({
                 }`}
             >
               設問選択肢の編集
+            </button>
+            <button
+              onClick={() => setActiveTab('texts')}
+              className={`flex-1 py-4 text-sm font-medium rounded-md transition-all border-0 ${activeTab === 'texts'
+                ? 'bg-white text-gray-900 shadow'
+                : 'text-gray-500 hover:text-gray-700'
+                }`}
+            >
+              質問文の編集
             </button>
             <button
               onClick={() => setActiveTab('menus')}
@@ -99,6 +109,16 @@ export default function ManageQuestionsModal({
             )}
             {activeTab === 'doctors' && (
               <ManageDoctorsModal
+                isOpen={true}
+                onClose={() => { }}
+                onSave={() => {
+                  onSave()
+                }}
+                embedded={true}
+              />
+            )}
+            {activeTab === 'texts' && (
+              <ManageQuestionTextsModal
                 isOpen={true}
                 onClose={() => { }}
                 onSave={() => {

@@ -75,8 +75,28 @@ export default function SurveyForm() {
     atmosphereRating: atmosphereRatings,
     staffServiceRating: staffServiceRatings,
   })
+  const [questionTexts, setQuestionTexts] = useState<Record<string, string>>({})
 
   useEffect(() => {
+    // 質問文を取得
+    fetch('/api/questions')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch questions')
+        return res.json()
+      })
+      .then((data) => {
+        if (Array.isArray(data)) {
+          const texts: Record<string, string> = {}
+          data.forEach((q: { key: string; label: string }) => {
+            texts[q.key] = q.label
+          })
+          setQuestionTexts(texts)
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching questions:', error)
+      })
+
     // 選択肢を取得
     fetch('/api/question-options')
       .then((res) => {
@@ -265,7 +285,7 @@ export default function SurveyForm() {
         return (
           <div className="space-y-4 md:space-y-8">
             <div className="space-y-2 md:space-y-4">
-              <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">性別を選択してください</h2>
+              <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.gender || '性別を選択してください'}</h2>
               <div className="grid grid-cols-2 gap-2 md:gap-4">
                 {questionOptions.gender.map((gender) => (
                   <button
@@ -282,7 +302,7 @@ export default function SurveyForm() {
               </div>
             </div>
             <div className="space-y-2 md:space-y-4">
-              <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">年齢層を選択してください</h2>
+              <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.ageGroup || '年齢層を選択してください'}</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                 {questionOptions.ageGroup.map((age) => (
                   <button
@@ -315,7 +335,7 @@ export default function SurveyForm() {
         // 院
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どちらの院で施術を受けられましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.clinicId || 'どちらの院で施術を受けられましたか？'}</h2>
             {clinics.length === 0 ? (
               <p className="text-black">院情報を読み込み中...</p>
             ) : (
@@ -341,7 +361,7 @@ export default function SurveyForm() {
         // 先生
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どちらの先生に施術していただきましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.doctorId || 'どちらの先生に施術していただきましたか？'}</h2>
             {selectedClinic ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
                 {selectedClinic.doctors.map((doctor) => (
@@ -372,7 +392,7 @@ export default function SurveyForm() {
 
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術日を選択してください</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.treatmentDate || '施術日を選択してください'}</h2>
             <div className="w-full overflow-hidden">
               <input
                 type="date"
@@ -412,7 +432,7 @@ export default function SurveyForm() {
         // 施術メニュー
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">どの施術メニューを受けられましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.treatmentMenu || 'どの施術メニューを受けられましたか？'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
               {treatmentMenus.map((menu) => (
                 <button
@@ -434,7 +454,7 @@ export default function SurveyForm() {
         // 結果への満足度
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術結果に満足できましたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.resultSatisfaction || '施術結果に満足できましたか？'}</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
               {questionOptions.resultSatisfaction.map((result) => (
                 <button
@@ -456,7 +476,7 @@ export default function SurveyForm() {
         // カウンセリングへの満足度
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">カウンセリングはご希望に沿った内容でしたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.counselingSatisfaction || 'カウンセリングはご希望に沿った内容でしたか？'}</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
               {questionOptions.counselingSatisfaction.map((counseling) => (
                 <button
@@ -478,7 +498,7 @@ export default function SurveyForm() {
         // 院内の雰囲気
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">院内の雰囲気はいかがでしたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.atmosphereRating || '院内の雰囲気はいかがでしたか？'}</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
               {questionOptions.atmosphereRating.map((atmosphere) => (
                 <button
@@ -500,7 +520,7 @@ export default function SurveyForm() {
         // スタッフの対応
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">スタッフの対応はいかがでしたか？</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.staffServiceRating || 'スタッフの対応はいかがでしたか？'}</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
               {questionOptions.staffServiceRating.map((staff) => (
                 <button
@@ -525,7 +545,7 @@ export default function SurveyForm() {
 
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">伝えたいことがあれば、お書きください（任意）</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.message || '伝えたいことがあれば、お書きください（任意）'}</h2>
             <textarea
               value={formData.message || ''}
               onChange={(e) => {
