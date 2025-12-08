@@ -66,7 +66,46 @@ export default function SurveyForm() {
   const [selectedClinic, setSelectedClinic] = useState<Clinic | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const [questionOptions, setQuestionOptions] = useState<Record<string, string[]>>({
+    gender: genders,
+    ageGroup: ageGroups,
+    satisfaction: satisfactions,
+    resultSatisfaction: resultSatisfactions,
+    counselingSatisfaction: counselingSatisfactions,
+    atmosphereRating: atmosphereRatings,
+    staffServiceRating: staffServiceRatings,
+  })
+
   useEffect(() => {
+    // 選択肢を取得
+    fetch('/api/question-options')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch question options')
+        return res.json()
+      })
+      .then((data) => {
+        // データがあれば更新（なければデフォルトのまま）
+        if (Object.keys(data).length > 0) {
+          const newOptions: Record<string, string[]> = { ...questionOptions }
+
+          // APIのレスポンス形式に合わせて変換
+          // dataは { category: [{ label, value, order }, ...] } の形式
+          Object.keys(data).forEach((category) => {
+            if (data[category] && Array.isArray(data[category])) {
+              // order順にソートしてvalue（またはlabel）を抽出
+              // ここでは表示用にlabelを使用する想定だが、現状のコードはvalue=labelのような扱い
+              // DBのvalueを使うかlabelを使うか統一が必要。
+              // 現状のハードコードは ['男性', '女性'] なので、これを label とみなす。
+              newOptions[category] = data[category].map((opt: any) => opt.label)
+            }
+          })
+          setQuestionOptions(newOptions)
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching question options:', error)
+      })
+
     fetch('/api/clinics')
       .then((res) => {
         if (!res.ok) {
@@ -228,13 +267,13 @@ export default function SurveyForm() {
             <div className="space-y-2 md:space-y-4">
               <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">性別を選択してください</h2>
               <div className="grid grid-cols-2 gap-2 md:gap-4">
-                {genders.map((gender) => (
+                {questionOptions.gender.map((gender) => (
                   <button
                     key={gender}
                     onClick={() => handleSelect('gender', gender, false)}
                     className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${formData.gender === gender
-                        ? 'border-pink-500 bg-pink-300'
-                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      ? 'border-pink-500 bg-pink-300'
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                       }`}
                   >
                     {gender}
@@ -245,13 +284,13 @@ export default function SurveyForm() {
             <div className="space-y-2 md:space-y-4">
               <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">年齢層を選択してください</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-                {ageGroups.map((age) => (
+                {questionOptions.ageGroup.map((age) => (
                   <button
                     key={age}
                     onClick={() => handleSelect('ageGroup', age, false)}
                     className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-black font-medium text-sm md:text-base ${formData.ageGroup === age
-                        ? 'border-pink-500 bg-pink-300'
-                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      ? 'border-pink-500 bg-pink-300'
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                       }`}
                   >
                     {age}
@@ -286,8 +325,8 @@ export default function SurveyForm() {
                     key={clinic.id}
                     onClick={() => handleSelect('clinicId', clinic.id)}
                     className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.clinicId === clinic.id
-                        ? 'border-pink-500 bg-pink-300'
-                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      ? 'border-pink-500 bg-pink-300'
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                       }`}
                   >
                     {clinic.name}
@@ -310,8 +349,8 @@ export default function SurveyForm() {
                     key={doctor.id}
                     onClick={() => handleSelect('doctorId', doctor.id)}
                     className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.doctorId === doctor.id
-                        ? 'border-pink-500 bg-pink-300'
-                        : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                      ? 'border-pink-500 bg-pink-300'
+                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                       }`}
                   >
                     {doctor.name}
@@ -380,8 +419,8 @@ export default function SurveyForm() {
                   key={menu}
                   onClick={() => handleSelect('treatmentMenu', menu)}
                   className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.treatmentMenu === menu
-                      ? 'border-pink-500 bg-pink-300'
-                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    ? 'border-pink-500 bg-pink-300'
+                    : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                     }`}
                 >
                   {menu}
@@ -397,13 +436,13 @@ export default function SurveyForm() {
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">施術結果に満足できましたか？</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
-              {resultSatisfactions.map((result) => (
+              {questionOptions.resultSatisfaction.map((result) => (
                 <button
                   key={result}
                   onClick={() => handleSelect('resultSatisfaction', result)}
                   className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.resultSatisfaction === result
-                      ? 'border-pink-500 bg-pink-300'
-                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    ? 'border-pink-500 bg-pink-300'
+                    : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                     }`}
                 >
                   {result}
@@ -419,13 +458,13 @@ export default function SurveyForm() {
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">カウンセリングはご希望に沿った内容でしたか？</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
-              {counselingSatisfactions.map((counseling) => (
+              {questionOptions.counselingSatisfaction.map((counseling) => (
                 <button
                   key={counseling}
                   onClick={() => handleSelect('counselingSatisfaction', counseling)}
                   className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.counselingSatisfaction === counseling
-                      ? 'border-pink-500 bg-pink-300'
-                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    ? 'border-pink-500 bg-pink-300'
+                    : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                     }`}
                 >
                   {counseling}
@@ -441,13 +480,13 @@ export default function SurveyForm() {
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">院内の雰囲気はいかがでしたか？</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
-              {atmosphereRatings.map((atmosphere) => (
+              {questionOptions.atmosphereRating.map((atmosphere) => (
                 <button
                   key={atmosphere}
                   onClick={() => handleSelect('atmosphereRating', atmosphere)}
                   className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.atmosphereRating === atmosphere
-                      ? 'border-pink-500 bg-pink-300'
-                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    ? 'border-pink-500 bg-pink-300'
+                    : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                     }`}
                 >
                   {atmosphere}
@@ -463,13 +502,13 @@ export default function SurveyForm() {
           <div className="space-y-4">
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">スタッフの対応はいかがでしたか？</h2>
             <div className="grid grid-cols-1 gap-2 md:gap-4">
-              {staffServiceRatings.map((staff) => (
+              {questionOptions.staffServiceRating.map((staff) => (
                 <button
                   key={staff}
                   onClick={() => handleSelect('staffServiceRating', staff)}
                   className={`p-3 md:p-4 border-2 rounded-lg transition-colors text-left text-black font-medium text-sm md:text-base ${formData.staffServiceRating === staff
-                      ? 'border-pink-500 bg-pink-300'
-                      : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
+                    ? 'border-pink-500 bg-pink-300'
+                    : 'bg-white border-pink-200 md:hover:border-pink-400 md:hover:bg-pink-200'
                     }`}
                 >
                   {staff}
