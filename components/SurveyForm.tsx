@@ -416,7 +416,7 @@ export default function SurveyForm() {
                 style={{ boxSizing: 'border-box', width: '100%', maxWidth: '100%', minHeight: '50px' }}
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setCurrentStep(currentStep + 1)}
                 disabled={!formData.treatmentDate}
@@ -553,7 +553,7 @@ export default function SurveyForm() {
               }}
               placeholder="ご意見やご感想をお聞かせください"
               rows={6}
-              className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg text-black resize-none"
+              className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg text-black resize-none box-border max-w-full"
             />
 
             {/* 選択内容の確認 */}
