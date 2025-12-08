@@ -496,7 +496,13 @@ export default function SurveyForm() {
                 )}
               />
             </div>
-            <div className="mt-4 flex justify-end">
+            <div className="mt-4 flex justify-between items-center">
+              <button
+                onClick={handleBack}
+                className="px-4 py-2 md:px-6 md:py-2 bg-gray-200 text-black rounded-lg hover:bg-pink-100 hover:border-pink-300 border-2 border-transparent transition-colors font-medium text-sm md:text-base"
+              >
+                戻る
+              </button>
               <button
                 onClick={() => setCurrentStep(currentStep + 1)}
                 disabled={!formData.treatmentDate}
@@ -746,7 +752,7 @@ export default function SurveyForm() {
 
           {renderStep()}
 
-          {currentStep > 1 && currentStep < 10 && (
+          {currentStep > 1 && currentStep < 10 && currentStep !== 4 && (
             <div className="mt-4 md:mt-8">
               <button
                 onClick={handleBack}
