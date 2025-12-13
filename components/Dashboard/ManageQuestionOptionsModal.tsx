@@ -307,33 +307,8 @@ export default function ManageQuestionOptionsModal({
             </select>
           </div>
 
-          {/* 追加フォーム */}
-          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-lg font-semibold mb-3 text-gray-900">
-              {categoryLabels[selectedCategory]}の選択肢を追加
-            </h3>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={newValue}
-                onChange={(e) => setNewValue(e.target.value)}
-                placeholder="選択肢(例: 男性)"
-                disabled={isAdding}
-                className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50"
-              />
-
-              <button
-                onClick={handleAdd}
-                disabled={isAdding || !newValue.trim()}
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-0"
-              >
-                {isAdding ? '追加中...' : '追加'}
-              </button>
-            </div>
-          </div>
-
           {/* 選択肢一覧 */}
-          <div className="space-y-2 border border-gray-200 rounded-lg p-4">
+          <div className="space-y-2 border-2 border-gray-400 rounded-lg p-4 mb-6">
             <h3 className="text-lg font-semibold mb-3 text-gray-900">
               {categoryLabels[selectedCategory]}の選択肢一覧
             </h3>
@@ -401,6 +376,26 @@ export default function ManageQuestionOptionsModal({
                 </div>
               ))
             )}
+          </div>
+
+          {/* 追加フォーム */}
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newValue}
+              onChange={(e) => setNewValue(e.target.value)}
+              placeholder="新しい選択肢を追加"
+              disabled={isAdding}
+              className="flex-1 px-4 py-2 border-0 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black disabled:opacity-50 bg-gray-100"
+            />
+
+            <button
+              onClick={handleAdd}
+              disabled={isAdding || !newValue.trim()}
+              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-0"
+            >
+              {isAdding ? '追加中...' : '追加'}
+            </button>
           </div>
         </>
       )}

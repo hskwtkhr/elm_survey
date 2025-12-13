@@ -147,8 +147,15 @@ export default function DashboardPage() {
 
   if (isLoading && !dashboardData) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4 transition-opacity duration-300">
-        <div className="max-w-7xl mx-auto animate-pulse space-y-8">
+      <div className="min-h-screen bg-gray-50 py-12 px-4 transition-opacity duration-300 relative">
+        {/* Loading Overlay */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-gray-50/50 backdrop-blur-[2px]">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent shadow-lg mb-4"></div>
+          <p className="text-xl font-bold text-blue-600 tracking-wider animate-pulse">Loading...</p>
+        </div>
+
+        {/* Background Skeleton */}
+        <div className="max-w-7xl mx-auto animate-pulse space-y-8 opacity-50">
           {/* Header Skeleton */}
           <div className="flex justify-between items-end mb-8">
             <div className="h-12 w-48 bg-gray-200 rounded-lg"></div>
