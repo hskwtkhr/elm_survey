@@ -50,6 +50,7 @@ model Survey {
   atmosphereRating        String?  // 院内の雰囲気
   staffServiceRating      String?  // スタッフの対応
   message        String?  // 伝えたいこと（任意）
+  ipHash         String?  // レート制限用IPハッシュ
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -57,6 +58,7 @@ model Survey {
   @@index([doctorId])
   @@index([treatmentDate])
   @@index([satisfaction])
+  @@index([ipHash])
 }
 
 model AdminUser {
@@ -73,6 +75,14 @@ model TreatmentMenu {
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model RateLimit {
+  id        String   @id @default(uuid())
+  ipHash    String
+  createdAt DateTime @default(now())
+
+  @@index([ipHash, createdAt])
 }
 
 model QuestionOption {

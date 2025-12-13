@@ -1,11 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import crypto from 'crypto'
 
 // このAPI Routeは動的に実行される（静的生成時には実行しない）
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
+    // IPアドレスの取得とハッシュ化
+    const ip = request.headers.get('x-forwarded-for') || 'unknown'
+    const ipHash = crypto.createHash('sha256').update(ip).digest('hex')
+
+    // レート制限チェック (1時間に10件まで)
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000)
+    const recentRequestsCount = await prisma.rateLimit.count({
+      where: {
+        ipHash,
+        createdAt: {
+          gte: oneHourAgo,
+        },
+      },
+    })
+
+    if (recentRequestsCount >= 10) {
+      return NextResponse.json(
+        { error: '短時間に多数の投稿が行われました。しばらく待ってから再度お試しください。' },
+        { status: 429 }
+      )
+    }
+
+    // レート制限用ログを保存（バリデーション成否に関わらず記録）
+    await prisma.rateLimit.create({
+      data: { ipHash },
+    })
+
     const body = await request.json()
     console.log('Received survey data:', body)
 
@@ -88,7 +116,8 @@ export async function POST(request: NextRequest) {
         counselingSatisfaction: counselingSatisfaction || null,
         atmosphereRating: atmosphereRating || null,
         staffServiceRating: staffServiceRating || null,
-      } as any, // Prisma型定義の更新が必要な場合の一時的な対応
+        ipHash, // IPハッシュを保存
+      },
       include: {
         clinic: {
           select: {
@@ -102,10 +131,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       id: survey.id,
       clinicId: survey.clinicId,
-      resultSatisfaction: (survey as any).resultSatisfaction || survey.satisfaction,
-      counselingSatisfaction: (survey as any).counselingSatisfaction || null,
-      atmosphereRating: (survey as any).atmosphereRating || null,
-      staffServiceRating: (survey as any).staffServiceRating || null,
+      resultSatisfaction: survey.resultSatisfaction || survey.satisfaction,
+      counselingSatisfaction: survey.counselingSatisfaction || null,
+      atmosphereRating: survey.atmosphereRating || null,
+      staffServiceRating: survey.staffServiceRating || null,
     })
   } catch (error) {
     console.error('Error creating survey:', error)

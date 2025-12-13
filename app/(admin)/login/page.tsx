@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -16,32 +17,25 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+      const result = await signIn('credentials', {
+        username,
+        password,
+        redirect: false,
       })
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.error || 'ログインに失敗しました')
+      if (result?.error) {
+        setError('ユーザー名またはパスワードが正しくありません')
+        setIsLoading(false)
         return
       }
 
-      // セッションを保存（簡易的な実装）
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('adminAuth', 'true')
-        sessionStorage.setItem('adminUsername', username)
+      if (result?.ok) {
+        router.push('/dashboard')
+        router.refresh()
       }
-
-      router.push('/dashboard')
     } catch (err) {
       console.error('Login error:', err)
       setError('ログインに失敗しました')
-    } finally {
       setIsLoading(false)
     }
   }

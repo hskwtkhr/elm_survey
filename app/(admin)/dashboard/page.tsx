@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import NextImage from 'next/image'
+import { signOut } from 'next-auth/react'
 import Filters from '@/components/Dashboard/Filters'
 import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
@@ -47,25 +48,10 @@ export default function DashboardPage() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isManageQuestionsModalOpen, setIsManageQuestionsModalOpen] = useState(false)
   const [isClickDetailsModalOpen, setIsClickDetailsModalOpen] = useState(false)
 
   useEffect(() => {
-    // 認証チェック
-    if (typeof window !== 'undefined') {
-      const auth = sessionStorage.getItem('adminAuth')
-      if (!auth) {
-        router.push('/login')
-        return
-      }
-      setIsAuthenticated(true)
-    }
-  }, [router])
-
-  useEffect(() => {
-    if (!isAuthenticated) return
-
     // 院一覧を取得
     fetch('/api/clinics')
       .then((res) => {
@@ -86,14 +72,12 @@ export default function DashboardPage() {
         console.error('Error fetching clinics:', error)
         setClinics([])
       })
-  }, [isAuthenticated])
+  }, [])
 
   useEffect(() => {
-    if (!isAuthenticated) return
-
     // ダッシュボードデータを取得
     fetchDashboardData()
-  }, [selectedClinicId, startDate, endDate, currentPage, isAuthenticated])
+  }, [selectedClinicId, startDate, endDate, currentPage])
 
   const fetchDashboardData = async () => {
     setIsLoading(true)
@@ -106,6 +90,13 @@ export default function DashboardPage() {
       params.append('limit', '50')
 
       const response = await fetch(`/api/dashboard?${params.toString()}`)
+
+      if (response.status === 401) {
+        // ミドルウェアで弾かれるはずだが、念のため
+        router.push('/login')
+        return
+      }
+
       const data = await response.json()
 
       if (response.ok) {
@@ -150,25 +141,70 @@ export default function DashboardPage() {
     }
   }
 
-  const handleLogout = () => {
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('adminAuth')
-      sessionStorage.removeItem('adminUsername')
-    }
-    router.push('/login')
-  }
-
-  if (!isAuthenticated) {
-    return null
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/login' })
   }
 
   if (isLoading && !dashboardData) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-lg text-gray-600">データを読み込んでいます...</p>
+      <div className="min-h-screen bg-gray-50 py-12 px-4 transition-opacity duration-300">
+        <div className="max-w-7xl mx-auto animate-pulse space-y-8">
+          {/* Header Skeleton */}
+          <div className="flex justify-between items-end mb-8">
+            <div className="h-12 w-48 bg-gray-200 rounded-lg"></div>
+            <div className="flex gap-4">
+              <div className="h-12 w-32 bg-gray-200 rounded-lg"></div>
+              <div className="h-12 w-32 bg-gray-200 rounded-lg"></div>
+              <div className="h-12 w-32 bg-gray-200 rounded-lg"></div>
+            </div>
+          </div>
+
+          {/* Stats Cards Skeleton */}
+          <div className="mb-6 bg-white p-6 rounded-lg shadow border border-gray-100">
+            <div className="h-6 w-32 bg-gray-200 rounded mb-6"></div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="text-center p-4">
+                  <div className="h-10 w-16 bg-gray-200 rounded mx-auto mb-2"></div>
+                  <div className="h-4 w-24 bg-gray-200 rounded mx-auto"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Filters Skeleton */}
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-wrap gap-4 items-end">
+            <div className="h-10 w-40 bg-gray-200 rounded"></div>
+            <div className="h-10 w-40 bg-gray-200 rounded"></div>
+            <div className="h-10 w-40 bg-gray-200 rounded"></div>
+            <div className="h-10 w-24 bg-gray-200 rounded ml-auto"></div>
+          </div>
+
+          {/* Charts Skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-80">
+              <div className="h-6 w-40 bg-gray-200 rounded mb-4"></div>
+              <div className="h-full w-full bg-gray-100 rounded-full opacity-50 mx-auto aspect-square max-h-56"></div>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-80">
+              <div className="h-6 w-40 bg-gray-200 rounded mb-4"></div>
+              <div className="h-full w-full bg-gray-100 rounded opacity-50"></div>
+            </div>
+          </div>
+
+          {/* Table Skeleton */}
+          <div className="bg-white rounded-lg shadow overflow-hidden border border-gray-100">
+            <div className="p-4 border-b border-gray-100 flex justify-between">
+              <div className="h-6 w-32 bg-gray-200 rounded"></div>
+              <div className="h-6 w-24 bg-gray-200 rounded"></div>
+            </div>
+            <div className="p-4 space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="h-8 w-full bg-gray-100 rounded"></div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
