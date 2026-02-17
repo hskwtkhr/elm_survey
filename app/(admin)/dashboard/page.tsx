@@ -8,6 +8,7 @@ import Filters from '@/components/Dashboard/Filters'
 import Charts from '@/components/Dashboard/Charts'
 import DataTable from '@/components/Dashboard/DataTable'
 import ManageQuestionsModal from '@/components/Dashboard/ManageQuestionsModal'
+import ManageClinicsModal from '@/components/Dashboard/ManageClinicsModal'
 
 import ClickDetailsModal from '@/components/Dashboard/ClickDetailsModal'
 
@@ -49,6 +50,7 @@ export default function DashboardPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
   const [isManageQuestionsModalOpen, setIsManageQuestionsModalOpen] = useState(false)
+  const [isManageClinicsModalOpen, setIsManageClinicsModalOpen] = useState(false)
   const [isClickDetailsModalOpen, setIsClickDetailsModalOpen] = useState(false)
 
   useEffect(() => {
@@ -247,6 +249,12 @@ export default function DashboardPage() {
           </div>
           <div className="flex gap-4">
             <button
+              onClick={() => setIsManageClinicsModalOpen(true)}
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors border-0 text-lg font-medium"
+            >
+              院の管理
+            </button>
+            <button
               onClick={() => setIsManageQuestionsModalOpen(true)}
               className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors border-0 text-lg font-medium"
             >
@@ -337,6 +345,18 @@ export default function DashboardPage() {
           onSave={() => {
             fetchDashboardData()
             // 院一覧も再取得
+            fetch('/api/clinics')
+              .then((res) => res.json())
+              .then((data) => setClinics(data))
+              .catch((error) => console.error('Error fetching clinics:', error))
+          }}
+        />
+
+        <ManageClinicsModal
+          isOpen={isManageClinicsModalOpen}
+          onClose={() => setIsManageClinicsModalOpen(false)}
+          onSave={() => {
+            // 院一覧を再取得
             fetch('/api/clinics')
               .then((res) => res.json())
               .then((data) => setClinics(data))

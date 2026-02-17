@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 
@@ -6,6 +7,23 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   try {
+    const clinics = await prisma.clinic.findMany({
+      include: {
+        doctors: {
+          select: {
+            id: true,
+            name: true,
+          },
+          orderBy: {
+            createdAt: 'asc', // orderカラムがない可能性があるためcreatedAtで代用
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      }
+    })
+
     // 指定された順番で院を取得
     const clinicOrder = [
       '広島院',
@@ -19,62 +37,133 @@ export async function GET() {
       '麻布院',
     ]
 
-    const clinics = await prisma.clinic.findMany({
-      include: {
-        doctors: {
-          select: {
-            id: true,
-            name: true,
-          },
-          orderBy: {
-            order: 'asc',
-          },
-        },
-      },
-    })
-
-    // IDで重複を削除（念のため）
-    const uniqueClinics = Array.from(
-      new Map(clinics.map(clinic => [clinic.id, clinic])).values()
-    )
-
-    // 指定された順番でソート
-    uniqueClinics.sort((a, b) => {
+    // 並び替え
+    const sortedClinics = [...clinics].sort((a, b) => {
       const indexA = clinicOrder.indexOf(a.name)
       const indexB = clinicOrder.indexOf(b.name)
-      // 順番リストにない場合は最後に配置
-      if (indexA === -1) return 1
-      if (indexB === -1) return -1
-      return indexA - indexB
+
+      // 両方ともリストにある場合
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB
+      }
+      // aのみリストにある場合（aを先に）
+      if (indexA !== -1) return -1
+      // bのみリストにある場合（bを先に）
+      if (indexB !== -1) return 1
+
+      // 両方ともリストにない場合は作成日時順
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     })
 
-    return NextResponse.json(uniqueClinics)
+    return NextResponse.json(sortedClinics)
   } catch (error) {
     console.error('Error fetching clinics:', error)
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    const errorStack = error instanceof Error ? error.stack : undefined
-    const errorName = error instanceof Error ? error.name : 'Unknown'
-
-    console.error('Error name:', errorName)
-    console.error('Error details:', errorMessage)
-    console.error('Error stack:', errorStack)
-
-    // DATABASE_URLの設定状況を確認（セキュリティのため、実際のURLは返さない）
-    const hasDatabaseUrl = !!process.env.DATABASE_URL
-    console.error('DATABASE_URL is set:', hasDatabaseUrl)
-
-    // 本番環境でもエラーメッセージを返す（デバッグ用）
     return NextResponse.json(
-      {
-        error: errorMessage,
-        errorName: errorName,
-        message: 'Failed to fetch clinics',
-        hasDatabaseUrl: hasDatabaseUrl,
-        // 本番環境でもスタックトレースを含める（一時的なデバッグ用）
-        ...(errorStack && { stack: errorStack })
-      },
+      { error: 'Failed to fetch clinics' },
       { status: 500 }
     )
   }
 }
 
+// 院の追加
+export async function POST(req: Request) {
+  try {
+    const { name, google_review_url } = await req.json()
+
+    if (!name) {
+      return NextResponse.json(
+        { error: 'Name is required' },
+        { status: 400 }
+      )
+    }
+
+    const clinic = await prisma.clinic.create({
+      data: {
+        name,
+        google_review_url: google_review_url || '',
+      },
+    })
+
+    return NextResponse.json(clinic)
+  } catch (error) {
+    console.error('Error creating clinic:', error)
+    return NextResponse.json(
+      { error: 'Failed to create clinic' },
+      { status: 500 }
+    )
+  }
+}
+
+// 院の更新
+export async function PUT(req: Request) {
+  try {
+    const { id, name, google_review_url } = await req.json()
+
+    if (!id || !name) {
+      return NextResponse.json(
+        { error: 'ID and Name are required' },
+        { status: 400 }
+      )
+    }
+
+    const clinic = await prisma.clinic.update({
+      where: { id },
+      data: {
+        name,
+        google_review_url: google_review_url || '',
+      },
+    })
+
+    return NextResponse.json(clinic)
+  } catch (error) {
+    console.error('Error updating clinic:', error)
+    return NextResponse.json(
+      { error: 'Failed to update clinic' },
+      { status: 500 }
+    )
+  }
+}
+
+// 院の削除
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json(
+        { error: 'ID is required' },
+        { status: 400 }
+      )
+    }
+
+    // 関連する医師がいるかチェック
+    const doctorsCount = await prisma.doctor.count({
+      where: { clinicId: id }
+    })
+
+    // 関連するアンケートがあるかチェック
+    const surveysCount = await prisma.survey.count({
+      where: { clinicId: id }
+    })
+
+    if (doctorsCount > 0 || surveysCount > 0) {
+      return NextResponse.json(
+        { error: 'Cannot delete clinic with associated doctors or surveys' },
+        { status: 400 }
+      )
+    }
+
+    await prisma.clinic.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error('Error deleting clinic:', error)
+    return NextResponse.json(
+      { error: 'Failed to delete clinic' },
+      { status: 500 }
+    )
+  }
+}
