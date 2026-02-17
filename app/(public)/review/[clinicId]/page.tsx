@@ -100,13 +100,19 @@ export default function ReviewPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-4 md:py-12 px-4">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-4 md:p-8 text-center">
-          <div className="mb-4 md:mb-6 flex justify-center">
-            <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-40 md:w-full" />
+      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl flex flex-col items-center">
+          <div className="w-16 h-16 mb-4">
+            <svg className="animate-spin w-full h-full text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
           </div>
-          <div className="animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-pink-500 mx-auto mb-3 md:mb-4"></div>
-          <p className="text-sm md:text-lg text-black">送信中...</p>
+          <p className="text-lg font-bold text-gray-800">送信中...</p>
+          <p className="text-sm text-gray-500 mt-2 text-center">
+            AIが口コミ文章を生成しています。<br />
+            画面が切り替わるまでお待ちください。
+          </p>
         </div>
       </div>
     )
