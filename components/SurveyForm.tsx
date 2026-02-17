@@ -693,6 +693,27 @@ export default function SurveyForm() {
               </div>
             </div>
 
+
+
+            {/* プライバシーポリシーの注釈 */}
+            <div className="mt-6 text-xs md:text-sm text-gray-600">
+              <ul className="list-disc pl-5 space-y-1">
+                <li>本アンケートでは、お名前やご連絡先などの個人を特定できる情報は収集いたしません。</li>
+                <li>
+                  ご回答いただいた内容は、当院のサービス向上のためにのみ使用し、
+                  <a
+                    href="https://www.elm-clinic.jp/privacy/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-pink-500 underline hover:text-pink-600"
+                  >
+                    プライバシーポリシー
+                  </a>
+                  に基づき厳重に管理いたします。
+                </li>
+              </ul>
+            </div>
+
             <div className="flex gap-4 mt-6">
               <button
                 onClick={handleBack}
@@ -705,12 +726,19 @@ export default function SurveyForm() {
                   await handleSubmitWithData(formData)
                 }}
                 disabled={isSubmitting}
-                className="flex-1 px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50 border-0"
+                className="flex-1 px-4 py-2 md:px-6 md:py-3 bg-pink-300 text-black rounded-lg hover:bg-pink-400 transition-colors font-medium text-sm md:text-base disabled:opacity-50 border-0 flex items-center justify-center gap-2"
               >
-                {isSubmitting ? '送信中...' : '送信する'}
+                {isSubmitting ? (
+                  <>
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-600 border-t-transparent" />
+                    <span>送信中...</span>
+                  </>
+                ) : (
+                  '送信する'
+                )}
               </button>
             </div>
-          </div>
+          </div >
         )
 
       default:
