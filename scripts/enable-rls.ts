@@ -32,6 +32,10 @@ async function main() {
         await prisma.$executeRawUnsafe(`ALTER TABLE "Question" ENABLE ROW LEVEL SECURITY;`)
         console.log('RLS enabled for Question')
 
+        // RateLimit
+        await prisma.$executeRawUnsafe(`ALTER TABLE "RateLimit" ENABLE ROW LEVEL SECURITY;`)
+        console.log('RLS enabled for RateLimit')
+
         console.log('Successfully enabled RLS on all tables.')
     } catch (error) {
         console.error('Error enabling RLS:', error)
