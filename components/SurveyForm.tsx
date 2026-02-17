@@ -695,24 +695,7 @@ export default function SurveyForm() {
 
 
 
-            {/* プライバシーポリシーの注釈 */}
-            <div className="mt-6 text-xs md:text-sm text-gray-600">
-              <ul className="list-disc pl-5 space-y-1">
-                <li>本アンケートでは、お名前やご連絡先などの個人を特定できる情報は収集いたしません。</li>
-                <li>
-                  ご回答いただいた内容は、当院のサービス向上のためにのみ使用し、
-                  <a
-                    href="https://www.elm-clinic.jp/privacy/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-pink-500 underline hover:text-pink-600"
-                  >
-                    プライバシーポリシー
-                  </a>
-                  に基づき厳重に管理いたします。
-                </li>
-              </ul>
-            </div>
+
 
             <div className="flex gap-4 mt-6">
               <button
@@ -730,7 +713,10 @@ export default function SurveyForm() {
               >
                 {isSubmitting ? (
                   <>
-                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-600 border-t-transparent" />
+                    <svg className="animate-spin h-5 w-5 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                     <span>送信中...</span>
                   </>
                 ) : (
@@ -790,6 +776,28 @@ export default function SurveyForm() {
               </button>
             </div>
           )}
+        </div>
+
+        {/* プライバシーポリシー & コピーライト */}
+        <div className="mt-8 mb-12 text-center text-gray-500 text-xs md:text-sm">
+          <p className="mb-2">
+            本アンケートでは、個人を特定できる情報は収集いたしません。
+          </p>
+          <p className="mb-6">
+            ご回答内容は、サービス向上のためにのみ使用し、<br className="md:hidden" />
+            <a
+              href="https://www.elm-clinic.jp/privacy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-500 underline hover:text-pink-600"
+            >
+              プライバシーポリシー
+            </a>
+            に基づき厳重に管理いたします。
+          </p>
+          <p className="text-gray-400">
+            &copy; ELM CLINIC. All Rights Reserved.
+          </p>
         </div>
       </div>
     </div>
