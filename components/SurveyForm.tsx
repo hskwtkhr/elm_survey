@@ -735,7 +735,7 @@ export default function SurveyForm() {
             </div>
             <p className="text-lg font-bold text-gray-800">送信中...</p>
             <p className="text-sm text-gray-500 mt-2 text-center">
-              AIが口コミ文章を生成しています。<br />
+              アンケートを送信しています。<br />
               画面が切り替わるまでお待ちください。
             </p>
           </div>
