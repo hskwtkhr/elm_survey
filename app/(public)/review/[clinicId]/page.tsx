@@ -175,7 +175,7 @@ export default function ReviewPage() {
                     e.target.style.height = 'auto'
                     e.target.style.height = e.target.scrollHeight + 'px'
                   }}
-                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-loose text-sm md:text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
+                  className="w-full bg-transparent text-black whitespace-pre-wrap leading-relaxed md:leading-[2.2] text-sm md:text-base border-none outline-none resize-none focus:ring-0 focus:outline-none"
                   style={{
                     fontFamily: 'inherit',
                     minHeight: '150px',
