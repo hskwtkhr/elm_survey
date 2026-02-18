@@ -201,7 +201,7 @@ export default function ReviewPage() {
                       console.error('Failed to track click:', err)
                     }
                   }}
-                  className={`w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg ${isCopied
+                  className={`w-full px-4 py-3 md:px-8 md:py-4 rounded-full font-bold text-sm md:text-lg transition-all transform hover:scale-105 active:scale-95 shadow-xl border-0 ${isCopied
                     ? 'bg-green-400 text-white'
                     : 'bg-pink-500 text-white hover:bg-pink-600'
                     }`}
@@ -214,12 +214,19 @@ export default function ReviewPage() {
                       </span>
                     </span>
                   ) : (
-                    <span className="flex flex-col items-center justify-center gap-2">
-                      <span className="text-xl">⭐️⭐️⭐️⭐️⭐️</span>
-                      <span>
-                        文章をコピー ＆ <br className="md:hidden" />Google口コミページを開く
-                      </span>
-                    </span>
+                    <div className="flex items-center justify-center gap-4">
+                      <div className="flex flex-col items-center justify-center gap-1">
+                        <span className="text-xl">⭐️⭐️⭐️⭐️⭐️</span>
+                        <span>
+                          文章をコピー ＆ <br className="md:hidden" />Google口コミページを開く
+                        </span>
+                      </div>
+                      <div className="bg-white text-pink-500 rounded-full w-8 h-8 flex items-center justify-center shadow-sm shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+                      </div>
+                    </div>
                   )}
                 </button>
               )}
