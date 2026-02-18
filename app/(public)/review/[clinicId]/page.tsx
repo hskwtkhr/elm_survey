@@ -155,10 +155,12 @@ export default function ReviewPage() {
         {/* メッセージ */}
         <div className="mb-4 md:mb-6 text-center">
           <p className="text-base md:text-xl text-gray-700 mb-2 md:mb-3 font-bold">Googleへの口コミにもご協力ください。</p>
-          <p className="text-xs md:text-sm text-gray-700">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed md:leading-loose">
             アンケート結果を元に、AIで文章を生成しました。
             <br />
-            もし良ければ、下記ボタンを押して、<br className="md:hidden" />Googleの口コミにご協力ください。
+            もし良ければ、下記ボタンを押して、Googleの口コミにご協力ください。
+            <br />
+            <span className="text-pink-600 font-bold">※ボタンを押すと文章が自動的にコピーされますので、<br className="md:hidden" />口コミの入力欄に貼り付けてください。</span>
           </p>
         </div>
 
