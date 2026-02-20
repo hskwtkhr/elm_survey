@@ -30,7 +30,7 @@ interface SurveyFormData {
   counselingSatisfaction?: string
   atmosphereRating?: string
   staffServiceRating?: string
-  message?: string // 伝えたいこと（任意）
+  message?: string // 伝えたいことの他に改善点など（任意）
 }
 
 const genders = ['男性', '女性']
@@ -631,7 +631,7 @@ export default function SurveyForm() {
 
         return (
           <div className="space-y-4">
-            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.message || '伝えたいことがあれば、お書きください（任意）'}</h2>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.message || '伝えたいことの他に改善点などがありましたら…（任意）'}</h2>
             <textarea
               value={formData.message || ''}
               onChange={(e) => {

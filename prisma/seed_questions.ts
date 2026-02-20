@@ -14,7 +14,7 @@ async function main() {
         { key: 'counselingSatisfaction', label: 'カウンセリングはご希望に沿った内容でしたか？', order: 8 },
         { key: 'atmosphereRating', label: '院内の雰囲気はいかがでしたか？', order: 9 },
         { key: 'staffServiceRating', label: 'スタッフの対応はいかがでしたか？', order: 10 },
-        { key: 'message', label: '伝えたいことがあれば、お書きください（任意）', order: 11 },
+        { key: 'message', label: '伝えたいことの他に改善点などがありましたら…（任意）', order: 11 },
     ]
 
     for (const q of questions) {
