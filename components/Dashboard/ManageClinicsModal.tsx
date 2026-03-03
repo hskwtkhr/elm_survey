@@ -7,6 +7,8 @@ interface Clinic {
     id: string
     name: string
     google_review_url: string | null
+    rewardTitle?: string | null
+    rewardDescription?: string | null
 }
 
 interface ManageClinicsModalProps {
@@ -24,6 +26,8 @@ export default function ManageClinicsModal({
     const [editingClinic, setEditingClinic] = useState<Clinic | null>(null)
     const [newClinicName, setNewClinicName] = useState('')
     const [newClinicUrl, setNewClinicUrl] = useState('')
+    const [newRewardTitle, setNewRewardTitle] = useState('')
+    const [newRewardDescription, setNewRewardDescription] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -58,6 +62,8 @@ export default function ManageClinicsModal({
                 body: JSON.stringify({
                     name: newClinicName,
                     google_review_url: newClinicUrl,
+                    rewardTitle: newRewardTitle,
+                    rewardDescription: newRewardDescription,
                 }),
             })
 
@@ -65,6 +71,8 @@ export default function ManageClinicsModal({
 
             setNewClinicName('')
             setNewClinicUrl('')
+            setNewRewardTitle('')
+            setNewRewardDescription('')
             fetchClinics()
             onSave()
         } catch (err) {
@@ -89,6 +97,8 @@ export default function ManageClinicsModal({
                     id: editingClinic.id,
                     name: editingClinic.name,
                     google_review_url: editingClinic.google_review_url,
+                    rewardTitle: editingClinic.rewardTitle,
+                    rewardDescription: editingClinic.rewardDescription,
                 }),
             })
 
@@ -168,6 +178,20 @@ export default function ManageClinicsModal({
                                 onChange={(e) => setNewClinicUrl(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
+                            <input
+                                type="text"
+                                placeholder="特典タイトル（任意）例：🎁 コスメプレゼント！"
+                                value={newRewardTitle}
+                                onChange={(e) => setNewRewardTitle(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <input
+                                type="text"
+                                placeholder="特典説明（任意）例：※投稿画面を受付でご提示ください。"
+                                value={newRewardDescription}
+                                onChange={(e) => setNewRewardDescription(e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
                         </div>
                         <button
                             onClick={handleAddClinic}
@@ -208,6 +232,34 @@ export default function ManageClinicsModal({
                                                         setEditingClinic({
                                                             ...editingClinic,
                                                             google_review_url: e.target.value,
+                                                        })
+                                                    }
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-gray-500 mb-1">特典タイトル（任意）</label>
+                                                <input
+                                                    type="text"
+                                                    value={editingClinic.rewardTitle || ''}
+                                                    onChange={(e) =>
+                                                        setEditingClinic({
+                                                            ...editingClinic,
+                                                            rewardTitle: e.target.value,
+                                                        })
+                                                    }
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs text-gray-500 mb-1">特典説明（任意）</label>
+                                                <input
+                                                    type="text"
+                                                    value={editingClinic.rewardDescription || ''}
+                                                    onChange={(e) =>
+                                                        setEditingClinic({
+                                                            ...editingClinic,
+                                                            rewardDescription: e.target.value,
                                                         })
                                                     }
                                                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"

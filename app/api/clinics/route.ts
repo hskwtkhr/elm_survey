@@ -68,7 +68,7 @@ export async function GET() {
 // 院の追加
 export async function POST(req: Request) {
   try {
-    const { name, google_review_url } = await req.json()
+    const { name, google_review_url, rewardTitle, rewardDescription } = await req.json()
 
     if (!name) {
       return NextResponse.json(
@@ -81,6 +81,8 @@ export async function POST(req: Request) {
       data: {
         name,
         google_review_url: google_review_url || '',
+        rewardTitle: rewardTitle || null,
+        rewardDescription: rewardDescription || null,
       },
     })
 
@@ -97,7 +99,7 @@ export async function POST(req: Request) {
 // 院の更新
 export async function PUT(req: Request) {
   try {
-    const { id, name, google_review_url } = await req.json()
+    const { id, name, google_review_url, rewardTitle, rewardDescription } = await req.json()
 
     if (!id || !name) {
       return NextResponse.json(
@@ -111,6 +113,8 @@ export async function PUT(req: Request) {
       data: {
         name,
         google_review_url: google_review_url || '',
+        rewardTitle: rewardTitle || null,
+        rewardDescription: rewardDescription || null,
       },
     })
 

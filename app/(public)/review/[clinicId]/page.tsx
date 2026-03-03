@@ -12,6 +12,8 @@ export default function ReviewPage() {
 
   const [reviewText, setReviewText] = useState<string>('')
   const [googleReviewUrl, setGoogleReviewUrl] = useState<string>('')
+  const [rewardTitle, setRewardTitle] = useState<string>('')
+  const [rewardDescription, setRewardDescription] = useState<string>('')
   const [isLoading, setIsLoading] = useState(true)
   const [isCopied, setIsCopied] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -25,6 +27,8 @@ export default function ReviewPage() {
         const clinic = clinics.find((c: any) => c.id === clinicId)
         if (clinic) {
           setGoogleReviewUrl(clinic.google_review_url)
+          setRewardTitle(clinic.rewardTitle || '🎁 Googleの口コミ投稿いただいた方に、コスメプレゼント！')
+          setRewardDescription(clinic.rewardDescription || '※投稿画面を受付でご提示ください。')
         } else {
           setError('院が見つかりません')
           setIsLoading(false)
@@ -155,11 +159,11 @@ export default function ReviewPage() {
         {/* メッセージ */}
         <div className="mb-4 md:mb-6 text-center">
           <div className="bg-pink-100 text-pink-700 font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg mb-4 inline-block border-2 border-pink-300 shadow-sm transform hover:scale-105 transition-transform duration-300">
-            <div className="text-lg md:text-2xl mb-1">
-              🎁 Googleの口コミ投稿いただいた方に、コスメプレゼント！
+            <div className="text-lg md:text-2xl mb-1 whitespace-pre-line">
+              {rewardTitle}
             </div>
-            <div className="text-xs md:text-sm font-normal text-pink-600">
-              ※投稿画面を受付でご提示ください。
+            <div className="text-xs md:text-sm font-normal text-pink-600 whitespace-pre-line">
+              {rewardDescription}
             </div>
           </div>
           <p className="text-base md:text-xl text-gray-700 mb-2 md:mb-3 font-bold">Googleへの口コミにもご協力ください。</p>
