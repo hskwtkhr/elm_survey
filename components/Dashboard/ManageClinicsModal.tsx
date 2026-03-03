@@ -26,8 +26,6 @@ export default function ManageClinicsModal({
     const [editingClinic, setEditingClinic] = useState<Clinic | null>(null)
     const [newClinicName, setNewClinicName] = useState('')
     const [newClinicUrl, setNewClinicUrl] = useState('')
-    const [newRewardTitle, setNewRewardTitle] = useState('')
-    const [newRewardDescription, setNewRewardDescription] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -62,8 +60,6 @@ export default function ManageClinicsModal({
                 body: JSON.stringify({
                     name: newClinicName,
                     google_review_url: newClinicUrl,
-                    rewardTitle: newRewardTitle,
-                    rewardDescription: newRewardDescription,
                 }),
             })
 
@@ -71,8 +67,6 @@ export default function ManageClinicsModal({
 
             setNewClinicName('')
             setNewClinicUrl('')
-            setNewRewardTitle('')
-            setNewRewardDescription('')
             fetchClinics()
             onSave()
         } catch (err) {
@@ -164,32 +158,24 @@ export default function ManageClinicsModal({
                     <div className="mb-8 bg-gray-50 p-4 rounded-lg">
                         <h3 className="text-sm font-bold text-gray-700 mb-3">新規追加</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                            <input
-                                type="text"
-                                placeholder="院名（例：東京院）"
+                            <select
                                 value={newClinicName}
                                 onChange={(e) => setNewClinicName(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                            >
+                                <option value="">院を選択してください</option>
+                                {[
+                                    '広島院', '福岡院', '岡山院', '京都院', '熊本院',
+                                    '大阪院', '神戸院', '表参道院', '麻布院'
+                                ].map(name => (
+                                    <option key={name} value={name}>{name}</option>
+                                ))}
+                            </select>
                             <input
                                 type="text"
                                 placeholder="GoogleレビューURL（任意）"
                                 value={newClinicUrl}
                                 onChange={(e) => setNewClinicUrl(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            <input
-                                type="text"
-                                placeholder="特典タイトル（任意）例：🎁 コスメプレゼント！"
-                                value={newRewardTitle}
-                                onChange={(e) => setNewRewardTitle(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            <input
-                                type="text"
-                                placeholder="特典説明（任意）例：※投稿画面を受付でご提示ください。"
-                                value={newRewardDescription}
-                                onChange={(e) => setNewRewardDescription(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
@@ -214,14 +200,21 @@ export default function ManageClinicsModal({
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
                                                 <label className="block text-xs text-gray-500 mb-1">院名</label>
-                                                <input
-                                                    type="text"
+                                                <select
                                                     value={editingClinic.name}
                                                     onChange={(e) =>
                                                         setEditingClinic({ ...editingClinic, name: e.target.value })
                                                     }
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                />
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                                                >
+                                                    <option value="">院を選択してください</option>
+                                                    {[
+                                                        '広島院', '福岡院', '岡山院', '京都院', '熊本院',
+                                                        '大阪院', '神戸院', '表参道院', '麻布院'
+                                                    ].map(name => (
+                                                        <option key={name} value={name}>{name}</option>
+                                                    ))}
+                                                </select>
                                             </div>
                                             <div>
                                                 <label className="block text-xs text-gray-500 mb-1">GoogleレビューURL</label>
@@ -285,19 +278,28 @@ export default function ManageClinicsModal({
                                 ) : (
                                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                                         <div className="flex-1">
-                                            <h3 className="font-bold text-gray-800">{clinic.name}</h3>
+                                            <h3 className="font-bold text-gray-800 mb-1">{clinic.name}</h3>
                                             {clinic.google_review_url ? (
                                                 <a
                                                     href={clinic.google_review_url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="text-xs text-blue-500 hover:underline break-all"
+                                                    className="inline-block mb-3 text-xs text-blue-500 hover:underline break-all"
                                                 >
                                                     {clinic.google_review_url}
                                                 </a>
                                             ) : (
-                                                <span className="text-xs text-gray-400">URL未設定</span>
+                                                <span className="inline-block mb-3 text-xs text-gray-400">URL未設定</span>
                                             )}
+
+                                            <div className="text-xs text-gray-700 bg-gray-50 p-3 rounded border border-gray-200">
+                                                <p className="font-bold text-pink-600 mb-1">
+                                                    {clinic.rewardTitle || '🎁 Googleの口コミ投稿いただいた方に、コスメプレゼント！'}
+                                                </p>
+                                                <p className="whitespace-pre-line leading-relaxed">
+                                                    {clinic.rewardDescription || '※投稿画面を受付でご提示ください。'}
+                                                </p>
+                                            </div>
                                         </div>
                                         <div className="flex gap-2 shrink-0">
                                             <button
