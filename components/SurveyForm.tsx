@@ -370,7 +370,13 @@ export default function SurveyForm() {
             <h2 className="text-lg md:text-2xl font-bold mb-3 md:mb-6 text-black">{questionTexts.doctorId || 'どちらの先生に施術していただきましたか？'}</h2>
             {selectedClinic ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-                {selectedClinic.doctors.map((doctor) => (
+                {[...selectedClinic.doctors].sort((a, b) => {
+                  const aIsNurse = a.name.includes('看護師')
+                  const bIsNurse = b.name.includes('看護師')
+                  if (aIsNurse && !bIsNurse) return 1
+                  if (!aIsNurse && bIsNurse) return -1
+                  return 0
+                }).map((doctor) => (
                   <button
                     key={doctor.id}
                     onClick={() => handleSelect('doctorId', doctor.id)}
