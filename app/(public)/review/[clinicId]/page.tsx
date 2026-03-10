@@ -153,7 +153,7 @@ export default function ReviewPage() {
 
         {/* ロゴ */}
         <div className="flex justify-center" style={{ marginBottom: '20px' }}>
-          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-64 md:w-full" />
+          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-64 max-w-full md:w-full" />
         </div>
 
         {/* メッセージ */}
