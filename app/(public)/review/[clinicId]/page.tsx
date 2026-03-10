@@ -164,7 +164,7 @@ export default function ReviewPage() {
               <Image src="/present.webp" alt="プレゼント" width={120} height={120} className="object-contain" />
             </div>
           )}
-          <div className="bg-pink-100 text-pink-700 font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg mb-4 inline-block border-2 border-pink-300 shadow-sm transform hover:scale-105 transition-transform duration-300">
+          <div className="bg-pink-100 text-pink-700 font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg mb-4 inline-block max-w-full border-2 border-pink-300 shadow-sm transform hover:scale-105 transition-transform duration-300">
             <div className="text-lg md:text-2xl mb-1 whitespace-pre-line break-keep">
               {rewardTitle}
             </div>
