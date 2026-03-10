@@ -166,7 +166,7 @@ export default function ReviewPage() {
           )}
           <div className="bg-pink-100 text-pink-700 font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg mb-4 border-2 border-pink-300 shadow-sm transform hover:scale-105 transition-transform duration-300">
             <div className="text-lg md:text-2xl mb-1 whitespace-pre-line break-keep overflow-wrap-anywhere" style={{ overflowWrap: 'anywhere' }}>
-              {rewardTitle}
+              {rewardTitle.replace(/^🎁\s*/, '')}
             </div>
             <div className="text-xs md:text-sm font-normal text-pink-600 whitespace-pre-line">
               {rewardDescription}
