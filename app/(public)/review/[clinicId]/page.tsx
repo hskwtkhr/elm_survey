@@ -153,7 +153,7 @@ export default function ReviewPage() {
 
         {/* ロゴ */}
         <div className="flex justify-center" style={{ marginBottom: '20px' }}>
-          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-40 md:w-full" />
+          <Image src="/elm_logo.png" alt="ELM CLINIC" width={400} height={160} className="object-contain w-64 md:w-full" />
         </div>
 
         {/* メッセージ */}
@@ -165,7 +165,7 @@ export default function ReviewPage() {
             </div>
           )}
           <div className="bg-pink-100 text-pink-700 font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg mb-4 inline-block border-2 border-pink-300 shadow-sm transform hover:scale-105 transition-transform duration-300">
-            <div className="text-lg md:text-2xl mb-1 whitespace-pre-line">
+            <div className="text-lg md:text-2xl mb-1 whitespace-pre-line break-keep">
               {rewardTitle}
             </div>
             <div className="text-xs md:text-sm font-normal text-pink-600 whitespace-pre-line">
